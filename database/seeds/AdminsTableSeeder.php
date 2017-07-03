@@ -13,7 +13,7 @@ class AdminsTableSeeder extends Seeder
     public function run()
     {
         DB::table('admins')->insert([
-            'id_user' => 1,
+            'user_id' => 1,
             'nombre' => 'Juan Pachanga',
             'hereda_permisos' => true,
             'crea_admin' => true,

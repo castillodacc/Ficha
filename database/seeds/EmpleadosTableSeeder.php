@@ -13,7 +13,7 @@ class EmpleadosTableSeeder extends Seeder
     public function run()
     {
         DB::table('empleados')->insert([
-            'id_user' => 2,
+            'user_id' => 2,
             'nombre' => 'Pedro',
             'apellido' => 'Navaja',
             'dni' => '123456',
