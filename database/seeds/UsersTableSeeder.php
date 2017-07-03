@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,11 +15,14 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'username' => 'admin',
+            'is_admin' => true,
             'password' => bcrypt('admin'),
+            'created_at' => Carbon::now(),
         ]);
         DB::table('users')->insert([
             'username' => 'empleado',
             'password' => bcrypt('empleado'),
+            'created_at' => Carbon::now(),
         ]);
     }
 }

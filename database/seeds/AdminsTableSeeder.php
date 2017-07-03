@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class AdminsTableSeeder extends Seeder
 {
@@ -23,6 +24,7 @@ class AdminsTableSeeder extends Seeder
             'gestiona_admin' => true,
             'gestiona_jornada' => true,
             'genera_reporte' => true,
+            'created_at' => Carbon::now(),
         ]);
 
     }

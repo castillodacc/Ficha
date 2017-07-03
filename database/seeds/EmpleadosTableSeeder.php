@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class EmpleadosTableSeeder extends Seeder
 {
@@ -21,6 +22,7 @@ class EmpleadosTableSeeder extends Seeder
             'direccion' => 'mi direccion',
             'telefono' => '54654',
             'telefono_movil' => '365854',
+            'created_at' => Carbon::now(),
         ]);
 
     }
