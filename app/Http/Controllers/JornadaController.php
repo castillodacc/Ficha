@@ -24,7 +24,7 @@ class JornadaController extends Controller
      */
     public function create()
     {
-        //
+        return view('jornada.create');
     }
 
     /**
