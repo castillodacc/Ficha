@@ -46,4 +46,16 @@ class LoginController extends Controller
     {
         return 'username';
     }
+
+    /**
+     * Handle an authentication attempt.
+     *
+     * @return Response
+     */
+    public function authenticate()
+    {
+        if (Auth::attempt(['username' => $username, 'password' => $password, 'activo' => $activo], $remember)) {
+            return redirect()->intended('home');
+        }
+    }
 }

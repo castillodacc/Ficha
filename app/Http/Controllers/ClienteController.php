@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Ficha;
+use App\Cliente;
 use Illuminate\Http\Request;
 
-class FichaController extends Controller
+class ClienteController extends Controller
 {
 
     public function __construct()
@@ -30,7 +30,7 @@ class FichaController extends Controller
      */
     public function create()
     {
-        //
+        return view("cliente.create");
     }
 
     /**
@@ -47,10 +47,10 @@ class FichaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Ficha  $ficha
+     * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function show(Ficha $ficha)
+    public function show(Cliente $cliente)
     {
         //
     }
@@ -58,10 +58,10 @@ class FichaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Ficha  $ficha
+     * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ficha $ficha)
+    public function edit(Cliente $cliente)
     {
         //
     }
@@ -70,10 +70,10 @@ class FichaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ficha  $ficha
+     * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ficha $ficha)
+    public function update(Request $request, Cliente $cliente)
     {
         //
     }
@@ -81,10 +81,10 @@ class FichaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Ficha  $ficha
+     * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ficha $ficha)
+    public function destroy(Cliente $cliente)
     {
         //
     }
