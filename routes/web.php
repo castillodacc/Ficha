@@ -22,3 +22,7 @@ Route::resource('admin', 'AdminController');
 Route::resource('empleado', 'EmpleadoController');
 Route::resource('ficha', 'FichaController');
 Route::resource('jornada', 'JornadaController');
+Route::resource('cliente', 'ClienteController');
+Route::resource('reporte', 'ReporteController', ['only' => ['create', 'store']]);
+Route::get('/password/update', 'PasswordController@update');
+Route::post('/password/save', 'PasswordController@save');
