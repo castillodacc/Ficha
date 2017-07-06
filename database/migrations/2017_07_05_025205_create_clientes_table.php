@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJornadasTable extends Migration
+class CreateClientesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateJornadasTable extends Migration
      */
     public function up()
     {
-        Schema::create('jornadas', function (Blueprint $table) {
+        Schema::create('clientes', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('hora_inicio_comida')->nullable();
-            $table->timestamp('hora_fin_comida')->nullable();
             $table->string('nombre');
-            $table->enum('tipo',['diurna', 'nocturna'])->default('diurna');
-            $table->boolean('hora_extras')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +28,6 @@ class CreateJornadasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jornadas');
+        Schema::dropIfExists('clientes');
     }
 }

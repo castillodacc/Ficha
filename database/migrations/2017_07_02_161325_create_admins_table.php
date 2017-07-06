@@ -21,9 +21,11 @@ class CreateAdminsTable extends Migration
             $table->boolean('crea_admin');
             $table->boolean('crea_empleado');
             $table->boolean('crea_jornada');
+            $table->boolean('crea_cliente');
             $table->boolean('gestiona_empleado');
             $table->boolean('gestiona_admin');
             $table->boolean('gestiona_jornada');
+            $table->boolean('gestiona_cliente');
             $table->boolean('genera_reporte');
             $table->timestamps();
             $table->softDeletes();

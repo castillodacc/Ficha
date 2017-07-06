@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+use Carbon\Carbon;
+
 class CreateFichasTable extends Migration
 {
     /**
@@ -16,14 +18,16 @@ class CreateFichasTable extends Migration
         Schema::create('fichas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('empleado_id')->unsigned();
-            $table->date('fecha');
-            $table->timestamp('hora_inicio')->nullable();
+            $table->enum('estado',['abierta', 'cerrada', 'desconocido'])->default('abierta');
+            $table->date('fecha')->default(Carbon::now());
+            $table->timestamp('hora_inicio')->useCurrent();
             $table->timestamp('hora_fin')->nullable();
-            $table->smallInteger('horas_extras');
+            $table->smallInteger('horas_extras')->nullable()->default(0);
+            $table->text('observaciones')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('empleado_id')
-                ->references('id')->on('users')
+                ->references('id')->on('empleados')
                 ->onDelete('cascade');
         });
     }
