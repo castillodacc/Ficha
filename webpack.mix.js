@@ -11,5 +11,17 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+mix.js('resources/assets/js/app.js', 'public/js');
+mix.copy(
+    [
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/timepicker/jquery.timepicker.js',
+        'node_modules/datepair.js/dist/jquery.datepair.js',
+        'node_modules/datepair.js/dist/datepair.js',
+    ],
+    'public/js'
+);
+
+
+mix.sass('resources/assets/sass/app.scss', 'public/css');
+mix.copy('node_modules/timepicker/jquery.timepicker.css', 'public/css');
