@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Empleado extends Model
+class Cliente extends Model
 {
     use SoftDeletes;
 
@@ -19,9 +19,4 @@ class Empleado extends Model
         'updated_at',
         'deleted_at'
     ];
-
-    public function user()
-    {
-        return $this->belongsTo('App\User');
-    }
 }
