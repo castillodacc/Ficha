@@ -3,34 +3,78 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
                 <div class="panel-body">
                   @if (Auth::user()->is_admin)
                     <ul class="list-inline">
                       <div class="row">
-                        <div class="col-xs-4">
-                          <li><a href="/empleado/create" class="btn">Crear empleado</a></li>
+                        @can('crear_empleado', Auth::user()->admin)
+                        <div class="col-md-3">
+                          <li><a href="/empleado/create" class="btn">Crear Empleado</a></li>
                         </div>
-                        <div class="col-xs-4">
-                          <li><a href="/admin/create" class="btn">Crear admin</a></li>
+                        @endcan
+                        @can('crear_admin', Auth::user()->admin)
+                        <div class="col-md-3">
+                          <li><a href="/admin/create" class="btn">Crear Administrador</a></li>
                         </div>
-                        <div class="col-xs-4">
+                        @endcan
+                        @can('crear_jornada', Auth::user()->admin)
+                        <div class="col-md-3">
                           <li><a href="/jornada/create" class="btn">Crear Jornada</a></li>
                         </div>
+                        @endcan
+                        @can('crear_cliente', Auth::user()->admin)
+                        <div class="col-md-3">
+                          <li><a href="/cliente/create" class="btn">Crear Cliente</a></li>
+                        </div>
+                        @endcan
+                      </div>
+                    </ul>
+                    <ul class="list-inline">
+                      <div class="row">
+                        @can('gestionar_empleado', Auth::user()->admin)
+                        <div class="col-md-3">
+                          <li><a href="/empleado" class="btn">Gestionar empleados</a></li>
+                        </div>
+                        @endcan
+                        @can('gestionar_admin', Auth::user()->admin)
+                        <div class="col-md-3">
+                          <li><a href="/admin" class="btn">Gestionar administradores</a></li>
+                        </div>
+                        @endcan
+                        @can('gestionar_jornada', Auth::user()->admin)
+                        <div class="col-md-3">
+                          <li><a href="/jornada" class="btn">Gestionar jornadas</a></li>
+                        </div>
+                        @endcan
+                        @can('gestionar_cliente', Auth::user()->admin)
+                        <div class="col-md-3">
+                          <li><a href="/cliente" class="btn">Gestionar clientes</a></li>
+                        </div>
+                        @endcan
+                      </div>
+                    </ul>
+                    <ul class="list-inline">
+                      <div class="row">
+                        @can('generar_reporte', Auth::user()->admin)
+                        <div class="col-md-3">
+                          <li><a href="/reporte/create" class="btn">Generar Reporte</a></li>
+                        </div>
+                        @endcan
                       </div>
                     </ul>
                   @else
                     <ul class="list-inline">
                       <div class="row">
-                        <div class="col-xs-4">
+                        <div class="col-md-4">
                           <li><a href="#" class="btn">Jornada</a></li>
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-md-4">
                           <li><a href="#" class="btn">Hora de descanso</a></li>
                         </div>
-                        <div class="col-xs-4">
+                        <div class="col-md-4">
                           <li><a href="#" class="btn">Horas extras</a></li>
                         </div>
                       </div>

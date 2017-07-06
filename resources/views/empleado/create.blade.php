@@ -6,7 +6,7 @@
       <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
           <div class="panel-heading">
-            INSERTAR EMPLEADO
+            CREAR EMPLEADO
           </div>
           <div class="panel-body">
             {!! Form::open(['url' => '/empleado', 'id' => 'propiedad-form']) !!}
@@ -24,14 +24,16 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                {!! Form::label('password', 'Contraseña:', ['style' => 'display:block;']) !!}
-                {!! Form::password('password',
-                                null,
-                                [
-                                  'class' => 'form-control',
-                                  'required' => 'required'
-                                ])
-                !!}
+                <div class="form-group">
+                  {!! Form::label('password', 'Contraseña:', ['style' => 'display:block;']) !!}
+                  {!! Form::text('password',
+                                     null,
+                                     [
+                                       'class' => 'form-control',
+                                       'required' => 'required'
+                                     ])
+                  !!}
+                </div>
               </div>
             </div>
             <div class="row">
@@ -83,6 +85,29 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-md-6">
+                {!! Form::label('telefono', 'Tel&eacute;fono:', ['style' => 'display:block;']) !!}
+                {!! Form::text('telefono',
+                               null,
+                               [
+                                 'class' => 'form-control',
+                                 'required' => 'required'
+                               ])
+                !!}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                {!! Form::label('telefono_movil', 'Tel&eacute;fono M&oacute;vil:', ['style' => 'display:block;']) !!}
+                {!! Form::text('telefono_movil',
+                               null,
+                               [
+                                 'class' => 'form-control',
+                               ])
+                !!}
+              </div>
+            </div>
+            <div class="row">
               <div class="col-md-12">
                 {!! Form::label('direccion', 'Direcci&oacute;n:', ['style' => 'display:block;']) !!}
                 {!! Form::text('direccion',
@@ -97,7 +122,7 @@
             {!! Form::close() !!}
             <div class="form-group">
               <br>
-              <input type="submit" form="empleado-form" class="btn btn-success btn-block" value="Insertar Empleado" disabled/>
+              <input type="submit" form="empleado-form" class="btn btn-success btn-block" value="Crear Empleado" disabled/>
             </div>
           </div>
         </div>
