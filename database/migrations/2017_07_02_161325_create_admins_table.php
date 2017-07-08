@@ -17,16 +17,16 @@ class CreateAdminsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('nombre');
-            $table->boolean('hereda_permisos');
-            $table->boolean('crea_admin');
-            $table->boolean('crea_empleado');
-            $table->boolean('crea_jornada');
-            $table->boolean('crea_cliente');
-            $table->boolean('gestiona_empleado');
-            $table->boolean('gestiona_admin');
-            $table->boolean('gestiona_jornada');
-            $table->boolean('gestiona_cliente');
-            $table->boolean('genera_reporte');
+            // $table->boolean('hereda_permisos')->default(FALSE);
+            $table->boolean('crea_admin')->default(FALSE);
+            $table->boolean('crea_empleado')->default(FALSE);
+            $table->boolean('crea_jornada')->default(FALSE);
+            $table->boolean('crea_cliente')->default(FALSE);
+            $table->boolean('gestiona_empleado')->default(FALSE);
+            $table->boolean('gestiona_admin')->default(FALSE);
+            $table->boolean('gestiona_jornada')->default(FALSE);
+            $table->boolean('gestiona_cliente')->default(FALSE);
+            $table->boolean('genera_reporte')->default(FALSE);
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('user_id')

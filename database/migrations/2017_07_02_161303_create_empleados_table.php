@@ -21,10 +21,13 @@ class CreateEmpleadosTable extends Migration
             $table->string('direccion');
             $table->string('telefono')->nullable();
             $table->string('telefono_movil');
-            $table->string('correo')->unique();
-            $table->integer('dni')->unsigned()->unique();
+            $table->string('correo');
+            $table->string('dni')->unique();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade');
         });
     }
 
