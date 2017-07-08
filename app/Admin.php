@@ -20,6 +20,8 @@ class Admin extends Model
         'deleted_at'
     ];
 
+    protected $guarded = ['id'];
+
     public function user()
     {
         return $this->belongsTo('App\User');
