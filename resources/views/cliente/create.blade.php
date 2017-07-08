@@ -10,7 +10,7 @@
             {!! Form::open(['url' => '/cliente', 'class' => 'form-inline', 'id' => 'cliente-form']) !!}
             <!-- Content form input -->
             <div class="form-group">
-              {!! Form::label('nombre', 'Nombre:') !!}
+              {!! Form::label('nombre', 'Nombre y apellido:') !!}
               {!! Form::text('nombre', null, ['class' => 'form-control', 'required' => 'required']) !!}
             </div>
             <div class="form-group">

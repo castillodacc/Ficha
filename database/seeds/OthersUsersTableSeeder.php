@@ -4,7 +4,8 @@ use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class UsersTableSeeder extends Seeder
+
+class OthersUsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,14 +15,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'username' => 'admin',
-            'is_admin' => true,
-            'password' => bcrypt('admin'),
-            'created_at' => Carbon::now(),
-        ]);
-        DB::table('users')->insert([
-            'username' => 'empleado',
-            'password' => bcrypt('empleado'),
+            'username' => 'pedro',
+            'password' => bcrypt('pedro'),
             'activo' => false,
             'created_at' => Carbon::now(),
         ]);
