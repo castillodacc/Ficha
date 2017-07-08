@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cliente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class ClienteController extends Controller
 {
@@ -41,7 +42,20 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $cliente = Cliente::create($request->all());
+        if($cliente) {
+            return Response::json([
+            'error' => false,
+            'mensaje' => 'Cliente creado correctamente',
+            'code' => 200
+            ], 200);
+        }
+        return Response::json([
+            'error' => true,
+            'mensaje' => 'Error. Cliente NO fue creado',
+            'code' => 200
+            ], 200);
     }
 
     /**

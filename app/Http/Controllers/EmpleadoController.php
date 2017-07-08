@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empleado;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -43,7 +44,26 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user    = new User();
+        $user->username = $request->username;
+        $user->password = bcrypt($request->password);
+        if($user->save()) {
+            $empleado_datos = $request->except('username', 'password');
+            $empleado_datos = array_add($empleado_datos, 'user_id', $user->id);
+            $empleado = Empleado::create($empleado_datos);
+            if($empleado) {
+                return Response::json([
+                    'error' => false,
+                    'mensaje' => 'Empleado creado correctamente',
+                    'code' => 200
+                ], 200);
+            }
+        }
+        return Response::json([
+            'error' => true,
+            'mensaje' => 'Error. Empleado NO fue creado',
+            'code' => 200
+            ], 200);
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Jornada;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+
 
 class JornadaController extends Controller
 {
@@ -41,7 +43,19 @@ class JornadaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $jornada = Jornada::create($request->except('hora_comida'));
+        if($jornada) {
+            return Response::json([
+            'error' => false,
+            'mensaje' => 'Jornada creada correctamente',
+            'code' => 200
+            ], 200);
+        }
+        return Response::json([
+            'error' => true,
+            'mensaje' => 'Error. Jornada NO fue creada',
+            'code' => 200
+            ], 200);
     }
 
     /**

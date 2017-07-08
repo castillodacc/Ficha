@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class AdminController extends Controller
 {
@@ -41,7 +43,28 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user    = new User();
+        $user->username = $request->username;
+        $user->password = bcrypt($request->password);
+        $user->is_admin = TRUE;
+        if($user->save()) {
+            $admin_datos = $request->except('username', 'password');
+            $admin_datos = array_add($admin_datos, 'user_id', $user->id);
+            $admin = Admin::create($admin_datos);
+            if($admin) {
+                return Response::json([
+                    'error' => false,
+                    'mensaje' => 'Administrador creado correctamente',
+                    'code' => 200
+                ], 200);
+            }
+        }
+        return Response::json([
+            'error' => true,
+            'mensaje' => 'Error. Administrador NO fue creado',
+            'code' => 200
+            ], 200);
+
     }
 
     /**

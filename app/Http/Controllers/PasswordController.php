@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Hash;
 
 class PasswordController extends Controller
 {
@@ -30,9 +31,19 @@ class PasswordController extends Controller
      */
     public function save(Request $request)
     {
+        $actualizado = $request->user()->fill([
+            'password' => Hash::make($request->newPassword)
+        ])->save();
+        if($actualizado) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Contraseña actualizada correctamente',
+                'code' => 200
+            ], 200);
+        }
         return Response::json([
-            'error' => false,
-            'mensaje' => 'Contraseña actualizada correctamente.',
+            'error' => true,
+            'mensaje' => 'Error al actualizar contraseña',
             'code' => 200
         ], 200);
     }
