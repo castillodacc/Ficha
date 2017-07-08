@@ -40,13 +40,44 @@
               <div class="col-md-6">
                 {!! Form::label('tipo', 'Tipo:',['style' => 'display:block;']) !!}
                 {!! Form::select('tipo',
-                                 ['diurno' => 'Diurno','nocturno' => 'Nocturno'],
+                                 ['diurna' => 'Diurna','nocturna' => 'Nocturna'],
                                  null,
                                  [
                                    'required' => 'required',
                                    'class'      => 'form-control',
                                  ])
                 !!}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <div id="horas-jornada">
+                    <div class="row">
+                      <div class="col-md-12">
+                        {!! Form::label('hora_inicio_jornada', 'Inicio Jornada:') !!}
+                        {!! Form::text('hora_inicio_jornada',
+                                       null,
+                                       [
+                                         'class' => 'form-control time start',
+                                       ])
+                        !!}
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        {!! Form::label('hora_fin_jornada', 'Fin Jornada:') !!}
+                        {!! Form::text('hora_fin_jornada',
+                                       null,
+                                       [
+                                         'class' => 'form-control time end',
+                                       ]
+                            )
+                        !!}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="row">
@@ -71,8 +102,8 @@
                   <div id="horas-comida" class="hidden">
                     <div class="row">
                       <div class="col-md-12">
-                        {!! Form::label('inicio_comida', 'Inicio Comida:') !!}
-                        {!! Form::text('inicio_comida',
+                        {!! Form::label('hora_inicio_comida', 'Inicio Comida:') !!}
+                        {!! Form::text('hora_inicio_comida',
                                        null,
                                        [
                                          'class' => 'form-control time start',
@@ -82,8 +113,8 @@
                     </div>
                     <div class="row">
                       <div class="col-md-12">
-                        {!! Form::label('fin_comida', 'Fin Comida:') !!}
-                        {!! Form::text('fin_comida',
+                        {!! Form::label('hora_fin_comida', 'Fin Comida:') !!}
+                        {!! Form::text('hora_fin_comida',
                                        null,
                                        [
                                          'class' => 'form-control time end',
@@ -99,9 +130,10 @@
             {!! Form::close() !!}
             <div class="form-group">
               <br>
-              <input type="submit" form="jornada-form" class="btn btn-success btn-block" value="Crear Jornada" disabled/>
+              <input type="submit" form="jornada-form" class="btn btn-success btn-block" value="Crear Jornada"/>
             </div>
           </div>
+          <div class="panel-footer"></div>
         </div>
       </div>
     </div>
@@ -113,13 +145,26 @@
   <script>
     $(document).ready(function (){
       // initialize input widgets first
-      $('#inicio_comida').timepicker({
+      $('#hora_inicio_jornada').timepicker({
         'showDuration': true,
-        'timeFormat': 'g:ia'
+        'timeFormat': 'G:i'
       });
-      $('#fin_comida').timepicker({
+      $('#hora_fin_jornada').timepicker({
         'showDuration': true,
-        'timeFormat': 'g:ia'
+        'timeFormat': 'G:i'
+      });
+      // initialize datepair
+      $('#horas-jornada').datepair();
+
+
+      // initialize input widgets first
+      $('#hora_inicio_comida').timepicker({
+        'showDuration': true,
+        'timeFormat': 'G:i'
+      });
+      $('#hora_fin_comida').timepicker({
+        'showDuration': true,
+        'timeFormat': 'G:i'
       });
 
       // initialize datepair
@@ -128,14 +173,52 @@
       $("#hora_comida").on("change", function(){
         if($(this).is(":checked")) {
           $("#horas-comida").removeClass("hidden");
-          $("#inicio_comida").prop("required",true);
-          $("#fin_comida").prop("required",true);
+          $("#hora_inicio_comida").prop("required",true);
+          $("#hora_fin_comida").prop("required",true);
         } else {
           $("#horas-comida").addClass("hidden");
-          $("#inicio_comida").prop("required",false);
-          $("#fin_comida").prop("required",false);
+          $("#hora_inicio_comida").prop("required",false);
+          $("#hora_fin_comida").prop("required",false);
         }
       });
+
+      $("#jornada-form").submit("submit", function(e) {
+        $.ajax({
+          url: $(this).attr("action"),
+          method: $(this).attr("method"),
+          data: $(this).serialize(),
+          dataType: 'json',
+          beforeSend: function()
+          {
+            $(".panel-footer").empty();
+          },
+          success: function(respuesta)
+          {
+            if(!respuesta.error) {
+              var html = "<div class='alert alert-success'>";
+              html += "<p>" + respuesta.mensaje + "</p>";
+              html += "</div>";
+              $(".panel-footer").html(html);
+            } else {
+              var html = "<div class='alert alert-danger'>";
+              html +="<p>" + respuesta.mensaje + "</p>";
+              html += "</div>";
+              $(".panel-footer").html(html);
+            }
+            $("#jornada-form")[0].reset();
+          },
+          error: function()
+          {
+            var html = "<div class='alert alert-danger'>";
+            html +="<p>Error en el servidor. Por favor, recargue la p&aacute;gina, si el problema persiste contacte al administrador del sitio.</p>";
+            html += "</div>";
+            $(".panel-footer").html(html);
+            $("#jornada-form")[0].reset();
+          }
+        });
+        e.preventDefault();
+      });
+
     });
   </script>
 

@@ -24,7 +24,7 @@
     </div>
   </div>
   <script>
-    $(function (){
+    $(document).ready(function (){
       $("#cliente-form").submit("submit", function(e) {
         $.ajax({
           url: $(this).attr("action"),
