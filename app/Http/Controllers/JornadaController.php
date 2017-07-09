@@ -22,7 +22,8 @@ class JornadaController extends Controller
      */
     public function index()
     {
-        //
+        $jornadas = Jornada::all();
+        return view('jornada.index')->with('jornadas', $jornadas);
     }
 
     /**

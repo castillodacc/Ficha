@@ -46,4 +46,31 @@ class Jornada extends Model
     {
         $this->attributes['hora_fin_comida'] = Carbon::createFromFormat('H:i', $hora);
     }
+
+    public function getHoraInicioJornadaAttribute($hora)
+    {
+        return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->toTimeString());
+    }
+
+    public function getHoraFinJornadaAttribute($hora)
+    {
+        return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->toTimeString());
+    }
+
+    public function getHoraInicioComidaAttribute($hora)
+    {
+        if($hora) {
+            return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->toTimeString());
+        }
+        return($hora);
+    }
+
+    public function getHoraFinComidaAttribute($hora)
+    {
+        if($hora) {
+            return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->toTimeString());
+        }
+        return($hora);
+    }
+
 }

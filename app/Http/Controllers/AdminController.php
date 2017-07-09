@@ -22,7 +22,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        //
+        $administradores = Admin::all();
+        return view('admin.index')->with('administradores', $administradores);
     }
 
     /**
