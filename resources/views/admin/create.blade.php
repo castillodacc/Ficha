@@ -148,6 +148,7 @@
               <input type="submit" form="admin-form" class="btn btn-success btn-block" value="Crear Administrador"/>
             </div>
           </div>
+          <div class="panel-footer"></div>
         </div>
       </div>
     </div>

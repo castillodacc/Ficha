@@ -156,7 +156,6 @@
       // initialize datepair
       $('#horas-jornada').datepair();
 
-
       // initialize input widgets first
       $('#hora_inicio_comida').timepicker({
         'showDuration': true,
@@ -221,5 +220,4 @@
 
     });
   </script>
-
 @endsection
