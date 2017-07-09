@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Validation\Validator;
+use Auth;
+use App\User;
 
 class PasswordController extends Controller
 {
@@ -31,21 +34,40 @@ class PasswordController extends Controller
      */
     public function save(Request $request)
     {
-        $actualizado = $request->user()->fill([
-            'password' => Hash::make($request->newPassword)
-        ])->save();
-        if($actualizado) {
-            return Response::json([
-                'error' => false,
-                'mensaje' => 'Contraseña actualizada correctamente',
-                'code' => 200
-            ], 200);
+
+        $messages = [
+            'current_password.required' => 'Ingrese contraseña actual',
+            'password.required' => 'Ingrese contraseña nueva',
+        ];
+
+        $this->validate($request, [
+            'current_password' => 'required',
+            'password' => 'required|same:password',
+            'password_confirmation' => 'required|same:password',
+        ], $messages);
+
+        $current_password = Auth::User()->password;
+        if(Hash::check($request->current_password, $current_password)) {
+            $user_id = Auth::User()->id;
+            $obj_user = User::find($user_id);
+            $obj_user->password = Hash::make($request->password);;
+            $obj_user->save();
+            return response()->json(
+                [
+                    'error' => false,
+                    'mensaje' => 'Contraseña cambiada correctamente',
+                    'code' => 200
+                ],
+                200);
+        }else{
+            return response()->json(
+                [
+                    'error' => true,
+                    'mensaje' => 'Contraseña actual incorrecta',
+                    'code' => 200
+                ],
+                200);
         }
-        return Response::json([
-            'error' => true,
-            'mensaje' => 'Error al actualizar contraseña',
-            'code' => 200
-        ], 200);
-    }
+   }
 
 }
