@@ -47,6 +47,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'is_admin' => 'boolean',
+        'activo' => 'boolean',
     ];
 
     public function admin()

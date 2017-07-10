@@ -25,6 +25,17 @@ class Jornada extends Model
         'hora_fin_comida',
     ];
 
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'activa' => 'boolean',
+        'hora_extras' => 'boolean',
+    ];
+
+
     protected $guarded = ['id'];
 
     public function setHoraInicioJornadaAttribute($hora)
