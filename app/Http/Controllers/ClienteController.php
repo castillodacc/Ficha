@@ -78,7 +78,7 @@ class ClienteController extends Controller
      */
     public function edit(Cliente $cliente)
     {
-        //
+        return view('cliente.edit')->with('cliente',$cliente);
     }
 
     /**
@@ -90,7 +90,20 @@ class ClienteController extends Controller
      */
     public function update(Request $request, Cliente $cliente)
     {
-        //
+        $cliente->nombre = $request->nombre;
+        if($cliente->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Cliente fue editado correctamente',
+                'code' => 200
+            ], 200);
+        }
+        return Response::json([
+            'error' => true,
+            'mensaje' => 'Error al intentar editar el nombre del cliente',
+            'code' => 200
+        ], 500);
+
     }
 
     /**
@@ -101,6 +114,18 @@ class ClienteController extends Controller
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        if($cliente->delete()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Cliente eliminado correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar eliminadr al cliente',
+                'code' => 200
+            ], 200);
+        }
     }
 }

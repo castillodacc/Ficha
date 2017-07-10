@@ -39,17 +39,6 @@
                             <span class="glyphicon glyphicon-remove"></span>
                           </a>
                           {!! Form::close() !!}
-                          {!! Form::open(
-                              [
-                                'url' => '/cliente/'.$cliente->id.'/block',
-                                'method' => 'post',
-                                'style' => 'display: inline-block;'
-                              ])
-                          !!}
-                          <a class="bloquear" id="{{$cliente->id}}" href="#" data-toggle="tooltip" data-placement="right" title="Bloquear">
-                            <span class="glyphicon glyphicon-ban-circle"></span>
-                          </a>
-                          {!! Form::close() !!}
                         </td>
                       </tr>
                     @endforeach
@@ -69,55 +58,32 @@
   <script>
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
+
       $(".eliminar").on("click", function() {
-        var parent = $(this).parent();
-        var form = $(this).closest("form");
-
-        $.ajax({
-          url: $(form).attr("action"),
-          method: $(form).attr("method"),
-          data: $(form).serialize(),
-          dataType: 'json',
-          success: function(respuesta)
-          {
-            if(!respuesta.error) {
-              parent.slideUp(300, function () {
-                parent.closest("tr").remove();
-              });
-            } else {
-              alert("Error al intentar eliminar el usuario");
+        if(confirm("Presione Aceptar para eliminar al cliente")) {
+          var parent = $(this).parent();
+          var form = $(this).closest("form");
+          $.ajax({
+            url: $(form).attr("action"),
+            method: $(form).attr("method"),
+            data: $(form).serialize(),
+            dataType: 'json',
+            success: function(respuesta)
+            {
+              if(!respuesta.error) {
+                parent.slideUp(300, function () {
+                  parent.closest("tr").remove();
+                });
+              } else {
+                alert("Error al intentar eliminar al cliente");
+              }
+            },
+            error: function()
+            {
+              alert("Error al intentar eliminar al cliente");
             }
-          },
-          error: function()
-          {
-            alert("Error, en el servidor, al intentar eliminar la propiedad");
-          }
-        });
-      });
-      $(".bloquear").on("click", function() {
-        var parent = $(this).parent();
-        var form = $(this).closest("form");
-
-        $.ajax({
-          url: $(form).attr("action"),
-          method: $(form).attr("method"),
-          data: $(form).serialize(),
-          dataType: 'json',
-          success: function(respuesta)
-          {
-            if(!respuesta.error) {
-              parent.slideUp(300, function () {
-                parent.closest("tr").remove();
-              });
-            } else {
-              alert("Error al intentar eliminar el usuario");
-            }
-          },
-          error: function()
-          {
-            alert("Error, en el servidor, al intentar eliminar la propiedad");
-          }
-        });
+          });
+        }
       });
     });
   </script>
