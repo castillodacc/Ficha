@@ -48,14 +48,15 @@ class LoginController extends Controller
     }
 
     /**
-     * Handle an authentication attempt.
+     * Get the post register / login redirect path.
      *
-     * @return Response
-]     */
-    public function authenticate()
+     * @return string
+     */
+    public function redirectPath()
     {
-        if (Auth::attempt(['username' => $username, 'password' => $password, 'activo' => true], $remember)) {
-            return redirect()->intended('home');
+        if (\Auth::user()->is_admin) {
+            return '/empleado';
         }
+        return '/home';
     }
 }
