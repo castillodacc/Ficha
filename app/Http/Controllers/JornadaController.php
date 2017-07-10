@@ -101,6 +101,18 @@ class JornadaController extends Controller
      */
     public function destroy(Jornada $jornada)
     {
-        //
+        if($jornada->delete()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Jornada eliminada correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar eliminar la jornada',
+                'code' => 200
+            ], 200);
+        }
     }
 }
