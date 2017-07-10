@@ -20,6 +20,7 @@ class CreateJornadasTable extends Migration
             $table->enum('tipo',['diurna', 'nocturna'])->default('diurna');
             $table->smallInteger('horas_laborales')->unsigned()->default(8);
             $table->boolean('horas_extras')->default(false);
+            $table->boolean('activa')->default(TRUE);
             $table->timestamp('hora_inicio_jornada')->default(Carbon::now());
             $table->timestamp('hora_fin_jornada')->default(Carbon::now());
             $table->timestamp('hora_inicio_comida')->nullable();
