@@ -123,7 +123,7 @@ class ClienteController extends Controller
         } else {
             return Response::json([
                 'error' => false,
-                'mensaje' => 'Error al intentar eliminadr al cliente',
+                'mensaje' => 'Error al intentar eliminar al cliente',
                 'code' => 200
             ], 200);
         }
