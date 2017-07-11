@@ -50,28 +50,32 @@ class Jornada extends Model
 
     public function setHoraInicioComidaAttribute($hora)
     {
-        $this->attributes['hora_inicio_comida'] =  Carbon::createFromFormat('H:i', $hora);
+        if($hora) {
+            $this->attributes['hora_inicio_comida'] =  Carbon::createFromFormat('H:i', $hora);
+        }
     }
 
     public function setHoraFinComidaAttribute($hora)
     {
-        $this->attributes['hora_fin_comida'] = Carbon::createFromFormat('H:i', $hora);
+        if($hora) {
+            $this->attributes['hora_fin_comida'] = Carbon::createFromFormat('H:i', $hora);
+        }
     }
 
     public function getHoraInicioJornadaAttribute($hora)
     {
-        return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->toTimeString());
+        return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
     }
 
     public function getHoraFinJornadaAttribute($hora)
     {
-        return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->toTimeString());
+        return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
     }
 
     public function getHoraInicioComidaAttribute($hora)
     {
         if($hora) {
-            return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->toTimeString());
+            return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
         }
         return($hora);
     }
@@ -79,7 +83,7 @@ class Jornada extends Model
     public function getHoraFinComidaAttribute($hora)
     {
         if($hora) {
-            return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->toTimeString());
+            return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
         }
         return($hora);
     }

@@ -9,12 +9,12 @@
             CREAR JORNADA
           </div>
           <div class="panel-body">
-            {!! Form::open(['url' => '/jornada', 'id' => 'jornada-form']) !!}
+            {!! Form::open(['url' => '/jornada/'.$jornada->id, 'method' => 'put', 'class' => 'form-inline', 'id' => 'update-jornada-form']) !!}
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('nombre', 'Nombre:', ['style' => 'display:block;']) !!}
                 {!! Form::text('nombre',
-                               null,
+                               $jornada->nombre,
                                [
                                  'class' => 'form-control',
                                  'required' => 'required'
@@ -26,13 +26,13 @@
               <div class="col-md-6">
                 {!! Form::label('horas_laborales', 'Horas Laborales:', ['style' => 'display:block;']) !!}
                 {!! Form::number('horas_laborales',
-                               null,
-                               [
-                                 'class' => 'form-control',
-                                 'required' => 'required',
-                                 'min' => '1',
-                                 'max' => '8'
-                               ])
+                                 $jornada->horas_laborales,
+                                 [
+                                   'class' => 'form-control',
+                                   'required' => 'required',
+                                   'min' => '1',
+                                   'max' => '8'
+                                 ])
                 !!}
               </div>
             </div>
@@ -41,7 +41,7 @@
                 {!! Form::label('tipo', 'Tipo:',['style' => 'display:block;']) !!}
                 {!! Form::select('tipo',
                                  ['diurna' => 'Diurna','nocturna' => 'Nocturna'],
-                                 null,
+                                 $jornada->tipo,
                                  [
                                    'required' => 'required',
                                    'class'      => 'form-control',
@@ -57,7 +57,7 @@
                       <div class="col-md-12">
                         {!! Form::label('hora_inicio_jornada', 'Inicio Jornada:') !!}
                         {!! Form::text('hora_inicio_jornada',
-                                       null,
+                                       $jornada->hora_inicio_jornada,
                                        [
                                          'class' => 'form-control time start',
                                        ])
@@ -68,7 +68,7 @@
                       <div class="col-md-12">
                         {!! Form::label('hora_fin_jornada', 'Fin Jornada:') !!}
                         {!! Form::text('hora_fin_jornada',
-                                       null,
+                                       $jornada->hora_fin_jornada,
                                        [
                                          'class' => 'form-control time end',
                                        ]
@@ -84,7 +84,7 @@
               <div class="col-md-4">
                 <div class="input-group">
                   {!! Form::label('horas_extras', 'Horas extras:') !!}
-                  {!! Form::checkbox('horas_extras') !!}
+                  {!! Form::checkbox('horas_extras', $jornada->horas_extras) !!}
                 </div>
               </div>
             </div>
@@ -92,19 +92,27 @@
               <div class="col-md-4">
                 <div class="input-group">
                   {!! Form::label('hora_comida', 'Hora comida:') !!}
-                  {!! Form::checkbox('hora_comida') !!}
+                  @if($jornada->hora_inicio_comida and $jornada->hora_fin_comida)
+                    {!! Form::checkbox('hora_comida', true, true) !!}
+                  @else
+                    {!! Form::checkbox('hora_comida') !!}
+                  @endif
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-6">
                 <div class="input-group">
-                  <div id="horas-comida" class="hidden">
-                    <div class="row">
-                      <div class="col-md-12">
+                  @if($jornada->hora_inicio_comida and $jornada->hora_fin_comida)
+                    <div id="horas-comida">
+                  @else
+                      <div id="horas-comida" class="hidden">
+                  @endif
+                      <div class="row">
+                        <div class="col-md-12">
                         {!! Form::label('hora_inicio_comida', 'Inicio Comida:') !!}
                         {!! Form::text('hora_inicio_comida',
-                                       null,
+                                       $jornada->hora_inicio_comida,
                                        [
                                          'class' => 'form-control time start',
                                        ])
@@ -115,7 +123,7 @@
                       <div class="col-md-12">
                         {!! Form::label('hora_fin_comida', 'Fin Comida:') !!}
                         {!! Form::text('hora_fin_comida',
-                                       null,
+                                       $jornada->hora_fin_comida,
                                        [
                                          'class' => 'form-control time end',
                                        ]
@@ -130,7 +138,7 @@
             {!! Form::close() !!}
             <div class="form-group">
               <br>
-              <input type="submit" form="jornada-form" class="btn btn-success btn-block" value="Crear Jornada"/>
+              <input type="submit" form="update-jornada-form" class="btn btn-success btn-block" value="Editar Jornada"/>
             </div>
           </div>
           <div class="panel-footer"></div>
@@ -181,7 +189,7 @@
         }
       });
 
-      $("#jornada-form").submit("submit", function(e) {
+      $("#update-jornada-form").submit("submit", function(e) {
         $.ajax({
           url: $(this).attr("action"),
           method: $(this).attr("method"),
@@ -198,7 +206,6 @@
               html += "<p>" + respuesta.mensaje + "</p>";
               html += "</div>";
               $(".panel-footer").html(html);
-              $("#jornada-form")[0].reset();
             } else {
               var html = "<div class='alert alert-danger'>";
               html +="<p>" + respuesta.mensaje + "</p>";
