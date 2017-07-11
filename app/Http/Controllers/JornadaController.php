@@ -54,7 +54,7 @@ class JornadaController extends Controller
         }
         return Response::json([
             'error' => true,
-            'mensaje' => 'Error. Jornada NO fue creada',
+            'mensaje' => 'Error al intentar crear jornada',
             'code' => 200
             ], 200);
     }
@@ -78,7 +78,7 @@ class JornadaController extends Controller
      */
     public function edit(Jornada $jornada)
     {
-        //
+        return view('jornada.edit')->with('jornada', $jornada);
     }
 
     /**
@@ -90,7 +90,20 @@ class JornadaController extends Controller
      */
     public function update(Request $request, Jornada $jornada)
     {
-        //
+        if($jornada->update($request->except('hora_comida'))) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Jornada actualizada correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar actualizar la jornada',
+                'code' => 200
+            ], 200);
+        }
+
     }
 
     /**
@@ -115,4 +128,53 @@ class JornadaController extends Controller
             ], 200);
         }
     }
+
+    /**
+     * enable the specified resource.
+     *
+     * @param  \App\Jornada  $jornada
+     * @return \Illuminate\Http\Response
+     */
+    public function enable(Jornada $jornada)
+    {
+        $jornada->activa = TRUE;
+        if($jornada->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Jornada activada correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar activar la jornada',
+                'code' => 200
+            ], 200);
+        }
+    }
+
+    /**
+     * disable the specified resource.
+     *
+     * @param  \App\Jornada  $jornada
+     * @return \Illuminate\Http\Response
+     */
+    public function disable(Jornada $jornada)
+    {
+        $jornada->activa = FALSE;
+        if($jornada->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Jornada desactivada correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar desactivar la jornada',
+                'code' => 200
+            ], 200);
+        }
+    }
+
 }
