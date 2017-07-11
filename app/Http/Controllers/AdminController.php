@@ -6,6 +6,7 @@ use App\Admin;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -44,9 +45,9 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        $user    = new User();
+        $user           = new User();
         $user->username = $request->username;
-        $user->password = bcrypt($request->password);
+        $user->password = Hash::make($request->password);
         $user->is_admin = TRUE;
         if($user->save()) {
             $admin_datos = $request->except('username', 'password');
@@ -87,7 +88,7 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        //
+        return view('admin.edit')->with('admin', $admin);
     }
 
     /**
@@ -99,7 +100,22 @@ class AdminController extends Controller
      */
     public function update(Request $request, Admin $admin)
     {
-        //
+        $admin->user->username = $request->username;
+        $admin->user->password = Hash::make($request->password);
+        if($admin->user->save()) {
+            if($admin->update($request->except('username', 'password'))) {
+                return Response::json([
+                    'error' => false,
+                    'mensaje' => 'Administrador actualizado correctamente',
+                    'code' => 200
+                ], 200);
+            }
+        }
+        return Response::json([
+            'error' => false,
+            'mensaje' => 'Error al intentar actualizar administrador',
+            'code' => 200
+        ], 200);
     }
 
     /**
@@ -110,6 +126,66 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        //
+        if($admin->delete()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Administrador eliminado correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar eliminar administrador',
+                'code' => 200
+            ], 200);
+        }
+    }
+
+    /**
+     * Enable the specified resource.
+     *
+     * @param  \App\admin  $admin
+     * @return \Illuminate\Http\Response
+     */
+    public function enable(Admin $admin)
+    {
+        $admin->user->activo = TRUE;
+        if($admin->user->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Administrador activado correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar activar administrador',
+                'code' => 200
+            ], 200);
+        }
+    }
+
+    /**
+     * Disable the specified resource.
+     *
+     * @param  \App\Admin  $admin
+     * @return \Illuminate\Http\Response
+     */
+    public function disable(Admin $admin)
+    {
+        $admin->user->activo = FALSE;
+        if($admin->user->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Administrador desactivado correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar desactivar administrador',
+                'code' => 200
+            ], 200);
+        }
     }
 }

@@ -39,17 +39,31 @@
                             <span class="glyphicon glyphicon-remove"></span>
                           </a>
                           {!! Form::close() !!}
-                          {!! Form::open(
-                              [
-                                'url' => '/admin/'.$administrador->id.'/block',
-                                'method' => 'post',
-                                'style' => 'display: inline-block;'
-                              ])
-                          !!}
-                          <a class="bloquear" id="{{$administrador->id}}" href="#" data-toggle="tooltip" data-placement="right" title="Bloquear">
-                            <span class="glyphicon glyphicon-ban-circle"></span>
-                          </a>
-                          {!! Form::close() !!}
+                          @if($administrador->user->activo)
+                            {!! Form::open(
+                                [
+                                  'url' => '/admin/'.$administrador->id.'/disable',
+                                  'method' => 'post',
+                                  'style' => 'display: inline-block;'
+                                ])
+                            !!}
+                            <a class="bloquear" href="#" data-toggle="tooltip" data-placement="right" title="Bloquear">
+                              <span class="glyphicon glyphicon-ban-circle"></span>
+                            </a>
+                            {!! Form::close() !!}
+                          @else
+                            {!! Form::open(
+                                [
+                                  'url' => '/admin/'.$administrador->id.'/enable',
+                                  'method' => 'post',
+                                  'style' => 'display: inline-block;'
+                                ])
+                            !!}
+                            <a class="desbloquear" href="#" data-toggle="tooltip" data-placement="right" title="Desbloquear">
+                              <span class="glyphicon glyphicon-ok-circle"></span>
+                            </a>
+                            {!! Form::close() !!}
+                          @endif
                         </td>
                       </tr>
                     @endforeach
@@ -67,58 +81,88 @@
     </div>
   </div>
   <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
       $('[data-toggle="tooltip"]').tooltip();
-      $(".eliminar").on("click", function() {
-        var parent = $(this).parent();
-        var form = $(this).closest("form");
 
-        $.ajax({
-          url: $(form).attr("action"),
-          method: $(form).attr("method"),
-          data: $(form).serialize(),
-          dataType: 'json',
-          success: function(respuesta)
-          {
-            if(!respuesta.error) {
-              parent.slideUp(300, function () {
-                parent.closest("tr").remove();
-              });
-            } else {
-              alert("Error al intentar eliminar el usuario");
+      $(".eliminar").on("click", function() {
+        if(confirm("Presione Aceptar para eliminar administrador")) {
+          var parent = $(this).parent();
+          var form = $(this).closest("form");
+
+          $.ajax({
+            url: $(form).attr("action"),
+            method: $(form).attr("method"),
+            data: $(form).serialize(),
+            dataType: 'json',
+            success: function(respuesta)
+            {
+              if(!respuesta.error) {
+                parent.slideUp(300, function () {
+                  parent.closest("tr").remove();
+                });
+              } else {
+                alert("Error al intentar eliminar administrador");
+              }
+            },
+            error: function()
+            {
+              alert("Error al eliminar administrador");
             }
-          },
-          error: function()
-          {
-            alert("Error, en el servidor, al intentar eliminar la propiedad");
-          }
-        });
+          });
+        }
       });
       $(".bloquear").on("click", function() {
-        var parent = $(this).parent();
-        var form = $(this).closest("form");
+        if(confirm("Presione Aceptar para desactivar administrador")) {
+          var parent = $(this).parent();
+          var form = $(this).closest("form");
 
-        $.ajax({
-          url: $(form).attr("action"),
-          method: $(form).attr("method"),
-          data: $(form).serialize(),
-          dataType: 'json',
-          success: function(respuesta)
-          {
-            if(!respuesta.error) {
-              parent.slideUp(300, function () {
-                parent.closest("tr").remove();
-              });
-            } else {
-              alert("Error al intentar eliminar el usuario");
+          $.ajax({
+            url: $(form).attr("action"),
+            method: $(form).attr("method"),
+            data: $(form).serialize(),
+            dataType: 'json',
+            success: function(respuesta)
+            {
+              if(!respuesta.error) {
+                location.reload();
+              } else {
+                alert("Error al intentar desactivar administrador");
+              }
+            },
+            error: function()
+            {
+              alert("Error al desactivar administrador");
             }
-          },
-          error: function()
-          {
-            alert("Error, en el servidor, al intentar eliminar la propiedad");
-          }
-        });
+          });
+        }
       });
+
+      $(".desbloquear").on("click", function() {
+        if(confirm("Presione Aceptar para activar administrador")) {
+          var parent = $(this).parent();
+          var form = $(this).closest("form");
+
+          $.ajax({
+            url: $(form).attr("action"),
+            method: $(form).attr("method"),
+            data: $(form).serialize(),
+            dataType: 'json',
+            success: function(respuesta)
+            {
+              if(!respuesta.error) {
+                location.reload();
+              } else {
+                alert("Error al intentar activar administrador");
+              }
+            },
+            error: function()
+            {
+              alert("Error al activar administrador");
+            }
+          });
+        }
+      });
+
     });
   </script>
 @endsection
