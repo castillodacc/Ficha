@@ -6,6 +6,7 @@ use App\Empleado;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Hash;
 
 class EmpleadoController extends Controller
 {
@@ -33,7 +34,6 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        //
         return view('empleado.create');
     }
 
@@ -45,13 +45,13 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        $user    = new User();
+        $user           = new User();
         $user->username = $request->username;
-        $user->password = bcrypt($request->password);
+        $user->password = Hash::make($request->password);
         if($user->save()) {
             $empleado_datos = $request->except('username', 'password');
             $empleado_datos = array_add($empleado_datos, 'user_id', $user->id);
-            $empleado = Empleado::create($empleado_datos);
+            $empleado       = Empleado::create($empleado_datos);
             if($empleado) {
                 return Response::json([
                     'error' => false,
@@ -86,7 +86,7 @@ class EmpleadoController extends Controller
      */
     public function edit(Empleado $empleado)
     {
-        //
+        return view('empleado.edit')->with('empleado', $empleado);
     }
 
     /**
@@ -98,7 +98,22 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, Empleado $empleado)
     {
-        //
+        $empleado->user->username = $request->username;
+        $empleado->user->password = Hash::make($request->password);
+        if($empleado->user->save()) {
+            if($empleado->update($request->except('username', 'password'))) {
+                return Response::json([
+                    'error' => false,
+                    'mensaje' => 'Empleado actualizado correctamente',
+                    'code' => 200
+                ], 200);
+            }
+        }
+        return Response::json([
+            'error' => false,
+            'mensaje' => 'Error al intentar actualizar empleado',
+            'code' => 200
+        ], 200);
     }
 
     /**
@@ -109,6 +124,66 @@ class EmpleadoController extends Controller
      */
     public function destroy(Empleado $empleado)
     {
-        //
+        if($empleado->delete()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Empleado eliminado correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar eliminar empleado',
+                'code' => 200
+            ], 200);
+        }
+    }
+
+    /**
+     * Enable the specified resource.
+     *
+     * @param  \App\Empleado  $empleado
+     * @return \Illuminate\Http\Response
+     */
+    public function enable(Empleado $empleado)
+    {
+        $empleado->user->activo = TRUE;
+        if($empleado->user->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Empleado activado correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar activar empleado',
+                'code' => 200
+            ], 200);
+        }
+    }
+
+    /**
+     * Disable the specified resource.
+     *
+     * @param  \App\Empleado  $empleado
+     * @return \Illuminate\Http\Response
+     */
+    public function disable(Empleado $empleado)
+    {
+        $empleado->user->activo = FALSE;
+        if($empleado->user->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Empleado desactivado correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar desactivar empleado',
+                'code' => 200
+            ], 200);
+        }
     }
 }

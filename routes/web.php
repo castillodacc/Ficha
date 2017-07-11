@@ -23,8 +23,8 @@ Route::post('/admin/{admin}/enable', 'AdminController@enable');
 Route::post('/admin/{admin}/disable', 'AdminController@disable');
 Route::resource('admin', 'AdminController');
 
-Route::post('/admin/{admin}/enable', 'AdminController@enable');
-Route::post('/admin/{admin}/disable', 'AdminController@disable');
+Route::post('/empleado/{empleado}/enable', 'EmpleadoController@enable');
+Route::post('/empleado/{empleado}/disable', 'EmpleadoController@disable');
 Route::resource('empleado', 'EmpleadoController');
 
 Route::post('/jornada/{jornada}/enable', 'JornadaController@enable');

@@ -49,17 +49,31 @@
                             <span class="glyphicon glyphicon-remove"></span>
                           </a>
                           {!! Form::close() !!}
-                          {!! Form::open(
-                              [
-                                'url' => '/empleado/'.$empleado->id.'/block',
-                                'method' => 'post',
-                                'style' => 'display: inline-block;'
-                              ])
-                          !!}
-                          <a class="bloquear" id="{{$empleado->id}}" href="#" data-toggle="tooltip" data-placement="right" title="Bloquear">
-                            <span class="glyphicon glyphicon-ban-circle"></span>
-                          </a>
-                          {!! Form::close() !!}
+                          @if($empleado->user->activo)
+                            {!! Form::open(
+                                [
+                                  'url' => '/empleado/'.$empleado->id.'/disable',
+                                  'method' => 'post',
+                                  'style' => 'display: inline-block;'
+                                ])
+                            !!}
+                            <a class="bloquear" href="#" data-toggle="tooltip" data-placement="right" title="Bloquear">
+                              <span class="glyphicon glyphicon-ban-circle"></span>
+                            </a>
+                            {!! Form::close() !!}
+                          @else
+                            {!! Form::open(
+                                [
+                                  'url' => '/empleado/'.$empleado->id.'/enable',
+                                  'method' => 'post',
+                                  'style' => 'display: inline-block;'
+                                ])
+                            !!}
+                            <a class="desbloquear" href="#" data-toggle="tooltip" data-placement="right" title="Desbloquear">
+                              <span class="glyphicon glyphicon-ok-circle"></span>
+                            </a>
+                            {!! Form::close() !!}
+                          @endif
                         </td>
                       </tr>
                     @endforeach
@@ -77,57 +91,86 @@
     </div>
   </div>
   <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
       $('[data-toggle="tooltip"]').tooltip();
-      $(".eliminar").on("click", function() {
-        var parent = $(this).parent();
-        var form = $(this).closest("form");
 
-        $.ajax({
-          url: $(form).attr("action"),
-          method: $(form).attr("method"),
-          data: $(form).serialize(),
-          dataType: 'json',
-          success: function(respuesta)
-          {
-            if(!respuesta.error) {
-              parent.slideUp(300, function () {
-                parent.closest("tr").remove();
-              });
-            } else {
-              alert("Error al intentar eliminar el usuario");
+      $(".eliminar").on("click", function() {
+        if(confirm("Presione Aceptar para eliminar empleado")) {
+          var parent = $(this).parent();
+          var form = $(this).closest("form");
+
+          $.ajax({
+            url: $(form).attr("action"),
+            method: $(form).attr("method"),
+            data: $(form).serialize(),
+            dataType: 'json',
+            success: function(respuesta)
+            {
+              if(!respuesta.error) {
+                parent.slideUp(300, function () {
+                  parent.closest("tr").remove();
+                });
+              } else {
+                alert("Error al intentar eliminar empleado");
+              }
+            },
+            error: function()
+            {
+              alert("Error al eliminar empleado");
             }
-          },
-          error: function()
-          {
-            alert("Error, en el servidor, al intentar eliminar la propiedad");
-          }
-        });
+          });
+        }
       });
       $(".bloquear").on("click", function() {
-        var parent = $(this).parent();
-        var form = $(this).closest("form");
+        if(confirm("Presione Aceptar para desactivar empleado")) {
+          var parent = $(this).parent();
+          var form = $(this).closest("form");
 
-        $.ajax({
-          url: $(form).attr("action"),
-          method: $(form).attr("method"),
-          data: $(form).serialize(),
-          dataType: 'json',
-          success: function(respuesta)
-          {
-            if(!respuesta.error) {
-              parent.slideUp(300, function () {
-                parent.closest("tr").remove();
-              });
-            } else {
-              alert("Error al intentar eliminar el usuario");
+          $.ajax({
+            url: $(form).attr("action"),
+            method: $(form).attr("method"),
+            data: $(form).serialize(),
+            dataType: 'json',
+            success: function(respuesta)
+            {
+              if(!respuesta.error) {
+                location.reload();
+              } else {
+                alert("Error al intentar desactivar empleado");
+              }
+            },
+            error: function()
+            {
+              alert("Error al desactivar empleado");
             }
-          },
-          error: function()
-          {
-            alert("Error, en el servidor, al intentar eliminar la propiedad");
-          }
-        });
+          });
+        }
+      });
+
+      $(".desbloquear").on("click", function() {
+        if(confirm("Presione Aceptar para activar empleado")) {
+          var parent = $(this).parent();
+          var form = $(this).closest("form");
+
+          $.ajax({
+            url: $(form).attr("action"),
+            method: $(form).attr("method"),
+            data: $(form).serialize(),
+            dataType: 'json',
+            success: function(respuesta)
+            {
+              if(!respuesta.error) {
+                location.reload();
+              } else {
+                alert("Error al intentar activar empleado");
+              }
+            },
+            error: function()
+            {
+              alert("Error al activar empleado");
+            }
+          });
+        }
       });
     });
   </script>
