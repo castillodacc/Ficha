@@ -18,11 +18,24 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('/admin/{admin}/enable', 'AdminController@enable');
+Route::post('/admin/{admin}/disable', 'AdminController@disable');
 Route::resource('admin', 'AdminController');
+
+Route::post('/admin/{admin}/enable', 'AdminController@enable');
+Route::post('/admin/{admin}/disable', 'AdminController@disable');
 Route::resource('empleado', 'EmpleadoController');
-Route::resource('ficha', 'FichaController');
+
+Route::post('/jornada/{jornada}/enable', 'JornadaController@enable');
+Route::post('/jornada/{jornada}/disable', 'JornadaController@disable');
 Route::resource('jornada', 'JornadaController');
+
+Route::resource('ficha', 'FichaController');
+
 Route::resource('cliente', 'ClienteController');
+
 Route::resource('reporte', 'ReporteController', ['only' => ['create', 'store']]);
+
 Route::get('/password/update', 'PasswordController@update');
 Route::post('/password/save', 'PasswordController@save');
