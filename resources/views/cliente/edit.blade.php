@@ -14,7 +14,7 @@
               {!! Form::text('nombre', $cliente->nombre, ['class' => 'form-control', 'required' => 'required']) !!}
             </div>
             <div class="form-group">
-              {!! Form::submit('Editar', ["class" => "btn btn-success"]) !!}
+              {!! Form::submit('Actualizar Cliente', ["class" => "btn btn-success"]) !!}
             </div>
           </div>
           {!! Form::close() !!}
