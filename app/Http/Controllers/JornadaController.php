@@ -103,7 +103,6 @@ class JornadaController extends Controller
                 'code' => 200
             ], 200);
         }
-
     }
 
     /**

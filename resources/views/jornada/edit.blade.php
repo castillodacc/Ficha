@@ -6,10 +6,10 @@
       <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
           <div class="panel-heading">
-            CREAR JORNADA
+            EDITAR JORNADA
           </div>
           <div class="panel-body">
-            {!! Form::open(['url' => '/jornada/'.$jornada->id, 'method' => 'put', 'class' => 'form-inline', 'id' => 'update-jornada-form']) !!}
+            {!! Form::open(['url' => '/jornada/'.$jornada->id, 'method' => 'put', 'id' => 'update-jornada-form']) !!}
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('nombre', 'Nombre:', ['style' => 'display:block;']) !!}
@@ -138,7 +138,7 @@
             {!! Form::close() !!}
             <div class="form-group">
               <br>
-              <input type="submit" form="update-jornada-form" class="btn btn-success btn-block" value="Editar Jornada"/>
+              <input type="submit" form="update-jornada-form" class="btn btn-success btn-block" value="Actualizar Jornada"/>
             </div>
           </div>
           <div class="panel-footer"></div>
