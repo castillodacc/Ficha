@@ -70,18 +70,18 @@
                   <ul class="list-inline">
                     <div class="row">
                       <div class="col-md-4">
-                        <li><a href="/empleado/jornada" class="btn">Jornada</a></li>
+                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/jornada" class="btn">Jornada</a></li>
                       </div>
                       <div class="col-md-4">
-                        <li><a href="/empleado/descanso" class="btn">Hora de descanso</a></li>
+                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/descanso" class="btn">Hora de descanso</a></li>
                       </div>
                       <div class="col-md-4">
-                        <li><a href="/empleado/extras" class="btn">Horas extras</a></li>
+                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/extras" class="btn">Horas extras</a></li>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col-md-4">
-                        <li><a href="/empleado/historial" class="btn">Historial de jornadas</a></li>
+                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/historial" class="btn">Historial de jornadas</a></li>
                       </div>
                     </div>
                   </ul>
