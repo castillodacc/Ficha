@@ -75,7 +75,7 @@
                             </a>
                             {!! Form::close() !!}
                           @endif
-                          <a href="#" data-toggle="modal" title="Agregar/Quitar Empleados">
+                          <a href="/jornada/{{$jornada->id}}/empleados" data-toggle="tooltip" data-placement="left" title="Agregar/Quitar Empleados">
                             <span class="glyphicon glyphicon-user"></span>
                           </a>
                         </td>
