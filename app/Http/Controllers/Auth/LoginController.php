@@ -52,7 +52,7 @@ class LoginController extends Controller
      *
      * @return string
      */
-    public function redirectPath()
+    public function redirectTo()
     {
         if (\Auth::user()->is_admin) {
             return '/empleado';
