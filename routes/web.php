@@ -33,6 +33,7 @@ Route::post('/empleado/{empleado}/disable', 'EmpleadoController@disable');
 Route::get('/empleado/{empleado}/jornada', 'EmpleadoController@jornada');
 Route::get('/empleado/{empleado}/extras', 'EmpleadoController@extras');
 Route::get('/empleado/{empleado}/descanso', 'EmpleadoController@descanso');
+Route::get('/empleado/{empleado}/historial', 'EmpleadoController@historial');
 Route::resource('empleado', 'EmpleadoController');
 
 Route::post('/jornada/{jornada}/enable', 'JornadaController@enable');
