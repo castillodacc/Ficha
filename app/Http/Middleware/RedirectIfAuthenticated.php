@@ -18,6 +18,9 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
+            // if(!$request->user()->activo) {
+            //     return redirect('home')->withErrors('inactivo','Usuario bloqueado.');
+            // }
             return redirect('/home');
         }
 
