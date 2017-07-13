@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Empleado;
 use App\User;
+use App\Ficha;
+use App\Cliente;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Hash;
@@ -186,4 +189,52 @@ class EmpleadoController extends Controller
             ], 200);
         }
     }
+
+   public function jornada(Empleado $empleado)
+   {
+       $clientes = Cliente::all()->pluck('nombre', 'id');
+
+       return view('empleado.jornada')
+           ->with('clientes', $clientes)
+           ->with('empleado', $empleado);
+   }
+
+    public function historial(Empleado $empleado)
+    {
+        $fichas = Ficha::where('empleado_id','=',$empleado->id)->get();
+        return view('empleado.historial')->with('fichas', $fichas);
+    }
+
+    public function extras(Empleado $empleado)
+    {
+        $clientes = Cliente::all();
+        return view('empleado.extras')->with('clientes', $clientes);
+    }
+
+    public function descanso(Empleado $empleado)
+    {
+        $clientes = Ficha::all();
+        return view('empleado.descanso')->with('clientes', $clientes);
+    }
+
+    public function iniciar(Request $request, Empleado $empleado)
+    {
+        $ficha = new Ficha();
+        $ficha->empleado_id = $empleado->id;
+        $ficha->cliente_id = $request->cliente;
+        if($ficha->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Jornada iniciada',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar iniciar jornada',
+                'code' => 200
+            ], 200);
+        }
+    }
+
 }
