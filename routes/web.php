@@ -30,10 +30,17 @@ Route::resource('admin', 'AdminController');
 
 Route::post('/empleado/{empleado}/enable', 'EmpleadoController@enable');
 Route::post('/empleado/{empleado}/disable', 'EmpleadoController@disable');
+Route::get('/empleado/{empleado}/jornada', 'EmpleadoController@jornada');
+Route::get('/empleado/{empleado}/extras', 'EmpleadoController@extras');
+Route::get('/empleado/{empleado}/descanso', 'EmpleadoController@descanso');
 Route::resource('empleado', 'EmpleadoController');
 
 Route::post('/jornada/{jornada}/enable', 'JornadaController@enable');
 Route::post('/jornada/{jornada}/disable', 'JornadaController@disable');
+Route::get('/jornada/{jornada}/empleados', 'JornadaController@empleados');
+Route::post('/jornada/{jornada}/empleados', 'JornadaController@agregarEmpleados');
+Route::delete('/jornada/{jornada}/empleados', 'JornadaController@removerEmpleados');
+
 Route::resource('jornada', 'JornadaController');
 
 Route::resource('ficha', 'FichaController');
