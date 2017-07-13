@@ -22,8 +22,22 @@ class Empleado extends Model
 
     protected $guarded = ['id'];
 
+    /**
+     * Get the jornada for empleado.
+     */
+    public function jornada()
+    {
+        return $this->belongsTo('App\Empleado');
+    }
+
+
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function fichas()
+    {
+        return $this->hasMany('App\Ficha');
     }
 }
