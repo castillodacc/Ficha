@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jornada;
+use App\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -175,5 +176,74 @@ class JornadaController extends Controller
             ], 200);
         }
     }
+
+    /**
+     * Display a listing of the empleados to add
+     *
+     * @param  \App\Jornada  $jornada
+     * @return \Illuminate\Http\Response
+     */
+    public function empleados(Jornada $jornada)
+    {
+        $empleados_por_asignar = Empleado::where('jornada_id','=',null)->pluck('nombre', 'id');
+        $empleados_asignados = Empleado::where('jornada_id','=', $jornada->id)->get();
+
+        $jornadas = Jornada::all();
+        return view('jornada.empleados')
+            ->with('empleados_asignados', $empleados_asignados)
+            ->with('empleados_por_asignar', $empleados_por_asignar)
+            ->with('jornada', $jornada);
+    }
+
+        /**
+     * remove the specified resource.
+     *
+     * @param  \App\Jornada  $jornada
+     * @return \Illuminate\Http\Response
+     */
+    public function removerEmpleados(Request $request, Jornada $jornada)
+    {
+        $empleado = Empleado::find($request->empleado);
+        $empleado->jornada_id = null;
+        if($empleado->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Empleado removido correctamente:'. $empleado->nombre,
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar remover el empleado'. $empleado->nombre,
+                'code' => 200
+            ], 200);
+        }
+    }
+
+            /**
+     * remove the specified resource.
+     *
+     * @param  \App\Jornada  $jornada
+     * @return \Illuminate\Http\Response
+     */
+    public function agregarEmpleados(Request $request, Jornada $jornada)
+    {
+        $empleado = Empleado::find($request->empleado);
+        $empleado->jornada_id = $jornada->id;
+        if($empleado->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Empleado agregado correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al intentar agregar empleado',
+                'code' => 200
+            ], 200);
+        }
+    }
+
 
 }
