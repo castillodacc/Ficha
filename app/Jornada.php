@@ -35,6 +35,13 @@ class Jornada extends Model
         'hora_extras' => 'boolean',
     ];
 
+    /**
+     * Get the empleados for the jornada.
+     */
+    public function empleados()
+    {
+        return $this->hasMany('App\Empleado');
+    }
 
     protected $guarded = ['id'];
 
