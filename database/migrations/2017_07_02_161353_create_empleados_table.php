@@ -16,6 +16,7 @@ class CreateEmpleadosTable extends Migration
         Schema::create('empleados', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('jornada_id')->nullable()->unsigned();
             $table->string('nombre');
             $table->string('apellido');
             $table->string('direccion');
@@ -28,6 +29,8 @@ class CreateEmpleadosTable extends Migration
             $table->foreign('user_id')
                 ->references('id')->on('users')
                 ->onDelete('cascade');
+            $table->foreign('jornada_id')
+                ->references('id')->on('jornadas');
         });
     }
 
