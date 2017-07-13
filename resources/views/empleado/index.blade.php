@@ -121,6 +121,7 @@
           });
         }
       });
+
       $(".bloquear").on("click", function() {
         if(confirm("Presione Aceptar para desactivar empleado")) {
           var parent = $(this).parent();
