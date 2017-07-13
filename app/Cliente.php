@@ -21,4 +21,10 @@ class Cliente extends Model
     ];
 
     protected $fillable = ['nombre'];
+
+    public function fichas()
+    {
+        return $this->hasMany('App\Ficha');
+    }
+
 }
