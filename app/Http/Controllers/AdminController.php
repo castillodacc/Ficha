@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 
 class AdminController extends Controller
 {
@@ -23,6 +24,7 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Auth::user()->admin);
         $administradores = Admin::all();
         return view('admin.index')->with('administradores', $administradores);
     }
@@ -34,6 +36,7 @@ class AdminController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Admin::class);
         return view('admin.create');
     }
 
@@ -88,6 +91,7 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
+        $this->authorize('edit', Auth::user()->admin);
         return view('admin.edit')->with('admin', $admin);
     }
 

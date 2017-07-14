@@ -46,6 +46,18 @@ class AdminPolicy
     }
 
     /**
+     * Determine whether the user can edit the admin.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Admin  $admin
+     * @return mixed
+     */
+    public function edit(User $user, Admin $admin)
+    {
+        return($user->activo AND $user->is_admin AND $admin->gestiona_admin);
+    }
+
+    /**
      * Determine whether the user can delete the admin.
      *
      * @param  \App\User  $user
