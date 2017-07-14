@@ -34,8 +34,8 @@ Route::get('/empleado/{empleado}/jornada', 'EmpleadoController@jornada');
 Route::get('/empleado/{empleado}/extras', 'EmpleadoController@extras');
 Route::get('/empleado/{empleado}/descanso', 'EmpleadoController@descanso');
 Route::get('/empleado/{empleado}/historial', 'EmpleadoController@historial');
-Route::post('/empleado/{empleado}/iniciar', 'EmpleadoController@disable');
-Route::post('/empleado/{empleado}/finalizar', 'EmpleadoController@disable');
+Route::post('/empleado/{empleado}/iniciar', 'EmpleadoController@iniciar');
+Route::post('/empleado/{empleado}/finalizar', 'EmpleadoController@finalizar');
 Route::resource('empleado', 'EmpleadoController');
 
 Route::post('/jornada/{jornada}/enable', 'JornadaController@enable');
