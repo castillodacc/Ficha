@@ -69,15 +69,33 @@
                 @else
                   <ul class="list-inline">
                     <div class="row">
+                      @can('iniciar_jornada', Auth::user()->empleado)
                       <div class="col-md-4">
-                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/jornada" class="btn">Jornada</a></li>
+                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/jornada/iniciar" class="btn">Iniciar Jornada</a></li>
                       </div>
+                      @endcan
+                      @can('finalizar_jornada', Auth::user()->empleado)
                       <div class="col-md-4">
-                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/descanso" class="btn">Hora de descanso</a></li>
+                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/jornada/finalizar" class="btn">Finalizar Jornada</a></li>
                       </div>
+                      @endcan
+                    </div>
+                    <div class="row">
+                      @can('iniciar_descanso', Auth::user()->empleado)
                       <div class="col-md-4">
-                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/extras" class="btn">Horas extras</a></li>
+                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/jornada/descanso/finalizar" class="btn">Iniciar descanso</a></li>
                       </div>
+                      @endcan
+                      @can('finalizar_descanso', Auth::user()->empleado)
+                      <div class="col-md-4">
+                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/jornada/descanso/iniciar" class="btn">Finalizar descanso</a></li>
+                      </div>
+                      @endcan
+                      @can('horas_extras', Auth::user()->empleado)
+                      <div class="col-md-4">
+                        <li><a href="/empleado/{{Auth::user()->empleado->id}}/jornada/extras/iniciar" class="btn">Horas extras</a></li>
+                      </div>
+                      @endcan
                     </div>
                     <div class="row">
                       <div class="col-md-4">
