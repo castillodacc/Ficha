@@ -6,6 +6,7 @@ use App\Empleado;
 use App\User;
 use App\Ficha;
 use App\Cliente;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -67,7 +68,7 @@ class EmpleadoController extends Controller
             'error' => true,
             'mensaje' => 'Error. Empleado NO fue creado',
             'code' => 200
-            ], 200);
+        ], 200);
     }
 
     /**
@@ -190,34 +191,31 @@ class EmpleadoController extends Controller
         }
     }
 
-   public function jornada(Empleado $empleado)
+    public function historial(Empleado $empleado)
+    {
+        $fichas = Ficha::where('empleado_id','=',$empleado->id)
+                ->where('estado','<>', 'abierta')
+                ->get();
+        return view('empleado.historial')->with('fichas', $fichas);
+    }
+
+   public function showFormIniciarJornada(Empleado $empleado)
    {
        $clientes = Cliente::all()->pluck('nombre', 'id');
 
-       return view('empleado.jornada')
+       return view('empleado.jornada.iniciar_jornada')
            ->with('clientes', $clientes)
            ->with('empleado', $empleado);
    }
 
-    public function historial(Empleado $empleado)
-    {
-        $fichas = Ficha::where('empleado_id','=',$empleado->id)->get();
-        return view('empleado.historial')->with('fichas', $fichas);
-    }
+   public function showFormFinalizarJornada(Empleado $empleado)
+   {
+       return view('empleado.jornada.finalizar_jornada')
+           ->with('clientes', $clientes)
+           ->with('empleado', $empleado);
+   }
 
-    public function extras(Empleado $empleado)
-    {
-        $clientes = Cliente::all();
-        return view('empleado.extras')->with('clientes', $clientes);
-    }
-
-    public function descanso(Empleado $empleado)
-    {
-        $clientes = Ficha::all();
-        return view('empleado.descanso')->with('clientes', $clientes);
-    }
-
-    public function iniciar(Request $request, Empleado $empleado)
+    public function iniciarJornada(Request $request, Empleado $empleado)
     {
         $ficha = new Ficha();
         $ficha->empleado_id = $empleado->id;
@@ -232,6 +230,109 @@ class EmpleadoController extends Controller
             return Response::json([
                 'error' => false,
                 'mensaje' => 'Error al intentar iniciar jornada',
+                'code' => 200
+            ], 200);
+        }
+    }
+
+    public function finalizarJornada(Request $request, Empleado $empleado)
+    {
+        $ficha = Ficha::where('empleado_id',$empleado->id)
+               ->where('estado','abierta')->get()->first();
+        if($request->observaciones) {
+            $ficha->observaciones = $request->observaciones;
+        }
+        $ficha->estado = "cerrada";
+        $ficha->hora_fin = Carbon::now()->format('H:i');
+        if($ficha->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Jornada cerrada correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al cerrar jornada',
+                'code' => 200
+            ], 200);
+        }
+    }
+
+    public function showFormIniciarDescanso(Empleado $empleado)
+    {
+        return view('empleado.jornada.iniciar_descanso')
+            ->with('empleado', $empleado);
+    }
+
+    public function showFormFinalizarDescanso(Empleado $empleado)
+    {
+
+        return view('empleado.jornada.finalizar_descanso')
+            ->with('empleado', $empleado);
+    }
+
+    public function iniciarDescanso(Request $request, Empleado $empleado)
+    {
+        $ficha = Ficha::where('empleado_id',$empleado->id)
+                         ->where('estado','abierta')->get()->first();
+        $ficha->hora_inicio_comida = Carbon::now()->format('H:i');
+        if($ficha->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Tiempo de descanso iniciado correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Tiempo de descanso finalizado correctamente',
+                'code' => 200
+            ], 200);
+        }
+    }
+
+    public function finalizarDescanso(Request $request, Empleado $empleado)
+    {
+        $ficha = Ficha::where('empleado_id',$empleado->id)
+               ->where('estado','abierta')->get()->first();
+        $ficha->hora_fin_comida = Carbon::now()->format('H:i');
+        if($ficha->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Tiempo de descanso finalizado correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al finalizar tiempo de descanso',
+                'code' => 200
+            ], 200);
+        }
+    }
+
+    public function showFormIniciarHorasExtras(Empleado $empleado)
+    {
+        return view('empleado.jornada.iniciar_extras')
+            ->with('empleado', $empleado);
+    }
+
+    public function iniciarHorasExtras(Request $request, Empleado $empleado)
+    {
+        $ficha = Ficha::where('empleado_id',$empleado->id)
+                         ->where('estado','abierta')->get()->first();
+        $ficha->hora_extras = $request->hora_extras;
+        if($ficha->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Hora extras guardadas',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Error al guardar horas extras',
                 'code' => 200
             ], 200);
         }
