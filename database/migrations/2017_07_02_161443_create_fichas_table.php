@@ -23,7 +23,9 @@ class CreateFichasTable extends Migration
             $table->date('fecha')->default(Carbon::now());
             $table->timestamp('hora_inicio')->useCurrent();
             $table->timestamp('hora_fin')->nullable();
-            $table->smallInteger('horas_extras')->nullable()->default(0);
+            $table->timestamp('hora_inicio_comida')->nullable();
+            $table->timestamp('hora_fin_comida')->nullable();
+            $table->smallInteger('horas_extras')->nullable();
             $table->text('observaciones')->nullable();
             $table->timestamps();
             $table->softDeletes();
