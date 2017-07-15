@@ -30,12 +30,21 @@ Route::resource('admin', 'AdminController');
 
 Route::post('/empleado/{empleado}/enable', 'EmpleadoController@enable');
 Route::post('/empleado/{empleado}/disable', 'EmpleadoController@disable');
-Route::get('/empleado/{empleado}/jornada', 'EmpleadoController@jornada');
-Route::get('/empleado/{empleado}/extras', 'EmpleadoController@extras');
-Route::get('/empleado/{empleado}/descanso', 'EmpleadoController@descanso');
 Route::get('/empleado/{empleado}/historial', 'EmpleadoController@historial');
-Route::post('/empleado/{empleado}/iniciar', 'EmpleadoController@iniciar');
-Route::post('/empleado/{empleado}/finalizar', 'EmpleadoController@finalizar');
+
+Route::get('/empleado/{empleado}/jornada/extras/iniciar', 'EmpleadoController@showFormIniciarHorasExtras');
+Route::post('/empleado/{empleado}/jornada/extras/iniciar', 'EmpleadoController@iniciarHorasExtras');
+
+Route::get('/empleado/{empleado}/jornada/descanso/iniciar', 'EmpleadoController@showFormIniciarDescanso');
+Route::post('/empleado/{empleado}/jornada/descanso/iniciar', 'EmpleadoController@iniciarDescanso');
+Route::get('/empleado/{empleado}/jornada/descanso/finalizar', 'EmpleadoController@showFormFinalizarDescanso');
+Route::post('/empleado/{empleado}/jornada/descanso/finalizar', 'EmpleadoController@finalizarDescanso');
+
+Route::get('/empleado/{empleado}/jornada/iniciar', 'EmpleadoController@showFormIniciarJornada');
+Route::post('/empleado/{empleado}/jornada/iniciar', 'EmpleadoController@iniciarJornada');
+Route::get('/empleado/{empleado}/jornada/finalizar', 'EmpleadoController@showFormFinalizarJornada');
+Route::post('/empleado/{empleado}/jornada/finalizar', 'EmpleadoController@finalizarJornada');
+
 Route::resource('empleado', 'EmpleadoController');
 
 Route::post('/jornada/{jornada}/enable', 'JornadaController@enable');
