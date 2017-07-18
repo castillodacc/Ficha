@@ -20,11 +20,15 @@ class Cliente extends Model
         'deleted_at'
     ];
 
-    protected $fillable = ['nombre'];
+    protected $fillable = ['nombre', 'activo'];
 
-    public function fichas()
+    protected $casts = [
+        'activo' => 'boolean',
+    ];
+
+    public function jornada()
     {
-        return $this->hasMany('App\Ficha');
+        return $this->hasOne('App\Jornada');
     }
 
 }

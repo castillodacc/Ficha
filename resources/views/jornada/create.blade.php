@@ -9,130 +9,146 @@
             CREAR JORNADA
           </div>
           <div class="panel-body">
-            {!! Form::open(['url' => '/jornada', 'id' => 'jornada-form']) !!}
-            <div class="row">
-              <div class="col-md-6">
-                {!! Form::label('nombre', 'Nombre:', ['style' => 'display:block;']) !!}
-                {!! Form::text('nombre',
-                               null,
-                               [
-                                 'class' => 'form-control',
-                                 'required' => 'required'
-                               ])
-                !!}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                {!! Form::label('horas_laborales', 'Horas Laborales:', ['style' => 'display:block;']) !!}
-                {!! Form::number('horas_laborales',
-                               null,
-                               [
-                                 'class' => 'form-control',
-                                 'required' => 'required',
-                                 'min' => '1',
-                                 'max' => '8'
-                               ])
-                !!}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                {!! Form::label('tipo', 'Tipo:',['style' => 'display:block;']) !!}
-                {!! Form::select('tipo',
-                                 ['diurna' => 'Diurna','nocturna' => 'Nocturna'],
+            @if($clientes->isNotEmpty())
+              {!! Form::open(['url' => '/jornada', 'id' => 'jornada-form']) !!}
+              <div class="row">
+                <div class="col-md-6">
+                  {!! Form::label('nombre', 'Nombre:', ['style' => 'display:block;']) !!}
+                  {!! Form::text('nombre',
                                  null,
                                  [
-                                   'required' => 'required',
-                                   'class'      => 'form-control',
+                                   'class' => 'form-control',
+                                   'required' => 'required'
                                  ])
-                !!}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="input-group">
-                  <div id="horas-jornada">
-                    <div class="row">
-                      <div class="col-md-12">
-                        {!! Form::label('hora_inicio_jornada', 'Inicio Jornada:') !!}
-                        {!! Form::text('hora_inicio_jornada',
-                                       null,
-                                       [
-                                         'class' => 'form-control time start',
-                                       ])
-                        !!}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        {!! Form::label('hora_fin_jornada', 'Fin Jornada:') !!}
-                        {!! Form::text('hora_fin_jornada',
-                                       null,
-                                       [
-                                         'class' => 'form-control time end',
-                                       ]
-                            )
-                        !!}
-                      </div>
-                    </div>
-                  </div>
+                  !!}
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="input-group">
-                  {!! Form::label('horas_extras', 'Horas extras:') !!}
-                  {!! Form::checkbox('horas_extras') !!}
+              <div class="row">
+                <div class="col-md-6">
+                  {!! Form::label('horas_laborales', 'Horas Laborales:', ['style' => 'display:block;']) !!}
+                  {!! Form::number('horas_laborales',
+                                   null,
+                                   [
+                                     'class' => 'form-control',
+                                     'required' => 'required',
+                                     'min' => '1',
+                                     'max' => '8'
+                                   ])
+                  !!}
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <div class="input-group">
-                  {!! Form::label('hora_comida', 'Hora comida:') !!}
-                  {!! Form::checkbox('hora_comida') !!}
+              <div class="row">
+                <div class="col-md-6">
+                  {!! Form::label('tipo', 'Tipo:',['style' => 'display:block;']) !!}
+                  {!! Form::select('tipo',
+                                   ['diurna' => 'Diurna','nocturna' => 'Nocturna'],
+                                   null,
+                                   [
+                                     'required' => 'required',
+                                     'class'      => 'form-control',
+                                   ])
+                  !!}
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="input-group">
-                  <div id="horas-comida" class="hidden">
-                    <div class="row">
-                      <div class="col-md-12">
-                        {!! Form::label('hora_inicio_comida', 'Inicio Comida:') !!}
-                        {!! Form::text('hora_inicio_comida',
-                                       null,
-                                       [
-                                         'class' => 'form-control time start',
-                                       ])
-                        !!}
+              <div class="row">
+                <div class="col-md-6">
+                  {!! Form::label('cliente', 'Cliente:', ['style' => 'display:block;']) !!}
+                  <select id="cliente_id" name="cliente_id" class="form-control" required>
+                    @foreach($clientes as $id => $nombre)
+                      <option value="{{$id}}">{{$nombre}}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <div id="horas-jornada">
+                      <div class="row">
+                        <div class="col-md-12">
+                          {!! Form::label('hora_inicio_jornada', 'Inicio Jornada:', ['style' => 'display:block;']) !!}
+                          {!! Form::text('hora_inicio_jornada',
+                                         null,
+                                         [
+                                           'class' => 'form-control time start',
+                                         ])
+                          !!}
+                        </div>
                       </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        {!! Form::label('hora_fin_comida', 'Fin Comida:') !!}
-                        {!! Form::text('hora_fin_comida',
-                                       null,
-                                       [
-                                         'class' => 'form-control time end',
-                                       ]
-                            )
-                        !!}
+                      <div class="row">
+                        <div class="col-md-12">
+                          {!! Form::label('hora_fin_jornada', 'Fin Jornada:', ['style' => 'display:block;']) !!}
+                          {!! Form::text('hora_fin_jornada',
+                                         null,
+                                         [
+                                           'class' => 'form-control time end',
+                                         ]
+                              )
+                          !!}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            {!! Form::close() !!}
-            <div class="form-group">
-              <br>
-              <input type="submit" form="jornada-form" class="btn btn-success btn-block" value="Crear Jornada"/>
-            </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="input-group">
+                    {!! Form::label('horas_extras', 'Horas extras:') !!}
+                    {!! Form::checkbox('horas_extras') !!}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="input-group">
+                    {!! Form::label('hora_comida', 'Hora comida:') !!}
+                    {!! Form::checkbox('hora_comida') !!}
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <div id="horas-comida" class="hidden">
+                      <div class="row">
+                        <div class="col-md-12">
+                          {!! Form::label('hora_inicio_comida', 'Inicio Comida:') !!}
+                          {!! Form::text('hora_inicio_comida',
+                                         null,
+                                         [
+                                           'class' => 'form-control time start',
+                                         ])
+                          !!}
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          {!! Form::label('hora_fin_comida', 'Fin Comida:') !!}
+                          {!! Form::text('hora_fin_comida',
+                                         null,
+                                         [
+                                           'class' => 'form-control time end',
+                                         ]
+                              )
+                          !!}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {!! Form::close() !!}
+              <div class="form-group">
+                <br>
+                <input type="submit" form="jornada-form" class="btn btn-success btn-block" value="Crear Jornada"/>
+              </div>
           </div>
+            @else
+          <div class="alert alert-danger" role="alert">
+            <p>No hay clientes disponibles. Por favor, <a href="/cliente/create">agregue</a> al menos uno.</p>
+          </div>
+            @endif
           <div class="panel-footer"></div>
         </div>
       </div>
@@ -199,6 +215,7 @@
               html += "</div>";
               $(".panel-footer").html(html);
               $("#jornada-form")[0].reset();
+              location.reload();
             } else {
               var html = "<div class='alert alert-danger'>";
               html +="<p>" + respuesta.mensaje + "</p>";

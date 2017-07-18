@@ -204,14 +204,12 @@ class EmpleadoController extends Controller
        $clientes = Cliente::all()->pluck('nombre', 'id');
 
        return view('empleado.jornada.iniciar_jornada')
-           ->with('clientes', $clientes)
            ->with('empleado', $empleado);
    }
 
    public function showFormFinalizarJornada(Empleado $empleado)
    {
        return view('empleado.jornada.finalizar_jornada')
-           ->with('clientes', $clientes)
            ->with('empleado', $empleado);
    }
 
@@ -219,7 +217,6 @@ class EmpleadoController extends Controller
     {
         $ficha = new Ficha();
         $ficha->empleado_id = $empleado->id;
-        $ficha->cliente_id = $request->cliente;
         if($ficha->save()) {
             return Response::json([
                 'error' => false,

@@ -18,7 +18,6 @@ class CreateFichasTable extends Migration
         Schema::create('fichas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('empleado_id')->unsigned();
-            $table->integer('cliente_id')->unsigned();
             $table->enum('estado',['abierta', 'cerrada', 'desconocido'])->default('abierta');
             $table->date('fecha')->default(Carbon::now());
             $table->timestamp('hora_inicio')->useCurrent();
@@ -31,9 +30,6 @@ class CreateFichasTable extends Migration
             $table->softDeletes();
             $table->foreign('empleado_id')
                 ->references('id')->on('empleados')
-                ->onDelete('cascade');
-            $table->foreign('cliente_id')
-                ->references('id')->on('clientes')
                 ->onDelete('cascade');
         });
     }

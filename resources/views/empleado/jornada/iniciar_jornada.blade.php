@@ -10,14 +10,6 @@
             @if($clientes->isNotEmpty())
               {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/iniciar', 'class' => 'form-inline', 'id' => 'jornada-form']) !!}
               <div class="form-group">
-                {!! Form::label('cliente', 'Cliente:') !!}
-                <select id="cliente" name="cliente"'>
-                  @foreach($clientes as $id => $nombre)
-                    <option value="{{$id}}">{{$nombre}}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="form-group">
                 {!! Form::submit('Iniciar Jornada', ["class" => "btn btn-success"]) !!}
               </div>
               {!! Form::close() !!}
