@@ -57,10 +57,10 @@ class Empleado extends Model
     public function horaRangoIniciarJornada()
     {
         $hora_actual = Carbon::now()->format('H:i');
-        $iniciar_jornada = $this->jornada->hora_inicio_jornada;
-        $fin_jornada = $this->jornada->hora_fin_jornada->subMinute();
+        $inicio_jornada = $this->jornada->hora_inicio_jornada;
+        $fin_jornada = $this->jornada->hora_fin_jornada;
 
-        return($hora_actual->between($inicio_jornada,$fin_jornada));
+        return($hora_actual->between($inicio_jornada->subMinutes(30),$fin_jornada->subSecond()));
     }
 
     public function horaRangoFinalizarJornada()
@@ -81,9 +81,8 @@ class Empleado extends Model
     {
         $hora_actual = Carbon::now()->format('H:i');
         $fin_jornada = $this->jornada->hora_fin_jornada;
-        $fin_jornada_prorroga = $this->jornada->hora_fin_jornada->addMinutes(30);
 
-        return($hora_actual->between($fin_jornada,$fin_jornada_prorroga));
+        return($hora_actual->between($fin_jornada->subMinutes(30),$fin_jornada->addMinutes(30)));
     }
 
     public function jornadaAdmiteTiempoDescanso()
