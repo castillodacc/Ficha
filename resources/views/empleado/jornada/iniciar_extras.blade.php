@@ -7,8 +7,8 @@
         <div class="panel panel-default">
           <div class="panel-heading">HORAS EXTRAS A TRABAJAR</div>
           <div class="panel-body">
+            @can('horas_extras', Auth::user()->empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/extras/iniciar', 'class' => 'form-inline', 'id' => 'iniciar-horas-extras-form']) !!}
-            <!-- Content form input -->
             <div class="form-group">
               {!! Form::label('horas_extras', 'Horas:') !!}
               {!! Form::number('horas_extras',
@@ -26,6 +26,11 @@
             </div>
           </div>
           {!! Form::close() !!}
+@else
+          <div class="alert alert-danger" role="alert">
+            <p>No tiene permisos para iniciar horas extras.</p>
+          </div>
+          @endcan
           <div class="panel-footer"></div>
         </div>
       </div>

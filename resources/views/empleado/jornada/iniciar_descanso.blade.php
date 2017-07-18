@@ -7,11 +7,17 @@
         <div class="panel panel-default">
           <div class="panel-heading">JORNADA DEL DÍA - DESCANSO</div>
           <div class="panel-body">
-              {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/descanso/iniciar', 'class' => 'form-inline', 'id' => 'descanso-form']) !!}
-              <div class="form-group">
-                {!! Form::submit('Iniciar Descanso', ["class" => "btn btn-block btn-success"]) !!}
-              </div>
-              {!! Form::close() !!}
+            @can('iniciar_descanso', Auth::user()->empleado)
+            {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/descanso/iniciar', 'class' => 'form-inline', 'id' => 'descanso-form']) !!}
+            <div class="form-group">
+              {!! Form::submit('Iniciar Descanso', ["class" => "btn btn-block btn-success"]) !!}
+            </div>
+            {!! Form::close() !!}
+@else
+            <div class="alert alert-danger" role="alert">
+              <p>No tiene permisos para iniciar el tiempo de descanso.</p>
+            </div>
+            @endcan
           </div>
           <div class="panel-footer"></div>
         </div>

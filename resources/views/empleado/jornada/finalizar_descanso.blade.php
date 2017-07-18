@@ -7,11 +7,17 @@
         <div class="panel panel-default">
           <div class="panel-heading">JORNADA DEL DÍA - DESCANSO</div>
           <div class="panel-body">
+            @can('finalizar_descanso', Auth::user()->empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/descanso/finalizar', 'class' => 'form-inline', 'id' => 'descanso-form']) !!}
             <div class="form-group">
               {!! Form::submit('Finalizar Descanso', ["class" => "btn btn-block btn-success"]) !!}
             </div>
             {!! Form::close() !!}
+            @else
+            <div class="alert alert-danger" role="alert">
+              <p>No tiene permisos para finalizar el tiempo de descanso.</p>
+            </div>
+            @endcan
           </div>
           <div class="panel-footer"></div>
         </div>

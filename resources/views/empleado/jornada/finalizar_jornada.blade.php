@@ -7,8 +7,8 @@
         <div class="panel panel-default">
           <div class="panel-heading">JORNADA DEL DÍA</div>
           <div class="panel-body">
-            @if($clientes->isNotEmpty())
-              {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/finalizar', 'class' => 'form', 'id' => 'jornada-form']) !!}
+            @can('finalizar_jornada', Auth::user()->empleado)
+            {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/finalizar', 'class' => 'form', 'id' => 'jornada-form']) !!}
               {!! Form::label('observaciones', 'Observaciones:') !!}
 
               {!! Form::textarea('observaciones', null, ['class' => 'form-control','rows' => '3']) !!}
@@ -20,9 +20,9 @@
               {!! Form::close() !!}
             @else
               <div class="alert alert-danger" role="alert">
-                <p>No hay clientes disponibles.</p>
+                <p>No tiene permisos para finalizar una jornada.</p>
               </div>
-            @endif
+            @endcan
           </div>
           <div class="panel-footer"></div>
         </div>

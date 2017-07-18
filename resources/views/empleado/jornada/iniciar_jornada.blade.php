@@ -7,17 +7,17 @@
         <div class="panel panel-default">
           <div class="panel-heading">JORNADA DEL DÍA</div>
           <div class="panel-body">
-            @if($clientes->isNotEmpty())
-              {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/iniciar', 'class' => 'form-inline', 'id' => 'jornada-form']) !!}
+            @can('iniciar_jornada', Auth::user()->empleado)
+            {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/iniciar', 'class' => 'form-inline', 'id' => 'jornada-form']) !!}
               <div class="form-group">
                 {!! Form::submit('Iniciar Jornada', ["class" => "btn btn-success"]) !!}
               </div>
               {!! Form::close() !!}
             @else
               <div class="alert alert-danger" role="alert">
-                <p>No hay clientes disponibles.</p>
+                <p>No tiene permisos para iniciar una jornada.</p>
               </div>
-            @endif
+            @endcan
           </div>
           <div class="panel-footer"></div>
         </div>
