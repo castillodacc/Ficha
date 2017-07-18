@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Console\Commands\FichaCron::class,
     ];
 
     /**
@@ -24,11 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function() {
-            echo date('r');
-        })->hourly();
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // $schedule->call(function() {
+        //     echo date('r');
+        // })->hourly();
+        $schedule->command('ficha:cerrar')->everyMinute();
     }
 
     /**

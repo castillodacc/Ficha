@@ -44,6 +44,18 @@ class FichaCron extends Command
      */
     public function handle()
     {
-        //
+        $fichas_abiertas = Ficha::where('estado','abierta')->get();
+        $hora_actual = Carbon::now()->format('H:i');
+
+        foreach($fichas_abiertas as $ficha_abierta) {
+            $empleado = $ficha_abierta->empleado;
+            $jornada = $empleado->jornada;
+            $fin_jornada = $jornada->hora_fin_jornada->addMinutes(30);
+            if($hora_actual->gt($fin_jornada)) {
+                $ficha_abierta->estado = 'cerrada';
+                $ficha_abierta->save();
+            }
+        }
+
     }
 }
