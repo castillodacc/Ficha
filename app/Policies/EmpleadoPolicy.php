@@ -57,6 +57,66 @@ class EmpleadoPolicy
         //
     }
 
+    public function usuario_activo(User $user)
+    {
+        return($user->activo);
+    }
+
+    public function usuario_no_admin(User $user)
+    {
+        return(!$user->is_admin);
+    }
+
+    public function jornada_asignada(User $user, Empleado $empleado)
+    {
+        return($empleado->jornadaAsignada());
+    }
+
+    public function jornada_abierta(User $user, Empleado $empleado)
+    {
+        return($empleado->jornadaAbierta());
+    }
+
+    public function jornada_cerrada(User $user, Empleado $empleado)
+    {
+        return(!$empleado->jornadaAbierta());
+    }
+
+    public function jornada_admite_horas_extras(User $user, Empleado $empleado)
+    {
+        return($empleado->jornadaAdmiteHorasExtras());
+    }
+
+    public function jornada_admite_tiempo_descanso(User $user, Empleado $empleado)
+    {
+        return($empleado->jornadaAdmiteTiempoDescanso());
+    }
+
+    public function tiempo_descanso_iniciado(User $user, Empleado $empleado)
+    {
+        return($empleado->tiempoDescansoIniciado());
+    }
+
+    public function hora_rango_iniciar_jornada(User $user, Empleado $empleado)
+    {
+        return($empleado->horaRangoIniciarJornada());
+    }
+
+    public function hora_rango_finalizar_jornada(User $user, Empleado $empleado)
+    {
+        return($empleado->horaRangoFinalizarJornada());
+    }
+
+    public function hora_rango_horas_extras(User $user, Empleado $empleado)
+    {
+        return($empleado->horaRangoHorasExtras());
+    }
+
+    public function hora_rango_tiempo_descanso(User $user, Empleado $empleado)
+    {
+        return($empleado->horaRangoTiempoDescanso());
+    }
+
     public function iniciar_jornada(User $user, Empleado $empleado)
     {
         return($user->activo AND
