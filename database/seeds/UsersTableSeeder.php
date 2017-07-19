@@ -22,7 +22,6 @@ class UsersTableSeeder extends Seeder
         DB::table('users')->insert([
             'username' => 'empleado',
             'password' => bcrypt('empleado'),
-            'activo' => false,
             'created_at' => Carbon::now(),
         ]);
     }
