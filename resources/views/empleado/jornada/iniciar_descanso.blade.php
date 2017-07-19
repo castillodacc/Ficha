@@ -7,15 +7,45 @@
         <div class="panel panel-default">
           <div class="panel-heading">JORNADA DEL DÍA - DESCANSO</div>
           <div class="panel-body">
-            @can('iniciar_descanso', Auth::user()->empleado)
+            @can('usuario_activo', $empleado)
+            @can('usuario_no_admin', $empleado)
+            @can('jornada_asignada', $empleado)
+            @can('jornada_abierta', $empleado)
+            @can('jornada_admite_tiempo_descanso', $empleado)
+            @can('hora_rango_tiempo_descanso', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/descanso/iniciar', 'class' => 'form-inline', 'id' => 'descanso-form']) !!}
             <div class="form-group">
               {!! Form::submit('Iniciar Descanso', ["class" => "btn btn-block btn-success"]) !!}
             </div>
             {!! Form::close() !!}
-@else
+                                  @else
             <div class="alert alert-danger" role="alert">
-              <p>No tiene permisos para iniciar el tiempo de descanso.</p>
+              <p>No puede iniciar el tiempo de descanso a la hora actual</p>
+            </div>
+            @endcan
+                        @else
+            <div class="alert alert-danger" role="alert">
+              <p>Su jornada no admite tiempo de descanso</p>
+            </div>
+            @endcan
+                  @else
+            <div class="alert alert-danger" role="alert">
+              <p>No tiene una jornada abierta</p>
+            </div>
+            @endcan
+                @else
+            <div class="alert alert-danger" role="alert">
+              <p>No tiene una jornada asignada</p>
+            </div>
+            @endcan
+              @else
+            <div class="alert alert-danger" role="alert">
+              <p>Un usuario administrador no puede finalizar una jornada</p>
+            </div>
+            @endcan
+            @else
+            <div class="alert alert-danger" role="alert">
+              <p>Su usuario fue bloqueado por un administrador</p>
             </div>
             @endcan
           </div>

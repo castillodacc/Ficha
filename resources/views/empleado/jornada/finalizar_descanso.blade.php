@@ -7,15 +7,45 @@
         <div class="panel panel-default">
           <div class="panel-heading">JORNADA DEL DÍA - DESCANSO</div>
           <div class="panel-body">
-            @can('finalizar_descanso', Auth::user()->empleado)
+            @can('usuario_activo', $empleado)
+            @can('usuario_no_admin', $empleado)
+            @can('jornada_asignada', $empleado)
+            @can('jornada_abierta', $empleado)
+            @can('jornada_admite_tiempo_descanso', $empleado)
+            @can('tiempo_descanso_iniciado', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/descanso/finalizar', 'class' => 'form-inline', 'id' => 'descanso-form']) !!}
             <div class="form-group">
               {!! Form::submit('Finalizar Descanso', ["class" => "btn btn-block btn-success"]) !!}
             </div>
             {!! Form::close() !!}
+                                  @else
+            <div class="alert alert-danger" role="alert">
+              <p>No ha iniciado el tiempo de descanso</p>
+            </div>
+            @endcan
+                        @else
+            <div class="alert alert-danger" role="alert">
+              <p>Su jornada no admite tiempo de descanso</p>
+            </div>
+            @endcan
+                  @else
+            <div class="alert alert-danger" role="alert">
+              <p>No tiene una jornada abierta</p>
+            </div>
+            @endcan
+                @else
+            <div class="alert alert-danger" role="alert">
+              <p>No tiene una jornada asignada</p>
+            </div>
+            @endcan
+              @else
+            <div class="alert alert-danger" role="alert">
+              <p>Un usuario administrador no puede finalizar una jornada</p>
+            </div>
+            @endcan
             @else
             <div class="alert alert-danger" role="alert">
-              <p>No tiene permisos para finalizar el tiempo de descanso.</p>
+              <p>Su usuario fue bloqueado por un administrador</p>
             </div>
             @endcan
           </div>

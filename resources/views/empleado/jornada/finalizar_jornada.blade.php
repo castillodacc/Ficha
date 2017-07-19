@@ -7,21 +7,43 @@
         <div class="panel panel-default">
           <div class="panel-heading">JORNADA DEL DÍA</div>
           <div class="panel-body">
-            @can('finalizar_jornada', Auth::user()->empleado)
+            @can('usuario_activo', $empleado)
+            @can('usuario_no_admin', $empleado)
+            @can('jornada_asignada', $empleado)
+            @can('jornada_abierta', $empleado)
+            @can('hora_rango_finalizar_jornada', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/finalizar', 'class' => 'form', 'id' => 'jornada-form']) !!}
-              {!! Form::label('observaciones', 'Observaciones:') !!}
-
-              {!! Form::textarea('observaciones', null, ['class' => 'form-control','rows' => '3']) !!}
-
-              <div class="form-group">
-                <br>
-                {!! Form::submit('Finalizar Jornada', ["class" => "btn btn-success"]) !!}
-              </div>
-              {!! Form::close() !!}
+            {!! Form::label('observaciones', 'Observaciones:') !!}
+            {!! Form::textarea('observaciones', null, ['class' => 'form-control','rows' => '3']) !!}
+            <div class="form-group">
+              <br>
+              {!! Form::submit('Finalizar Jornada', ["class" => "btn btn-success"]) !!}
+            </div>
+            {!! Form::close() !!}
+                                  @else
+            <div class="alert alert-danger" role="alert">
+              <p>Faltan m&aacute;s de 30 minutos para el fin de su jornada</p>
+            </div>
+            @endcan
+                  @else
+            <div class="alert alert-danger" role="alert">
+              <p>No tiene una jornada abierta</p>
+            </div>
+            @endcan
+                @else
+            <div class="alert alert-danger" role="alert">
+              <p>No tiene una jornada asignada</p>
+            </div>
+            @endcan
+              @else
+            <div class="alert alert-danger" role="alert">
+              <p>Un usuario administrador no puede finalizar una jornada</p>
+            </div>
+            @endcan
             @else
-              <div class="alert alert-danger" role="alert">
-                <p>No tiene permisos para finalizar una jornada.</p>
-              </div>
+            <div class="alert alert-danger" role="alert">
+              <p>Su usuario fue bloqueado por un administrador</p>
+            </div>
             @endcan
           </div>
           <div class="panel-footer"></div>

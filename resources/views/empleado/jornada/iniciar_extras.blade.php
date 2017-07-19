@@ -7,7 +7,12 @@
         <div class="panel panel-default">
           <div class="panel-heading">HORAS EXTRAS A TRABAJAR</div>
           <div class="panel-body">
-            @can('horas_extras', Auth::user()->empleado)
+            @can('usuario_activo', $empleado)
+            @can('usuario_no_admin', $empleado)
+            @can('jornada_asignada', $empleado)
+            @can('jornada_abierta', $empleado)
+            @can('jornada_admite_tiempo_descanso', $empleado)
+            @can('hora_rango_horas_extras', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/extras/iniciar', 'class' => 'form-inline', 'id' => 'iniciar-horas-extras-form']) !!}
             <div class="form-group">
               {!! Form::label('horas_extras', 'Horas:') !!}
@@ -26,9 +31,34 @@
             </div>
           </div>
           {!! Form::close() !!}
-@else
+                                  @else
           <div class="alert alert-danger" role="alert">
-            <p>No tiene permisos para iniciar horas extras.</p>
+            <p>Faltan m&aacute;s de 30 minutos para finalizar su jornada y poder iniciar horas extras</p>
+          </div>
+          @endcan
+                        @else
+          <div class="alert alert-danger" role="alert">
+            <p>Su jornada no admite horas extras</p>
+          </div>
+          @endcan
+                  @else
+          <div class="alert alert-danger" role="alert">
+            <p>No tiene una jornada abierta</p>
+          </div>
+          @endcan
+                @else
+          <div class="alert alert-danger" role="alert">
+            <p>No tiene una jornada asignada</p>
+          </div>
+          @endcan
+              @else
+          <div class="alert alert-danger" role="alert">
+            <p>Un usuario administrador no puede iniciar horas extras</p>
+          </div>
+          @endcan
+            @else
+          <div class="alert alert-danger" role="alert">
+            <p>Su usuario fue bloqueado por un administrador</p>
           </div>
           @endcan
           <div class="panel-footer"></div>

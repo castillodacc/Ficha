@@ -7,15 +7,39 @@
         <div class="panel panel-default">
           <div class="panel-heading">JORNADA DEL DÍA</div>
           <div class="panel-body">
-            @can('iniciar_jornada', Auth::user()->empleado)
+            @can('usuario_activo', $empleado)
+            @can('usuario_no_admin', $empleado)
+            @can('jornada_asignada', $empleado)
+            @can('jornada_cerrada', $empleado)
+            @can('hora_rango_iniciar_jornada', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/iniciar', 'class' => 'form-inline', 'id' => 'jornada-form']) !!}
-              <div class="form-group">
-                {!! Form::submit('Iniciar Jornada', ["class" => "btn btn-success"]) !!}
-              </div>
-              {!! Form::close() !!}
+            <div class="form-group">
+                        {!! Form::submit('Iniciar Jornada', ["class" => "btn btn-success"]) !!}
+                      </div>
+                      {!! Form::close() !!}
+                    @else
+                      <div class="alert alert-danger" role="alert">
+                        <p>Faltan m&aacute;s de 30 minutos para el inicio de su jornada</p>
+                      </div>
+                    @endcan
+                  @else
+                    <div class="alert alert-danger" role="alert">
+                      <p>Ya tiene una jornada abierta</p>
+                    </div>
+                    @endcan
+                @else
+                  <div class="alert alert-danger" role="alert">
+                    <p>No tiene una jornada asignada</p>
+                  </div>
+                  @endcan
+              @else
+                <div class="alert alert-danger" role="alert">
+                  <p>Un usuario administrador no puede iniciar una jornada</p>
+                </div>
+                @endcan
             @else
               <div class="alert alert-danger" role="alert">
-                <p>No tiene permisos para iniciar una jornada.</p>
+                <p>Su usuario fue bloqueado por un administrador</p>
               </div>
             @endcan
           </div>
