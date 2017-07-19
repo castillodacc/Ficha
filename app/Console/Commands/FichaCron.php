@@ -53,6 +53,7 @@ class FichaCron extends Command
             $fin_jornada = $jornada->hora_fin_jornada->addMinutes(30);
             if($hora_actual->gt($fin_jornada)) {
                 $ficha_abierta->estado = 'cerrada';
+                $ficha_abierta->hora_fin = $jornada->hora_fin_jornada;
                 $ficha_abierta->save();
             }
         }
