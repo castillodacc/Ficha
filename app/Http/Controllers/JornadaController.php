@@ -208,7 +208,7 @@ class JornadaController extends Controller
     public function removerEmpleados(Request $request, Jornada $jornada)
     {
         $empleado = Empleado::find($request->empleado);
-        $empleado->jornada_id = null;
+        $empleado->jornada()->dissociate();
         if($empleado->save()) {
             return Response::json([
                 'error' => false,
@@ -233,7 +233,7 @@ class JornadaController extends Controller
     public function agregarEmpleados(Request $request, Jornada $jornada)
     {
         $empleado = Empleado::find($request->empleado);
-        $empleado->jornada_id = $jornada->id;
+        $empleado->jornada()->associate($jornada);
         if($empleado->save()) {
             return Response::json([
                 'error' => false,
