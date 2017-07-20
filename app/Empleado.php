@@ -29,7 +29,7 @@ class Empleado extends Model
      */
     public function jornada()
     {
-        return $this->belongsTo('App\Empleado');
+        return $this->belongsTo('App\Jornada');
     }
 
     public function user()
@@ -56,20 +56,21 @@ class Empleado extends Model
 
     public function horaRangoIniciarJornada()
     {
-        $hora_actual = Carbon::now()->format('H:i');
-        $inicio_jornada = $this->jornada->hora_inicio_jornada;
-        $fin_jornada = $this->jornada->hora_fin_jornada;
+        $hora_actual = Carbon::now();
+        $inicio_jornada = Carbon::createFromFormat('H:i',$this->jornada->hora_inicio_jornada);
+        $fin_jornada = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
 
-        return($hora_actual->between($inicio_jornada->subMinutes(30),$fin_jornada->subSecond()));
+        return($hora_actual->between($inicio_jornada->subMinutes(30), $fin_jornada->subSecond()));
     }
 
     public function horaRangoFinalizarJornada()
     {
-        $hora_actual = Carbon::now()->format('H:i');
-        $fin_jornada = $this->jornada->hora_fin_jornada;
-        $fin_jornada_prorroga = $this->jornada->hora_fin_jornada->addMinutes(30);
+        $hora_actual = Carbon::now();
+        $fin_jornada = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
+        $fin_jornada_prorroga = $fin_jornada;
+        $fin_jornada_prorroga = $fin_jornada_prorroga->addMinutes(30);
 
-        return($hora_actual->between($fin_jornada,$fin_jornada_prorroga));
+        return($hora_actual->between($fin_jornada, $fin_jornada_prorroga));
     }
 
     public function jornadaAdmiteHorasExtras()
@@ -79,24 +80,24 @@ class Empleado extends Model
 
     public function horaRangoHorasExtras()
     {
-        $hora_actual = Carbon::now()->format('H:i');
-        $fin_jornada = $this->jornada->hora_fin_jornada;
+        $hora_actual = Carbon::now();
+        $fin_jornada = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
 
-        return($hora_actual->between($fin_jornada->subMinutes(30),$fin_jornada->addMinutes(30)));
+        return($hora_actual->between($fin_jornada->subMinutes(30), $fin_jornada->addMinutes(30)));
     }
 
     public function jornadaAdmiteTiempoDescanso()
     {
-        return $this->jornada->hora_inicio_comida AND $this->jornada->hora_fin_comida;
+        return($this->jornada->hora_inicio_comida AND $this->jornada->hora_fin_comida);
     }
 
     public function horaRangoTiempoDescanso()
     {
-        $hora_actual            = Carbon::now()->format('H:i');
-        $inicio_tiempo_descanso = $this->jornada->hora_inicio_comida;
-        $fin_tiempo_descanso    = $this->jornada->hora_fin_comida;
+        $hora_actual            = Carbon::now();
+        $inicio_tiempo_descanso = Carbon::createFromFormat('H:i', $this->jornada->hora_inicio_comida);
+        $fin_tiempo_descanso    = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_comida);
 
-        return $hora_actual->between($fin_jornada,$fin_jornada_prorroga);
+        return $hora_actual->between($inicio_tiempo_descanso, $fin_tiempo_descanso);
     }
 
     public function tiempoDescansoIniciado()
