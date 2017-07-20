@@ -97,6 +97,11 @@ class EmpleadoPolicy
         return($empleado->tiempoDescansoIniciado());
     }
 
+    public function tiempo_descanso_finalizado(User $user, Empleado $empleado)
+    {
+        return($empleado->tiempoDescansoFinalizado());
+    }
+
     public function hora_rango_iniciar_jornada(User $user, Empleado $empleado)
     {
         return($empleado->horaRangoIniciarJornada());
@@ -115,6 +120,11 @@ class EmpleadoPolicy
     public function hora_rango_tiempo_descanso(User $user, Empleado $empleado)
     {
         return($empleado->horaRangoTiempoDescanso());
+    }
+
+    public function horas_extras_iniciadas(User $user, Empleado $empleado)
+    {
+        return($empleado->horasExtrasIniciadas());
     }
 
     public function iniciar_jornada(User $user, Empleado $empleado)
