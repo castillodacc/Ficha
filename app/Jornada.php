@@ -32,7 +32,7 @@ class Jornada extends Model
      */
     protected $casts = [
         'activa' => 'boolean',
-        'hora_extras' => 'boolean',
+        'horas_extras' => 'boolean',
     ];
 
     /**
