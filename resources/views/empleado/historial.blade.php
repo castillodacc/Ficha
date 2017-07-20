@@ -24,7 +24,7 @@
                       <tr>
                         <th scope="row">{{$loop->iteration}}</th>
                         <td>{{$ficha->fecha}}</td>
-                        <td>{{$ficha->horas_extras}}</td>
+                        <td>{{$ficha->horas_extras ?: 0}}</td>
                         <td>{{$ficha->hora_inicio}}</td>
                         <td>{{$ficha->hora_fin}}</td>
                       </tr>

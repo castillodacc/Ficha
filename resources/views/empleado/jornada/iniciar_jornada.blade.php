@@ -51,8 +51,8 @@
   <script>
     $(document).ready(function (){
       $("#jornada-form").submit("submit", function(e) {
-        $("input[type='submit']", this)
-          .val("Enviando...")
+        var my_this = this;
+        var boton_sub = $("input[type='submit']", this)
           .attr('disabled', 'disabled');
         $.ajax({
           url: $(this).attr("action"),
@@ -75,6 +75,8 @@
               html +="<p>" + respuesta.mensaje + "</p>";
               html += "</div>";
               $(".panel-footer").html(html);
+              $(boton_sub, my_this)
+                .attr('disabled', false);
             }
           },
           error: function()
@@ -83,10 +85,11 @@
             html +="<p>Error en el servidor. Por favor, recargue la p&aacute;gina, si el problema persiste contacte al administrador del sitio.</p>";
             html += "</div>";
             $(".panel-footer").html(html);
+            $(boton_sub, my_this)
+              .attr('disabled', false);
           }
         });
         e.preventDefault();
-        e.stopPropagation();
       });
     });
   </script>

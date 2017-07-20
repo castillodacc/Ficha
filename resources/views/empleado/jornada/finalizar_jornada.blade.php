@@ -22,7 +22,7 @@
             {!! Form::close() !!}
                                   @else
             <div class="alert alert-danger" role="alert">
-              <p>Faltan m&aacute;s de 30 minutos para el fin de su jornada</p>
+              <p>Todav&iacute;a no es la hora para el fin de su jornada</p>
             </div>
             @endcan
                   @else
@@ -54,8 +54,8 @@
   <script>
     $(document).ready(function (){
       $("#jornada-form").submit("submit", function(e) {
-        $("input[type='submit']", this)
-          .val("Enviando...")
+        var my_this = this;
+        var boton_sub = $("input[type='submit']", this)
           .attr('disabled', 'disabled');
         $.ajax({
           url: $(this).attr("action"),
@@ -78,6 +78,8 @@
               html +="<p>" + respuesta.mensaje + "</p>";
               html += "</div>";
               $(".panel-footer").html(html);
+              $(boton_sub, my_this)
+                .attr('disabled', false);
             }
           },
           error: function()
@@ -86,7 +88,8 @@
             html +="<p>Error en el servidor. Por favor, recargue la p&aacute;gina, si el problema persiste contacte al administrador del sitio.</p>";
             html += "</div>";
             $(".panel-footer").html(html);
-            $("#poblacion-form")[0].reset();
+            $(boton_sub, my_this)
+              .attr('disabled', false);
           }
         });
         e.preventDefault();

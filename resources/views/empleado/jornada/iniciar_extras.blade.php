@@ -13,6 +13,7 @@
             @can('jornada_asignada', $empleado)
             @can('jornada_abierta', $empleado)
             @can('hora_rango_horas_extras', $empleado)
+            @cannot('horas_extras_iniciadas', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/extras/iniciar', 'class' => 'form-inline', 'id' => 'iniciar-horas-extras-form']) !!}
             <div class="form-group">
               {!! Form::label('horas_extras', 'Horas:') !!}
@@ -31,7 +32,12 @@
             </div>
           </div>
           {!! Form::close() !!}
-                                  @else
+          @else
+          <div class="alert alert-danger" role="alert">
+            <p>Ya inici&oacute; las horas extras en esta jornada</p>
+          </div>
+          @endcannot
+          @else
           <div class="alert alert-danger" role="alert">
             <p>Faltan m&aacute;s de 30 minutos para finalizar su jornada y poder iniciar horas extras</p>
           </div>
@@ -69,8 +75,8 @@
   <script>
     $(document).ready(function (){
       $("#iniciar-horas-extras-form").submit("submit", function(e) {
-        $("input[type='submit']", this)
-          .val("Enviando...")
+        var my_this = this;
+        var boton_sub = $("input[type='submit']", this)
           .attr('disabled', 'disabled');
         $.ajax({
           url: $(this).attr("action"),
@@ -84,7 +90,6 @@
           success: function(respuesta)
           {
             if(!respuesta.error) {
-
               var html = "<div class='alert alert-success'>";
               html += "<p>" + respuesta.mensaje + "</p>";
               html += "</div>";
@@ -94,6 +99,8 @@
               html +="<p>" + respuesta.mensaje + "</p>";
               html += "</div>";
               $(".panel-footer").html(html);
+              $(boton_sub, my_this)
+                .attr('disabled', false);
             }
           },
           error: function()
@@ -102,6 +109,8 @@
             html +="<p>Error en el servidor. Por favor, recargue la p&aacute;gina, si el problema persiste contacte al administrador del sitio.</p>";
             html += "</div>";
             $(".panel-footer").html(html);
+            $(boton_sub, my_this)
+              .attr('disabled', false);
           }
         });
         e.preventDefault();

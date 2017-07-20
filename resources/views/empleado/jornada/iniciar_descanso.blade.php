@@ -13,17 +13,23 @@
             @can('jornada_asignada', $empleado)
             @can('jornada_abierta', $empleado)
             @can('hora_rango_tiempo_descanso', $empleado)
+            @cannot('tiempo_descanso_iniciado', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/descanso/iniciar', 'class' => 'form-inline', 'id' => 'descanso-form']) !!}
             <div class="form-group">
               {!! Form::submit('Iniciar Descanso', ["class" => "btn btn-block btn-success"]) !!}
             </div>
             {!! Form::close() !!}
-                                  @else
+            @else
+            <div class="alert alert-danger" role="alert">
+              <p>Ya inici&oacute; el tiempo de descanso en esta jornada</p>
+            </div>
+            @endcannot
+               @else
             <div class="alert alert-danger" role="alert">
               <p>No puede iniciar el tiempo de descanso a la hora actual</p>
             </div>
             @endcan
-                        @else
+            @else
             <div class="alert alert-danger" role="alert">
               <p>No tiene una jornada abierta</p>
             </div>
@@ -57,8 +63,8 @@
   <script>
     $(document).ready(function (){
       $("#descanso-form").submit("submit", function(e) {
-        $("input[type='submit']", this)
-          .val("Enviando...")
+        var my_this = this;
+        var boton_sub = $("input[type='submit']", this)
           .attr('disabled', 'disabled');
         $.ajax({
           url: $(this).attr("action"),
@@ -81,6 +87,8 @@
               html +="<p>" + respuesta.mensaje + "</p>";
               html += "</div>";
               $(".panel-footer").html(html);
+              $(boton_sub, my_this)
+                .attr('disabled', false);
             }
           },
           error: function()
@@ -89,6 +97,8 @@
             html +="<p>Error en el servidor. Por favor, recargue la p&aacute;gina, si el problema persiste contacte al administrador del sitio.</p>";
             html += "</div>";
             $(".panel-footer").html(html);
+            $(boton_sub, my_this)
+              .attr('disabled', false);
           }
         });
         e.preventDefault();
