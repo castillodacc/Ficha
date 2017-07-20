@@ -114,7 +114,7 @@ class EmpleadoController extends Controller
             }
         }
         return Response::json([
-            'error' => false,
+            'error' => true,
             'mensaje' => 'Error al intentar actualizar empleado',
             'code' => 200
         ], 200);
@@ -136,7 +136,7 @@ class EmpleadoController extends Controller
             ], 200);
         } else {
             return Response::json([
-                'error' => false,
+                'error' => true,
                 'mensaje' => 'Error al intentar eliminar empleado',
                 'code' => 200
             ], 200);
@@ -160,7 +160,7 @@ class EmpleadoController extends Controller
             ], 200);
         } else {
             return Response::json([
-                'error' => false,
+                'error' => true,
                 'mensaje' => 'Error al intentar activar empleado',
                 'code' => 200
             ], 200);
@@ -184,7 +184,7 @@ class EmpleadoController extends Controller
             ], 200);
         } else {
             return Response::json([
-                'error' => false,
+                'error' => true,
                 'mensaje' => 'Error al intentar desactivar empleado',
                 'code' => 200
             ], 200);
@@ -225,7 +225,7 @@ class EmpleadoController extends Controller
             ], 200);
         } else {
             return Response::json([
-                'error' => false,
+                'error' => true,
                 'mensaje' => 'Error al intentar iniciar jornada',
                 'code' => 200
             ], 200);
@@ -249,7 +249,7 @@ class EmpleadoController extends Controller
             ], 200);
         } else {
             return Response::json([
-                'error' => false,
+                'error' => true,
                 'mensaje' => 'Error al cerrar jornada',
                 'code' => 200
             ], 200);
@@ -282,7 +282,7 @@ class EmpleadoController extends Controller
             ], 200);
         } else {
             return Response::json([
-                'error' => false,
+                'error' => true,
                 'mensaje' => 'Tiempo de descanso finalizado correctamente',
                 'code' => 200
             ], 200);
@@ -302,7 +302,7 @@ class EmpleadoController extends Controller
             ], 200);
         } else {
             return Response::json([
-                'error' => false,
+                'error' => true,
                 'mensaje' => 'Error al finalizar tiempo de descanso',
                 'code' => 200
             ], 200);
@@ -319,16 +319,16 @@ class EmpleadoController extends Controller
     {
         $ficha = Ficha::where('empleado_id',$empleado->id)
                          ->where('estado','abierta')->get()->first();
-        $ficha->hora_extras = $request->hora_extras;
+        $ficha->horas_extras = $request->horas_extras;
         if($ficha->save()) {
             return Response::json([
                 'error' => false,
-                'mensaje' => 'Hora extras guardadas',
+                'mensaje' => 'Horas extras guardadas',
                 'code' => 200
             ], 200);
         } else {
             return Response::json([
-                'error' => false,
+                'error' => true,
                 'mensaje' => 'Error al guardar horas extras',
                 'code' => 200
             ], 200);
