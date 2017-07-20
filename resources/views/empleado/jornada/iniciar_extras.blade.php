@@ -9,9 +9,9 @@
           <div class="panel-body">
             @can('usuario_activo', $empleado)
             @can('usuario_no_admin', $empleado)
+            @can('jornada_admite_tiempo_descanso', $empleado)
             @can('jornada_asignada', $empleado)
             @can('jornada_abierta', $empleado)
-            @can('jornada_admite_tiempo_descanso', $empleado)
             @can('hora_rango_horas_extras', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/extras/iniciar', 'class' => 'form-inline', 'id' => 'iniciar-horas-extras-form']) !!}
             <div class="form-group">
@@ -38,17 +38,17 @@
           @endcan
                         @else
           <div class="alert alert-danger" role="alert">
-            <p>Su jornada no admite horas extras</p>
+            <p>No tiene una jornada abierta</p>
           </div>
           @endcan
                   @else
           <div class="alert alert-danger" role="alert">
-            <p>No tiene una jornada abierta</p>
+            <p>No tiene una jornada asignada</p>
           </div>
           @endcan
                 @else
           <div class="alert alert-danger" role="alert">
-            <p>No tiene una jornada asignada</p>
+            <p>Su jornada no admite horas extras</p>
           </div>
           @endcan
               @else
