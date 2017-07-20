@@ -95,7 +95,9 @@ class JornadaController extends Controller
      */
     public function update(Request $request, Jornada $jornada)
     {
-        if($jornada->update($request->except('hora_comida'))) {
+        $data = $request->except('hora_comida');
+        $data['horas_extras'] = $request->input('horas_extras', false);
+        if($jornada->update($data)) {
             return Response::json([
                 'error' => false,
                 'mensaje' => 'Jornada actualizada correctamente',

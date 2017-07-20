@@ -84,7 +84,11 @@
               <div class="col-md-4">
                 <div class="input-group">
                   {!! Form::label('horas_extras', 'Horas extras:') !!}
-                  {!! Form::checkbox('horas_extras', $jornada->horas_extras) !!}
+                  {!! Form::checkbox('horas_extras',
+                                     true,
+                                     $jornada->horas_extras
+                      )
+                  !!}
                 </div>
               </div>
             </div>
