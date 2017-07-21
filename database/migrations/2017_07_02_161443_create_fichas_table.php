@@ -28,9 +28,7 @@ class CreateFichasTable extends Migration
             $table->text('observaciones')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('empleado_id')
-                ->references('id')->on('empleados')
-                ->onDelete('cascade');
+            $table->foreign('empleado_id')->references('id')->on('empleados');
         });
     }
 
