@@ -79,7 +79,7 @@ class Empleado extends Model
 
     public function jornadaAdmiteHorasExtras()
     {
-        return $this->jornada->horas_extras ? TRUE : FALSE;
+        return $this->jornada->horas_extras;
     }
 
     public function horaRangoHorasExtras()
