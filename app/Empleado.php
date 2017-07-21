@@ -100,7 +100,7 @@ class Empleado extends Model
 
     public function jornadaAdmiteTiempoDescanso()
     {
-        return($this->jornada->hora_inicio_comida AND $this->jornada->hora_fin_comida);
+        return $this->jornada->hora_comida;
     }
 
     public function horaRangoTiempoDescanso()

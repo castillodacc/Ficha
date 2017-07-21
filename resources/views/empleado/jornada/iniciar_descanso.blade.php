@@ -12,7 +12,6 @@
             @can('jornada_admite_tiempo_descanso', $empleado)
             @can('jornada_asignada', $empleado)
             @can('jornada_abierta', $empleado)
-            @can('hora_rango_tiempo_descanso', $empleado)
             @cannot('tiempo_descanso_iniciado', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/descanso/iniciar', 'class' => 'form-inline', 'id' => 'descanso-form']) !!}
             <div class="form-group">
@@ -24,11 +23,6 @@
               <p>Ya inici&oacute; el tiempo de descanso en esta jornada</p>
             </div>
             @endcannot
-               @else
-            <div class="alert alert-danger" role="alert">
-              <p>No puede iniciar el tiempo de descanso a la hora actual</p>
-            </div>
-            @endcan
             @else
             <div class="alert alert-danger" role="alert">
               <p>No tiene una jornada abierta</p>

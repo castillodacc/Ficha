@@ -96,37 +96,6 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="input-group">
-                    <div id="horas-comida" class="hidden">
-                      <div class="row">
-                        <div class="col-md-12">
-                          {!! Form::label('hora_inicio_comida', 'Inicio Comida:') !!}
-                          {!! Form::text('hora_inicio_comida',
-                                         null,
-                                         [
-                                           'class' => 'form-control time start',
-                                         ])
-                          !!}
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-md-12">
-                          {!! Form::label('hora_fin_comida', 'Fin Comida:') !!}
-                          {!! Form::text('hora_fin_comida',
-                                         null,
-                                         [
-                                           'class' => 'form-control time end',
-                                         ]
-                              )
-                          !!}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
               {!! Form::close() !!}
               <div class="form-group">
                 <br>
@@ -156,31 +125,6 @@
       // initialize datepair
       $('#horas-jornada').datepair();
 
-      // initialize input widgets first
-      $('#hora_inicio_comida').timepicker({
-        'showDuration': true,
-        'timeFormat': 'G:i'
-      });
-      $('#hora_fin_comida').timepicker({
-        'showDuration': true,
-        'timeFormat': 'G:i'
-      });
-
-      // initialize datepair
-      $('#horas-comida').datepair();
-
-      $("#hora_comida").on("change", function(){
-        if($(this).is(":checked")) {
-          $("#horas-comida").removeClass("hidden");
-          $("#hora_inicio_comida").prop("required",true);
-          $("#hora_fin_comida").prop("required",true);
-        } else {
-          $("#horas-comida").addClass("hidden");
-          $("#hora_inicio_comida").prop("required",false);
-          $("#hora_fin_comida").prop("required",false);
-        }
-      });
-
       $("#jornada-form").submit("submit", function(e) {
         $.ajax({
           url: $(this).attr("action"),
@@ -199,7 +143,6 @@
               html += "</div>";
               $(".panel-footer").html(html);
               $("#jornada-form")[0].reset();
-              location.reload();
             } else {
               var html = "<div class='alert alert-danger'>";
               html +="<p>" + respuesta.mensaje + "</p>";

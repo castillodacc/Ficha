@@ -21,8 +21,6 @@ class Jornada extends Model
         'deleted_at',
         'hora_inicio_jornada',
         'hora_fin_jornada',
-        'hora_inicio_comida',
-        'hora_fin_comida',
     ];
 
     /**
@@ -33,6 +31,7 @@ class Jornada extends Model
     protected $casts = [
         'activa' => 'boolean',
         'horas_extras' => 'boolean',
+        'hora_comida' => 'boolean',
     ];
 
     /**
@@ -55,20 +54,6 @@ class Jornada extends Model
         $this->attributes['hora_fin_jornada'] = Carbon::createFromFormat('H:i', $hora);
     }
 
-    public function setHoraInicioComidaAttribute($hora)
-    {
-        if($hora) {
-            $this->attributes['hora_inicio_comida'] =  Carbon::createFromFormat('H:i', $hora);
-        }
-    }
-
-    public function setHoraFinComidaAttribute($hora)
-    {
-        if($hora) {
-            $this->attributes['hora_fin_comida'] = Carbon::createFromFormat('H:i', $hora);
-        }
-    }
-
     public function getHoraInicioJornadaAttribute($hora)
     {
         return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
@@ -77,22 +62,6 @@ class Jornada extends Model
     public function getHoraFinJornadaAttribute($hora)
     {
         return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
-    }
-
-    public function getHoraInicioComidaAttribute($hora)
-    {
-        if($hora) {
-            return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
-        }
-        return($hora);
-    }
-
-    public function getHoraFinComidaAttribute($hora)
-    {
-        if($hora) {
-            return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
-        }
-        return($hora);
     }
 
 }

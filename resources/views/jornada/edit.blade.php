@@ -96,46 +96,11 @@
               <div class="col-md-4">
                 <div class="input-group">
                   {!! Form::label('hora_comida', 'Hora comida:') !!}
-                  @if($jornada->hora_inicio_comida and $jornada->hora_fin_comida)
-                    {!! Form::checkbox('hora_comida', true, true) !!}
-                  @else
-                    {!! Form::checkbox('hora_comida') !!}
-                  @endif
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="input-group">
-                  @if($jornada->hora_inicio_comida and $jornada->hora_fin_comida)
-                    <div id="horas-comida">
-                  @else
-                      <div id="horas-comida" class="hidden">
-                  @endif
-                      <div class="row">
-                        <div class="col-md-12">
-                        {!! Form::label('hora_inicio_comida', 'Inicio Comida:') !!}
-                        {!! Form::text('hora_inicio_comida',
-                                       $jornada->hora_inicio_comida,
-                                       [
-                                         'class' => 'form-control time start',
-                                       ])
-                        !!}
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        {!! Form::label('hora_fin_comida', 'Fin Comida:') !!}
-                        {!! Form::text('hora_fin_comida',
-                                       $jornada->hora_fin_comida,
-                                       [
-                                         'class' => 'form-control time end',
-                                       ]
-                            )
-                        !!}
-                      </div>
-                    </div>
-                  </div>
+                  {!! Form::checkbox('hora_comida',
+                                     true,
+                                     $jornada->hora_comida
+                      )
+                  !!}
                 </div>
               </div>
             </div>
@@ -167,31 +132,6 @@
       });
       // initialize datepair
       $('#horas-jornada').datepair();
-
-      // initialize input widgets first
-      $('#hora_inicio_comida').timepicker({
-        'showDuration': true,
-        'timeFormat': 'G:i'
-      });
-      $('#hora_fin_comida').timepicker({
-        'showDuration': true,
-        'timeFormat': 'G:i'
-      });
-
-      // initialize datepair
-      $('#horas-comida').datepair();
-
-      $("#hora_comida").on("change", function(){
-        if($(this).is(":checked")) {
-          $("#horas-comida").removeClass("hidden");
-          $("#hora_inicio_comida").prop("required",true);
-          $("#hora_fin_comida").prop("required",true);
-        } else {
-          $("#horas-comida").addClass("hidden");
-          $("#hora_inicio_comida").prop("required",false);
-          $("#hora_fin_comida").prop("required",false);
-        }
-      });
 
       $("#update-jornada-form").submit("submit", function(e) {
         $.ajax({

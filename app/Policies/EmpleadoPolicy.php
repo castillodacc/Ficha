@@ -117,11 +117,6 @@ class EmpleadoPolicy
         return($empleado->horaRangoHorasExtras());
     }
 
-    public function hora_rango_tiempo_descanso(User $user, Empleado $empleado)
-    {
-        return($empleado->horaRangoTiempoDescanso());
-    }
-
     public function horas_extras_iniciadas(User $user, Empleado $empleado)
     {
         return($empleado->horasExtrasIniciadas());
@@ -174,8 +169,7 @@ class EmpleadoPolicy
                !$user->is_admin AND
                $empleado->jornadaAsignada() AND
                $empleado->jornadaAbierta() AND
-               $empleado->jornadaAdmiteTiempoDescanso() AND
-               $empleado->horaRangoTiempoDescanso()
+               $empleado->jornadaAdmiteTiempoDescanso()
         );
     }
 
