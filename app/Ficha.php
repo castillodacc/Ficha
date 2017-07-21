@@ -21,6 +21,8 @@ class Ficha extends Model
         'deleted_at',
         'hora_inicio',
         'hora_fin',
+        'hora_inicio_comida',
+        'hora_fin_comida',
     ];
 
     public function empleado()
