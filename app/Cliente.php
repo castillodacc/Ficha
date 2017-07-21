@@ -26,9 +26,9 @@ class Cliente extends Model
         'activo' => 'boolean',
     ];
 
-    public function jornada()
+    public function empleados()
     {
-        return $this->hasOne('App\Jornada');
+        return $this->hasMany('App\Empleado');
     }
 
 }

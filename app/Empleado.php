@@ -37,6 +37,11 @@ class Empleado extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function cliente()
+    {
+        return $this->belongsTo('App\Cliente');
+    }
+
     public function fichas()
     {
         return $this->hasMany('App\Ficha');

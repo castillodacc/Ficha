@@ -91,7 +91,6 @@
                                $empleado->telefono,
                                [
                                  'class' => 'form-control',
-                                 'required' => 'required'
                                ])
                 !!}
               </div>
@@ -103,7 +102,9 @@
                                $empleado->telefono_movil,
                                [
                                  'class' => 'form-control',
-                               ])
+                                 'required' => 'required',
+                               ]
+                    )
                 !!}
               </div>
             </div>
@@ -119,6 +120,28 @@
                 !!}
               </div>
             </div>
+            @if($clientes->isNotEmpty())
+              <div class="row">
+                <div class="col-md-6">
+                  {!! Form::label('cliente_id', 'Cliente:', ['style' => 'display:block;']) !!}
+                  {!! Form::select('cliente_id',
+                                   $clientes,
+                                   ($empleado->cliente) ? $empleado->cliente->id: null,
+                                   [
+                                     'id' => 'cliente_id',
+                                     'required' => 'required',
+                                     'class' => 'form-control'
+                                   ]
+                      )
+                  !!}
+                </div>
+              </div>
+            @else
+              <br>
+              <div class="alert alert-warning" role="alert">
+                <p>No hay clientes disponibles. Por favor, <a href="/cliente/create">agregue</a> al menos uno.</p>
+              </div>
+            @endif
             {!! Form::close() !!}
             <div class="form-group">
               <br>

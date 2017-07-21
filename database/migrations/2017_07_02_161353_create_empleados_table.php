@@ -16,7 +16,8 @@ class CreateEmpleadosTable extends Migration
         Schema::create('empleados', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('jornada_id')->nullable()->unsigned();
+            $table->integer('jornada_id')->unsigned()->nullable();
+            $table->integer('cliente_id')->unsigned()->nullable();
             $table->string('nombre');
             $table->string('apellido');
             $table->string('direccion');
@@ -26,11 +27,9 @@ class CreateEmpleadosTable extends Migration
             $table->string('dni')->unique();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade');
-            $table->foreign('jornada_id')
-                ->references('id')->on('jornadas');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('jornada_id')->references('id')->on('jornadas');
+            $table->foreign('cliente_id')->references('id')->on('clientes');
         });
     }
 

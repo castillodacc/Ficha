@@ -38,7 +38,9 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        return view('empleado.create');
+        $clientes = Cliente::where('activo', TRUE)->pluck('nombre', 'id');
+        return view('empleado.create')
+            ->with('clientes', $clientes);
     }
 
     /**
@@ -90,7 +92,10 @@ class EmpleadoController extends Controller
      */
     public function edit(Empleado $empleado)
     {
-        return view('empleado.edit')->with('empleado', $empleado);
+        $clientes = Cliente::where('activo', TRUE)->pluck('nombre', 'id');
+        return view('empleado.edit')
+            ->with('clientes', $clientes)
+            ->with('empleado', $empleado);
     }
 
     /**
