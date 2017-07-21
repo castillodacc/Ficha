@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Jornada;
 use App\Empleado;
-use App\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -35,10 +34,7 @@ class JornadaController extends Controller
      */
     public function create()
     {
-        $clientes = Cliente::doesntHave('jornada')->pluck('nombre', 'id');
-
-        return view('jornada.create')
-            ->with('clientes', $clientes);
+        return view('jornada.create');
     }
 
     /**

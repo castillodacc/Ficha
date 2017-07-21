@@ -15,7 +15,6 @@ class CreateJornadasTable extends Migration
     {
         Schema::create('jornadas', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('cliente_id')->unsigned();
             $table->string('nombre');
             $table->enum('tipo',['diurna', 'nocturna'])->default('diurna');
             $table->smallInteger('horas_laborales')->unsigned()->default(8);
@@ -27,7 +26,6 @@ class CreateJornadasTable extends Migration
             $table->timestamp('hora_fin_comida')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreign('cliente_id')->references('id')->on('clientes');
         });
     }
 

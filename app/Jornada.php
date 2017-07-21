@@ -43,11 +43,6 @@ class Jornada extends Model
         return $this->hasMany('App\Empleado');
     }
 
-    public function cliente()
-    {
-        return $this->belongsTo('App\Cliente');
-    }
-
     protected $guarded = ['id'];
 
     public function setHoraInicioJornadaAttribute($hora)

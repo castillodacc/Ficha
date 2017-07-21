@@ -9,7 +9,6 @@
             CREAR JORNADA
           </div>
           <div class="panel-body">
-            @if($clientes->isNotEmpty())
               {!! Form::open(['url' => '/jornada', 'id' => 'jornada-form']) !!}
               <div class="row">
                 <div class="col-md-6">
@@ -48,16 +47,6 @@
                                      'class'      => 'form-control',
                                    ])
                   !!}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
-                  {!! Form::label('cliente', 'Cliente:', ['style' => 'display:block;']) !!}
-                  <select id="cliente_id" name="cliente_id" class="form-control" required>
-                    @foreach($clientes as $id => $nombre)
-                      <option value="{{$id}}">{{$nombre}}</option>
-                    @endforeach
-                  </select>
                 </div>
               </div>
               <div class="row">
@@ -144,11 +133,6 @@
                 <input type="submit" form="jornada-form" class="btn btn-success btn-block" value="Crear Jornada"/>
               </div>
           </div>
-            @else
-          <div class="alert alert-danger" role="alert">
-            <p>No hay clientes disponibles. Por favor, <a href="/cliente/create">agregue</a> al menos uno.</p>
-          </div>
-            @endif
           <div class="panel-footer"></div>
         </div>
       </div>
