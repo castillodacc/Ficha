@@ -18,8 +18,8 @@
                       <th>Nombre</th>
                       <th>Tipo</th>
                       <th>Horas laborales</th>
-                      <th>Horas extras</th>
                       <th>Hora Jornada</th>
+                      <th>Horas extras</th>
                       <th>Hora comida</th>
                       <th>Acciones</th>
                     </tr>
@@ -31,10 +31,9 @@
                         <td>{{$jornada->nombre}}</td>
                         <td>{{$jornada->tipo}}</td>
                         <td>{{$jornada->horas_laborales}}</td>
-                        <td>{{($jornada->horas_extras) ? "Si" : "No"}}</td>
                         <td>{{$jornada->hora_inicio_jornada ." - ". $jornada->hora_fin_jornada}}</td>
-                        <td>{{($jornada->hora_inicio_comida and $jornada->hora_fin_comida)
-                              ? $jornada->hora_inicio_comida ." - ". $jornada->hora_fin_comida : "N/D" }}</td>
+                        <td>{{$jornada->horas_extras ? "Si" : "No"}}</td>
+                        <td>{{$jornada->hora_comida ? "Si" : "No" }}</td>
                         <td>
                           <a href="/jornada/{{$jornada->id}}/edit" data-toggle="tooltip" data-placement="left" title="Editar">
                             <span class="glyphicon glyphicon-pencil"></span>
