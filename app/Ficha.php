@@ -23,6 +23,8 @@ class Ficha extends Model
         'hora_fin',
         'hora_inicio_comida',
         'hora_fin_comida',
+        'hora_inicio_extras',
+        'hora_fin_extras',
     ];
 
     public function empleado()
@@ -58,7 +60,7 @@ class Ficha extends Model
         }
     }
 
-        public function setHoraInicioComidaAttribute($hora)
+    public function setHoraInicioComidaAttribute($hora)
     {
         if($hora) {
             $this->attributes['hora_inicio_comida'] =  Carbon::createFromFormat('H:i', $hora);
@@ -86,4 +88,31 @@ class Ficha extends Model
         }
     }
 
+    public function setHoraInicioExtrasAttribute($hora)
+    {
+        if($hora) {
+            $this->attributes['hora_inicio_extras'] =  Carbon::createFromFormat('H:i', $hora);
+        }
+    }
+
+    public function setHoraFinExtrasAttribute($hora)
+    {
+        if($hora) {
+            $this->attributes['hora_fin_extras'] = Carbon::createFromFormat('H:i', $hora);
+        }
+    }
+
+    public function getHoraInicioExtrasAttribute($hora)
+    {
+        if($hora) {
+            return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
+        }
+    }
+
+    public function getHoraFinExtrasAttribute($hora)
+    {
+        if($hora) {
+            return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
+        }
+    }
 }
