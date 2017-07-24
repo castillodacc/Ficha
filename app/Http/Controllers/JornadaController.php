@@ -6,6 +6,7 @@ use App\Jornada;
 use App\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Carbon\Carbon;
 
 
 class JornadaController extends Controller
@@ -45,7 +46,12 @@ class JornadaController extends Controller
      */
     public function store(Request $request)
     {
-        $jornada = Jornada::create($request->all());
+        $inicio = Carbon::createFromFormat('H:i', $request->hora_inicio_jornada);
+        $fin    = Carbon::createFromFormat('H:i', $request->hora_fin_jornada);
+        $data   = $request->all();
+        $data['horas_laborales'] = $inicio->diff($fin)->format('%H:%I');
+
+        $jornada = Jornada::create($data);
         if($jornada) {
             return Response::json([
             'error' => false,
