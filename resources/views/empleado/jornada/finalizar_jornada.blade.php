@@ -11,6 +11,7 @@
             @can('usuario_no_admin', $empleado)
             @can('jornada_asignada', $empleado)
             @can('jornada_abierta', $empleado)
+            @cannot('horas_extras_iniciadas', $empleado)
             @can('hora_rango_finalizar_jornada', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/finalizar', 'class' => 'form', 'id' => 'jornada-form']) !!}
             {!! Form::label('observaciones', 'Observaciones:') !!}
@@ -25,6 +26,11 @@
               <p>Todav&iacute;a no es la hora para el fin de su jornada</p>
             </div>
             @endcan
+                      @else
+            <div class="alert alert-danger" role="alert">
+              <p>Ha iniciado horas extras en esta jornada. Debe <a href="/empleado/{{$empleado->id}}/jornada/extras/finalizar">finalizarlas</a></p>
+            </div>
+            @endcannot
                   @else
             <div class="alert alert-danger" role="alert">
               <p>No tiene una jornada abierta</p>
