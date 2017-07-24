@@ -199,7 +199,7 @@ class EmpleadoController extends Controller
     public function historial(Empleado $empleado)
     {
         $fichas = Ficha::where('empleado_id','=',$empleado->id)
-                ->where('estado','<>', 'abierta')
+                ->where('estado','<>', 'en progreso')
                 ->get();
         return view('empleado.historial')->with('fichas', $fichas);
     }
@@ -240,11 +240,11 @@ class EmpleadoController extends Controller
     public function finalizarJornada(Request $request, Empleado $empleado)
     {
         $ficha = Ficha::where('empleado_id',$empleado->id)
-               ->where('estado','abierta')->get()->first();
+               ->where('estado','en progreso')->get()->first();
         if($request->observaciones) {
             $ficha->observaciones = $request->observaciones;
         }
-        $ficha->estado = "cerrada";
+        $ficha->estado = "cerrado";
         $ficha->hora_fin = Carbon::now()->format('H:i');
         if($ficha->save()) {
             return Response::json([
@@ -277,7 +277,7 @@ class EmpleadoController extends Controller
     public function iniciarDescanso(Request $request, Empleado $empleado)
     {
         $ficha = Ficha::where('empleado_id',$empleado->id)
-                         ->where('estado','abierta')->get()->first();
+                         ->where('estado','en progreso')->get()->first();
         $ficha->hora_inicio_comida = Carbon::now()->format('H:i');
         if($ficha->save()) {
             return Response::json([
@@ -297,7 +297,7 @@ class EmpleadoController extends Controller
     public function finalizarDescanso(Request $request, Empleado $empleado)
     {
         $ficha = Ficha::where('empleado_id',$empleado->id)
-               ->where('estado','abierta')->get()->first();
+               ->where('estado','en progreso')->get()->first();
         $ficha->hora_fin_comida = Carbon::now()->format('H:i');
         if($ficha->save()) {
             return Response::json([
