@@ -112,14 +112,24 @@ class EmpleadoPolicy
         return($empleado->horaRangoFinalizarJornada());
     }
 
-    public function hora_rango_horas_extras(User $user, Empleado $empleado)
+    public function hora_rango_inicio_horas_extras(User $user, Empleado $empleado)
     {
-        return($empleado->horaRangoHorasExtras());
+        return($empleado->horaRangoInicioHorasExtras());
+    }
+
+    public function hora_rango_fin_horas_extras(User $user, Empleado $empleado)
+    {
+        return($empleado->horaRangoFinHorasExtras());
     }
 
     public function horas_extras_iniciadas(User $user, Empleado $empleado)
     {
         return($empleado->horasExtrasIniciadas());
+    }
+
+        public function horas_extras_finalizadas(User $user, Empleado $empleado)
+    {
+        return($empleado->horasExtrasFinalizadas());
     }
 
     public function iniciar_jornada(User $user, Empleado $empleado)
@@ -148,8 +158,7 @@ class EmpleadoPolicy
                !$user->is_admin AND
                $empleado->jornadaAsignada() AND
                $empleado->jornadaAbierta() AND
-               $empleado->jornadaAdmiteHorasExtras() AND
-               $empleado->horaRangoHorasExtras()
+               $empleado->jornadaAdmiteHorasExtras()
         );
     }
 
