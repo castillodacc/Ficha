@@ -17,7 +17,7 @@ class CreateJornadasTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->enum('tipo',['diurna', 'nocturna'])->default('diurna');
-            $table->smallInteger('horas_laborales')->unsigned()->default(8);
+            $table->string('horas_laborales');
             $table->boolean('horas_extras')->default(FALSE);
             $table->boolean('hora_comida')->default(FALSE);
             $table->boolean('activa')->default(TRUE);
