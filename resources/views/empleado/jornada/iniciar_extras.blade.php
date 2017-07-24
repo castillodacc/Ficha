@@ -5,30 +5,18 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div class="panel panel-default">
-          <div class="panel-heading">HORAS EXTRAS A TRABAJAR</div>
+          <div class="panel-heading">INICIAR HORAS EXTRAS</div>
           <div class="panel-body">
             @can('usuario_activo', $empleado)
             @can('usuario_no_admin', $empleado)
-            @can('jornada_admite_tiempo_descanso', $empleado)
             @can('jornada_asignada', $empleado)
             @can('jornada_abierta', $empleado)
-            @can('hora_rango_horas_extras', $empleado)
+            @can('horas_extras', $empleado)
+            @can('hora_rango_inicio_horas_extras', $empleado)
             @cannot('horas_extras_iniciadas', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/extras/iniciar', 'class' => 'form-inline', 'id' => 'iniciar-horas-extras-form']) !!}
             <div class="form-group">
-              {!! Form::label('horas_extras', 'Horas:') !!}
-              {!! Form::number('horas_extras',
-                               null,
-                               [
-                                 'class' => 'form-control',
-                                 'required' => 'required',
-                                 'min' => '1',
-                                 'max' => '8'
-                               ])
-              !!}
-            </div>
-            <div class="form-group">
-              {!! Form::submit('Enviar', ["class" => "btn btn-success"]) !!}
+              {!! Form::submit('Iniciar', ["class" => "btn btn-success"]) !!}
             </div>
           </div>
           {!! Form::close() !!}
@@ -39,7 +27,12 @@
           @endcannot
           @else
           <div class="alert alert-danger" role="alert">
-            <p>Faltan m&aacute;s de 30 minutos para finalizar su jornada y poder iniciar horas extras</p>
+            <p>Las horas extras se pueden activar pasada la hora de finalizar su jornada</p>
+          </div>
+          @endcan
+                          @else
+          <div class="alert alert-danger" role="alert">
+            <p>Su jornada no admite horas extras</p>
           </div>
           @endcan
                         @else
@@ -50,11 +43,6 @@
                   @else
           <div class="alert alert-danger" role="alert">
             <p>No tiene una jornada asignada</p>
-          </div>
-          @endcan
-                @else
-          <div class="alert alert-danger" role="alert">
-            <p>Su jornada no admite horas extras</p>
           </div>
           @endcan
               @else
