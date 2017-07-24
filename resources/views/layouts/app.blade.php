@@ -34,7 +34,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav navbar-nav-center">
               &nbsp;
-              @if(Auth::check() and Auth::user()->is_admin and \Route::current()->getName() != 'home')
+              @if(Auth::check() and Auth::user()->is_admin)
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Empleados<span class="caret"></span></a>
                   <ul class="dropdown-menu">
