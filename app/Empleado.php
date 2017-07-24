@@ -19,7 +19,7 @@ class Empleado extends Model
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at'
+        'deleted_at',
     ];
 
     protected $guarded = ['id'];
@@ -55,26 +55,28 @@ class Empleado extends Model
     public function jornadaAbierta()
     {
         $jornada_abierta = Ficha::where('empleado_id',$this->id)
-                         ->where('estado','abierta')->get()->first();
+                         ->where('estado','en progreso')->get()->first();
         return $jornada_abierta ? TRUE : FALSE;
     }
 
     public function horaRangoIniciarJornada()
     {
-        $hora_actual = Carbon::now();
+        $hora_actual    = Carbon::now();
         $inicio_jornada = Carbon::createFromFormat('H:i',$this->jornada->hora_inicio_jornada);
-        $fin_jornada = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
+        $fin_jornada    = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
 
         return($hora_actual->between($inicio_jornada->subMinutes(30), $fin_jornada->subSecond()));
     }
 
     public function horaRangoFinalizarJornada()
     {
-        $hora_actual = Carbon::now();
-        $fin_jornada = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
-        $prorroga    = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
+        $ficha = Ficha::where('empleado_id',$this->id)
+               ->where('estado','en progreso')->get()->first();
+        $hora_actual    = Carbon::now();
+        $inicio_jornada = Carbon::createFromFormat('H:i',$ficha->hora_inicio);
+        $fin_jornada    = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
 
-        return($hora_actual->between($fin_jornada, $prorroga->addMinutes(30)));
+        return($hora_actual->between($inicio_jornada->addMinutes(30), $fin_jornada->addMinutes(30)));
     }
 
     public function jornadaAdmiteHorasExtras()
@@ -82,20 +84,38 @@ class Empleado extends Model
         return $this->jornada->horas_extras;
     }
 
-    public function horaRangoHorasExtras()
+    public function horaRangoInicioHorasExtras()
     {
         $hora_actual = Carbon::now();
         $fin_jornada = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
         $prorroga    = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
-        return($hora_actual->between($fin_jornada->subMinutes(30), $prorroga->addMinutes(30)));
+        return($hora_actual->between($fin_jornada, $prorroga->addMinutes(30)));
+    }
+
+    public function horaRangoFinHorasExtras()
+    {
+        $ficha = Ficha::where('empleado_id',$this->id)
+               ->where('estado','en progreso')->get()->first();
+        $hora_actual   = Carbon::now();
+        $inicio_extras = Carbon::createFromFormat('H:i', $ficha->hora_inicio_extras);
+        $fin_extras    = Carbon::now()->addHours(8);
+        return($hora_actual->between($inicio_extras, $fin_extras));
     }
 
     public function horasExtrasIniciadas()
     {
         $ficha = Ficha::where('empleado_id',$this->id)
-               ->where('estado','abierta')->get()->first();
+               ->where('estado','en progreso')->get()->first();
 
-        return $ficha->horas_extras ? TRUE : FALSE;
+        return($ficha->hora_inicio_extras ? TRUE : FALSE);
+    }
+
+    public function horasExtrasFinalizadas()
+    {
+        $ficha = Ficha::where('empleado_id',$this->id)
+               ->where('estado','en progreso')->get()->first();
+
+        return($ficha->hora_fin_extras ? TRUE : FALSE);
     }
 
     public function jornadaAdmiteTiempoDescanso()
@@ -115,7 +135,7 @@ class Empleado extends Model
     public function tiempoDescansoIniciado()
     {
         $ficha = Ficha::where('empleado_id',$this->id)
-                         ->where('estado','abierta')->get()->first();
+                         ->where('estado','en progreso')->get()->first();
 
         return $ficha->hora_inicio_comida ? TRUE : FALSE;
     }
@@ -123,7 +143,7 @@ class Empleado extends Model
     public function tiempoDescansoFinalizado()
     {
         $ficha = Ficha::where('empleado_id',$this->id)
-                         ->where('estado','abierta')->get()->first();
+                         ->where('estado','en progreso')->get()->first();
 
         return $ficha->hora_fin_comida ? TRUE : FALSE;
     }
