@@ -18,13 +18,14 @@ class CreateFichasTable extends Migration
         Schema::create('fichas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('empleado_id')->unsigned();
-            $table->enum('estado',['abierta', 'cerrada', 'desconocido'])->default('abierta');
+            $table->enum('estado',['en progreso', 'cerrado', 'no laborado'])->default('en progreso');
             $table->date('fecha')->default(Carbon::now());
             $table->timestamp('hora_inicio')->useCurrent();
             $table->timestamp('hora_fin')->nullable();
             $table->timestamp('hora_inicio_comida')->nullable();
             $table->timestamp('hora_fin_comida')->nullable();
-            $table->smallInteger('horas_extras')->nullable();
+            $table->timestamp('hora_inicio_extras')->nullable();
+            $table->timestamp('hora_fin_extras')->nullable();
             $table->text('observaciones')->nullable();
             $table->timestamps();
             $table->softDeletes();
