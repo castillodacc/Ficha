@@ -24,20 +24,6 @@
               </div>
               <div class="row">
                 <div class="col-md-6">
-                  {!! Form::label('horas_laborales', 'Horas Laborales:', ['style' => 'display:block;']) !!}
-                  {!! Form::number('horas_laborales',
-                                   null,
-                                   [
-                                     'class' => 'form-control',
-                                     'required' => 'required',
-                                     'min' => '1',
-                                     'max' => '8'
-                                   ])
-                  !!}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6">
                   {!! Form::label('tipo', 'Tipo:',['style' => 'display:block;']) !!}
                   {!! Form::select('tipo',
                                    ['diurna' => 'Diurna','nocturna' => 'Nocturna'],
