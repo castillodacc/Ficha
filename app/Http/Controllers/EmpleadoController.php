@@ -323,18 +323,46 @@ class EmpleadoController extends Controller
     public function iniciarHorasExtras(Request $request, Empleado $empleado)
     {
         $ficha = Ficha::where('empleado_id',$empleado->id)
-                         ->where('estado','abierta')->get()->first();
-        $ficha->horas_extras = $request->horas_extras;
+                         ->where('estado','en progreso')->get()->first();
+        $ficha->hora_fin = $empleado->jornada->hora_fin_jornada;
+        $ficha->hora_inicio_extras = $empleado->jornada->hora_fin_jornada;
         if($ficha->save()) {
             return Response::json([
                 'error' => false,
-                'mensaje' => 'Horas extras guardadas',
+                'mensaje' => 'Horas extras iniciadas correctamente',
                 'code' => 200
             ], 200);
         } else {
             return Response::json([
                 'error' => true,
-                'mensaje' => 'Error al guardar horas extras',
+                'mensaje' => 'Error al iniciar horas extras',
+                'code' => 200
+            ], 200);
+        }
+    }
+
+        public function showFormFinalizarHorasExtras(Empleado $empleado)
+    {
+        return view('empleado.jornada.finalizar_extras')
+            ->with('empleado', $empleado);
+    }
+
+    public function finalizarHorasExtras(Request $request, Empleado $empleado)
+    {
+        $ficha = Ficha::where('empleado_id',$empleado->id)
+                         ->where('estado', 'en progreso')->get()->first();
+        $ficha->hora_fin_extras = Carbon::now()->format('H:i');
+        $ficha->estado = 'cerrado';
+        if($ficha->save()) {
+            return Response::json([
+                'error' => false,
+                'mensaje' => 'Horas extras finalizadas correctamente',
+                'code' => 200
+            ], 200);
+        } else {
+            return Response::json([
+                'error' => true,
+                'mensaje' => 'Error al finalizar horas extras',
                 'code' => 200
             ], 200);
         }
