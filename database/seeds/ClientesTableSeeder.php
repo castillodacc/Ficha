@@ -17,6 +17,5 @@ class ClientesTableSeeder extends Seeder
             'nombre' => 'Juana La Cubana',
             'created_at' => Carbon::now(),
         ]);
-
     }
 }
