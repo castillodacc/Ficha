@@ -10,6 +10,7 @@
             @can('usuario_activo', $empleado)
             @can('usuario_no_admin', $empleado)
             @can('jornada_asignada', $empleado)
+            @can('cliente_asignado', $empleado)
             @can('jornada_cerrada', $empleado)
             @can('hora_rango_iniciar_jornada', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/iniciar', 'class' => 'form-inline', 'id' => 'jornada-form']) !!}
@@ -25,6 +26,11 @@
                   @else
                     <div class="alert alert-danger" role="alert">
                       <p>Ya tiene una jornada abierta</p>
+                    </div>
+                    @endcan
+                                    @else
+                    <div class="alert alert-danger" role="alert">
+                      <p>No tiene un cliente asignado</p>
                     </div>
                     @endcan
                 @else

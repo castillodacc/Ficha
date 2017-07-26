@@ -67,6 +67,11 @@ class EmpleadoPolicy
         return(!$user->is_admin);
     }
 
+    public function cliente_asignado(User $user, Empleado $empleado)
+    {
+        return($empleado->clienteAsignado());
+    }
+
     public function jornada_asignada(User $user, Empleado $empleado)
     {
         return($empleado->jornadaAsignada());

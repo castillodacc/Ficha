@@ -47,6 +47,11 @@ class Empleado extends Model
         return $this->hasMany('App\Ficha');
     }
 
+    public function clienteAsignado()
+    {
+        return ($this->cliente_id) ? TRUE : FALSE;
+    }
+
     public function jornadaAsignada()
     {
         return ($this->jornada_id) ? TRUE : FALSE;
