@@ -70,15 +70,19 @@ class Empleado extends Model
         $inicio_jornada = Carbon::createFromFormat('H:i',$this->jornada->hora_inicio_jornada);
         $fin_jornada    = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
 
-        return($hora_actual->between($inicio_jornada->subMinutes(30), $fin_jornada->subSecond()));
+        return($hora_actual->between($inicio_jornada->subMinutes(30), $fin_jornada->subMinute()));
     }
 
     public function horaRangoFinalizarJornada()
     {
         $ficha = Ficha::where('empleado_id',$this->id)
                ->where('estado','en progreso')->get()->first();
-        $hora_actual    = Carbon::now();
-        $inicio_jornada = Carbon::createFromFormat('H:i',$ficha->hora_inicio);
+
+        $hora_actual             = Carbon::now();
+        $inicio_jornada_asignada = Carbon::createFromFormat('H:i', $this->jornada->hora_inicio_jornada);
+        $inicio_ficha            = Carbon::createFromFormat('H:i', $ficha->hora_inicio);
+
+        $inicio_jornada = ($inicio_ficha->gt($inicio_jornada_asignada)) ? $inicio_ficha : $inicio_jornada_asignada;
         $fin_jornada    = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
 
         return($hora_actual->between($inicio_jornada->addMinutes(30), $fin_jornada->addMinutes(30)));
