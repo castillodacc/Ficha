@@ -10,6 +10,7 @@
           </div>
           <div class="panel-body">
             @if($administradores->isNotEmpty())
+              <input type="text" id="buscar" placeholder="Buscar..."/>
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -83,6 +84,17 @@
   <script>
     $(document).ready(function() {
       $('[data-toggle="tooltip"]').tooltip();
+
+      $("#buscar").keyup(function() {
+        var texto = $(this).val().toLowerCase();
+        $.each($("table tbody tr"), function() {
+          if($(this).text().toLowerCase().indexOf(texto) === -1) {
+            $(this).hide();
+          } else {
+            $(this).show();
+          }
+        });
+      });
 
       $(".eliminar").on("click", function() {
         if(confirm("Presione Aceptar para eliminar administrador")) {

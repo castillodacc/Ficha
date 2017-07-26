@@ -9,6 +9,7 @@
           <div class="panel-body">
             @if(Auth::user()->is_admin)
               @if($fichas->isNotEmpty())
+                <input type="text" id="buscar" placeholder="Buscar..."/>
                 <div class="table-responsive">
                   <table class="table">
                     <thead>
@@ -76,4 +77,18 @@
       </div>
     </div>
   </div>
+  <script>
+    $(document).ready(function() {
+      $("#buscar").keyup(function() {
+        var texto = $(this).val().toLowerCase();
+        $.each($("table tbody tr"), function() {
+          if($(this).text().toLowerCase().indexOf(texto) === -1) {
+            $(this).hide();
+          } else {
+            $(this).show();
+          }
+        });
+      });
+    });
+  </script>
 @endsection
