@@ -19,7 +19,7 @@ class CreateFichasTable extends Migration
             $table->increments('id');
             $table->integer('empleado_id')->unsigned();
             $table->enum('estado',['en progreso', 'cerrado', 'no laborado'])->default('en progreso');
-            $table->date('fecha')->default(Carbon::now());
+            $table->date('fecha')->default(Carbon::now()->format('Y-m-d'));
             $table->timestamp('hora_inicio')->useCurrent();
             $table->timestamp('hora_fin')->nullable();
             $table->timestamp('hora_inicio_comida')->nullable();
