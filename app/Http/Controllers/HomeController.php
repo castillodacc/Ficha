@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Ficha;
+use App\Empleado;
 use Carbon\Carbon;
 
 class HomeController extends Controller
@@ -28,7 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $fichas = Ficha::where('fecha', Carbon::now()->format('Y-m-d'))->get();
-        return view('home')->with('fichas', $fichas);
+        $empleados         = Empleado::has('jornada')->get();
+        return view('home')
+            ->with('empleados', $empleados);
     }
 }

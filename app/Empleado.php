@@ -157,4 +157,15 @@ class Empleado extends Model
         return $ficha->hora_fin_comida ? TRUE : FALSE;
     }
 
+    public function getEstadoFichaDiaActual()
+    {
+        $ficha = Ficha::where('fecha', Carbon::now()->format('Y-m-d'))
+               ->where('empleado_id', $this->id)
+               ->first();
+        if($ficha) {
+            return($ficha->estado);
+        }
+        return("no laborado");
+    }
+
 }

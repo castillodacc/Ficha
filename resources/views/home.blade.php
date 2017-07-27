@@ -8,7 +8,7 @@
           <div class="panel-heading">Dashboard</div>
           <div class="panel-body">
             @if(Auth::user()->is_admin)
-              @if($fichas->isNotEmpty())
+              @if($empleados->isNotEmpty())
                 <input type="text" id="buscar" placeholder="Buscar..."/>
                 <div class="table-responsive">
                   <table class="table">
@@ -22,21 +22,21 @@
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach($fichas as $ficha)
+                      @foreach($empleados as $empleado)
                         <tr>
                           <th scope="row">{{$loop->iteration}}</th>
-                          <td>{{$ficha->empleado->nombre." ".$ficha->empleado->apellido}}</td>
-                          <td>{{$ficha->empleado->cliente->nombre ?: "N/D"}}</td>
-                          <td>{{$ficha->empleado->jornada->nombre ?: "N/D"}}</td>
-                          <td>{{$ficha->estado}}</td>
-                        </tr>
+                          <td>{{$empleado->nombre." ".$empleado->apellido}}</td>
+                          <td>{{$empleado->cliente->nombre ?: "N/D"}}</td>
+                          <td>{{$empleado->jornada->nombre ?: "N/D"}}</td>
+                          <td>{{$empleado->getEstadoFichaDiaActual()}}</td>
+                      </tr>
                       @endforeach
                     </tbody>
                   </table>
                 </div>
               @else
                 <div class="alert alert-danger" role="alert">
-                  <p>No se encuentran fichas para el d&iacute;a</p>
+                  <p>No se encuentran empleados con jornadas asignadas</p>
                 </div>
               @endif
             @else
