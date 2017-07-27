@@ -36,6 +36,11 @@
             <p>No  inici&oacute; las horas extras en esta jornada</p>
           </div>
           @endcan
+                          @else
+          <div class="alert alert-danger" role="alert">
+            <p>Su jornada no admite horas extras</p>
+          </div>
+          @endcan
                         @else
           <div class="alert alert-danger" role="alert">
             <p>No tiene una jornada abierta</p>
@@ -44,11 +49,6 @@
                   @else
           <div class="alert alert-danger" role="alert">
             <p>No tiene una jornada asignada</p>
-          </div>
-          @endcan
-                @else
-          <div class="alert alert-danger" role="alert">
-            <p>Su jornada no admite horas extras</p>
           </div>
           @endcan
               @else
