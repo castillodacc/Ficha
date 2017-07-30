@@ -132,9 +132,14 @@ class EmpleadoPolicy
         return($empleado->horasExtrasIniciadas());
     }
 
-        public function horas_extras_finalizadas(User $user, Empleado $empleado)
+    public function horas_extras_finalizadas(User $user, Empleado $empleado)
     {
         return($empleado->horasExtrasFinalizadas());
+    }
+
+    public function primera_jornada(User $user, Empleado $empleado)
+    {
+        return($empleado->primeraJornada());
     }
 
     public function iniciar_jornada(User $user, Empleado $empleado)

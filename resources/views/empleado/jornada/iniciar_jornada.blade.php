@@ -11,42 +11,48 @@
             @can('usuario_no_admin', $empleado)
             @can('jornada_asignada', $empleado)
             @can('cliente_asignado', $empleado)
+            @can('primera_jornada', $empleado)
             @can('jornada_cerrada', $empleado)
             @can('hora_rango_iniciar_jornada', $empleado)
             {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/iniciar', 'class' => 'form-inline', 'id' => 'jornada-form']) !!}
             <div class="form-group">
-                        {!! Form::submit('Iniciar Jornada', ["class" => "btn btn-success"]) !!}
-                      </div>
-                      {!! Form::close() !!}
-                    @else
-                      <div class="alert alert-danger" role="alert">
-                        <p>Faltan m&aacute;s de 30 minutos para el inicio de su jornada</p>
-                      </div>
-                    @endcan
-                  @else
-                    <div class="alert alert-danger" role="alert">
-                      <p>Ya tiene una jornada abierta</p>
-                    </div>
-                    @endcan
-                                    @else
-                    <div class="alert alert-danger" role="alert">
-                      <p>No tiene un cliente asignado</p>
-                    </div>
-                    @endcan
-                @else
-                  <div class="alert alert-danger" role="alert">
-                    <p>No tiene una jornada asignada</p>
-                  </div>
-                  @endcan
-              @else
-                <div class="alert alert-danger" role="alert">
-                  <p>Un usuario administrador no puede iniciar una jornada</p>
-                </div>
-                @endcan
+              {!! Form::submit('Iniciar Jornada', ["class" => "btn btn-success"]) !!}
+            </div>
+            {!! Form::close() !!}
             @else
-              <div class="alert alert-danger" role="alert">
-                <p>Su usuario fue bloqueado por un administrador</p>
-              </div>
+            <div class="alert alert-danger" role="alert">
+              <p>Faltan m&aacute;s de 30 minutos para el inicio de su jornada</p>
+            </div>
+            @endcan
+            @else
+            <div class="alert alert-danger" role="alert">
+              <p>Ya tiene una jornada abierta</p>
+            </div>
+            @endcan
+            @else
+            <div class="alert alert-danger" role="alert">
+              <p>Ya inici&oacute; y finaliz&oacute; la jornada del d&iacute;a</p>
+            </div>
+            @endcan
+            @else
+            <div class="alert alert-danger" role="alert">
+              <p>No tiene un cliente asignado</p>
+            </div>
+            @endcan
+                @else
+            <div class="alert alert-danger" role="alert">
+              <p>No tiene una jornada asignada</p>
+            </div>
+            @endcan
+              @else
+            <div class="alert alert-danger" role="alert">
+              <p>Un usuario administrador no puede iniciar una jornada</p>
+            </div>
+            @endcan
+            @else
+            <div class="alert alert-danger" role="alert">
+              <p>Su usuario fue bloqueado por un administrador</p>
+            </div>
             @endcan
           </div>
           <div class="panel-footer"></div>

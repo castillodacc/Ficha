@@ -162,10 +162,14 @@ class Empleado extends Model
         $ficha = Ficha::where('fecha', Carbon::now()->format('Y-m-d'))
                ->where('empleado_id', $this->id)
                ->first();
-        if($ficha) {
-            return($ficha->estado);
-        }
-        return("no laborado");
+        return(($ficha) ? $ficha->estado : "no laborado");
     }
 
+    public function primeraJornada()
+    {
+        $ficha = Ficha::where('fecha', Carbon::now()->format('Y-m-d'))
+               ->where('empleado_id', $this->id)
+               ->first();
+        return((!($ficha ? TRUE : FALSE)));
+    }
 }
