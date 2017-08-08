@@ -59,7 +59,15 @@ Route::resource('ficha', 'FichaController');
 
 Route::resource('cliente', 'ClienteController');
 
-Route::resource('reporte', 'ReporteController', ['only' => ['create', 'store']]);
+Route::get('/reporte/cliente',    'ReporteController@showFormReporteCliente');
+Route::get('/reporte/clientes',   'ReporteController@showFormReporteClientes');
+Route::get('/reporte/empleado',   'ReporteController@showFormReporteEmpleado');
+Route::get('/reporte/empleados',  'ReporteController@showFormReporteEmpleados');
+Route::post('/reporte/cliente',   'ReporteController@reporteCliente');
+Route::post('/reporte/clientes',  'ReporteController@reporteClientes');
+Route::post('/reporte/empleado',  'ReporteController@reporteEmpleado');
+Route::post('/reporte/empleados', 'ReporteController@reporteEmpleados');
+Route::resource('reporte', 'ReporteController', ['only' => ['index', 'create', 'store']]);
 
 Route::get('/password/update', 'PasswordController@update');
 Route::post('/password/save', 'PasswordController@save');
