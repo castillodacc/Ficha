@@ -54,9 +54,13 @@ class LoginController extends Controller
      */
     public function redirectTo()
     {
-        if (\Auth::user()->is_admin) {
-            return '/empleado';
+        if(\Auth::user()->default_password) {
+            return '/password/update';
+        } else {
+            if (\Auth::user()->is_admin) {
+                return '/empleado';
+            }
+            return '/home';
         }
-        return '/home';
     }
 }
