@@ -24,20 +24,6 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <div class="form-group">
-                  {!! Form::label('password', 'Contraseña:', ['style' => 'display:block;']) !!}
-                  {!! Form::text('password',
-                                 null,
-                                 [
-                                   'class' => 'form-control',
-                                   'required' => 'required'
-                                 ])
-                  !!}
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
                 {!! Form::label('correo', 'Correo:', ['style' => 'display:block;']) !!}
                 {!! Form::email('correo',
                                 $empleado->correo,

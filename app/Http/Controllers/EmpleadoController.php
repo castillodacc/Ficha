@@ -108,9 +108,8 @@ class EmpleadoController extends Controller
     public function update(Request $request, Empleado $empleado)
     {
         $empleado->user->username = $request->username;
-        $empleado->user->password = Hash::make($request->password);
         if($empleado->user->save()) {
-            if($empleado->update($request->except('username', 'password'))) {
+            if($empleado->update($request->except('username'))) {
                 return Response::json([
                     'error' => false,
                     'mensaje' => 'Empleado actualizado correctamente',
