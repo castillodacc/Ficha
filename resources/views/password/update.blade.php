@@ -12,6 +12,11 @@
                 {{ session('status') }}
               </div>
             @endif
+            @if (Auth::user()->default_password)
+              <div class="alert alert-warning">
+                Por favor, cambie la contraseña asignada a su cuenta.
+              </div>
+            @endif
             <form name="updated-password-form" id="updated-password-form" class="form-horizontal" role="form" method="POST" action="{{ url('/password/save') }}">
               {{ csrf_field() }}
               <div class="form-group{{ $errors->has('password_actual') ? ' has-error' : '' }}">
