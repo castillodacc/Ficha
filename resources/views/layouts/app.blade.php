@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Ficha') }}</title
+    {{-- <title>{{ config('app.name', 'Ficha') }}</title --}}
+    <title>Ficha</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Scripts -->
@@ -26,9 +27,12 @@
               <span class="icon-bar"></span>
             </button>
             <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/home') }}">
-              {{ config('app.name', 'Ficha') }}
-            </a>
+              @if(Route::currentRouteName() != 'login' and !Request::is('/'))
+                <a class="navbar-brand" href="{{ url('/home') }}">
+                  {{--               {{ config('app.name', 'Ficha') }} --}}
+                  Ficha
+                </a>
+              @endif
           </div>
           <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
@@ -63,14 +67,27 @@
                     <li><a href="/cliente/create">Crear</a></li>
                   </ul>
                 </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reportes<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-header">Clientes</li>
+                    <li><a href="/reporte/cliente">De un cliente</a></li>
+                    <li><a href="/reporte/clientes">Todos los clientes</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="dropdown-header">Empleados</li>
+                    <li><a href="/reporte/empleado">De un empleado</a></li>
+                    <li><a href="/reporte/empleados">Todos los empleados</a></li>
+                  </ul>
+                </li>
               @endif
             </ul>
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
               <!-- Authentication Links -->
               @if (Auth::guest())
-                <li><a href="{{ route('login') }}">Iniciar sesi&oacute;n</a></li>
-                {{-- <li><a href="{{ route('register') }}">Register</a></li> --}}
+                @if(Route::currentRouteName() != 'login' and !Request::is('/'))
+                  <li><a href="{{ route('login') }}">Iniciar sesi&oacute;n</a></li>
+                @endif
               @else
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }} <span class="caret"></span>
