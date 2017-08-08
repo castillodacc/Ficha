@@ -46,19 +46,37 @@ class PasswordController extends Controller
             'password_confirmation' => 'required|same:password',
         ], $messages);
 
-        $current_password = Auth::User()->password;
-        if(Hash::check($request->current_password, $current_password)) {
-            $user_id = Auth::User()->id;
-            $obj_user = User::find($user_id);
-            $obj_user->password = Hash::make($request->password);;
-            $obj_user->save();
-            return response()->json(
-                [
-                    'error' => false,
-                    'mensaje' => 'Contraseña cambiada correctamente',
-                    'code' => 200
-                ],
-                200);
+        if(Hash::check($request->current_password, Auth::user()->password)) {
+            if(Hash::check($request->password, Auth::user()->password)) {
+                return response()->json(
+                    [
+                        'error' => true,
+                        'mensaje' => 'La contraseña nueva no puede ser igual a la contraseña actual',
+                        'code' => 200
+                    ],
+                    200);
+            } else {
+                $user = User::find(Auth::user()->id);
+                $user->password = Hash::make($request->password);;
+                $user->default_password = FALSE;
+                if($user->save()) {
+                    return response()->json(
+                        [
+                            'error' => false,
+                            'mensaje' => 'Contraseña cambiada correctamente',
+                            'code' => 200
+                        ],
+                        200);
+                } else {
+                    return response()->json(
+                        [
+                            'error' => true,
+                            'mensaje' => 'Error al cambiar contraseña',
+                            'code' => 200
+                        ],
+                        200);
+                }
+            }
         }else{
             return response()->json(
                 [
@@ -68,6 +86,6 @@ class PasswordController extends Controller
                 ],
                 200);
         }
-   }
+    }
 
 }
