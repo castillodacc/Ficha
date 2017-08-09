@@ -60,7 +60,12 @@
                     </div>
                     <div class="form-group">
                       <br>
-                      {!! Form::submit('Generar', ["class" => "btn btn-success btn-block", "disabled" => "disabled"]) !!}
+                      {!! Form::submit('Generar',
+                                       [
+                                         "class" => "btn btn-success btn-block",
+                                       ]
+                          )
+                      !!}
                     </div>
                   </div>
                   {!! Form::close() !!}
@@ -71,6 +76,8 @@
                 <p>No se encuentran empleados registrados</p>
               </div>
             @endif
+          </div>
+          <div class="panel-footer">
           </div>
         </div>
       </div>
@@ -90,7 +97,7 @@
           {
             if(!respuesta.error) {
               var html = "<div class='alert alert-success'>";
-              html += "<p>" + respuesta.mensaje + "</p>";
+              html += "<a href='"+respuesta.archivo+"' download='reporte.pdf' class='btn btn-info descargar'>Descargar PDF</a>";
               html += "</div>";
               $(".panel-footer").html(html);
             } else {
