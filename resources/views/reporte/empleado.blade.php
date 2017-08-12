@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
-          <div class="panel-heading">Generar reporte de un cliente</div>
+          <div class="panel-heading">Generar reporte de un empleado</div>
           <div class="panel-body">
             @if($empleados->isNotEmpty())
               {!! Form::open(['url' => '/reporte/empleado', 'id' => 'reporte-empleado-form']) !!}
@@ -48,7 +48,7 @@
                       </div>
                       <div class="col-md-4">
                         {!! Form::label('empleado', 'Empleado:') !!}
-                        {!! Form::select('empledo',
+                        {!! Form::select('empleado',
                                          $empleados,
                                          null,
                                          [
@@ -96,7 +96,7 @@
           success: function(respuesta)
           {
             if(!respuesta.error) {
-              var html = "<div class='alert alert-success'>";
+              var html = "<div class='alert'>";
               html += "<a href='"+respuesta.archivo+"' download='reporte.pdf' class='btn btn-info descargar'>Descargar PDF</a>";
               html += "</div>";
               $(".panel-footer").html(html);

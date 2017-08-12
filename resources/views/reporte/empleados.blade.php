@@ -52,6 +52,7 @@
                       {!! Form::submit('Generar',
                                        [
                                          "class" => "btn btn-success btn-block",
+                                         "disabled" => "disabled",
                                        ]
                           )
                       !!}

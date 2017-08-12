@@ -95,7 +95,7 @@
           success: function(respuesta)
           {
             if(!respuesta.error) {
-              var html = "<div class='alert alert-success'>";
+              var html = "<div class='alert'>";
               html += "<a href='"+respuesta.archivo+"' download='reporte.pdf' class='btn btn-info descargar'>Descargar PDF</a>";
               html += "</div>";
               $(".panel-footer").html(html);
