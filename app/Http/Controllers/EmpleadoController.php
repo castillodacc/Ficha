@@ -221,6 +221,7 @@ class EmpleadoController extends Controller
     {
         $ficha = new Ficha();
         $ficha->empleado_id = $empleado->id;
+        $ficha->cliente_id = $empleado->cliente_id;
         if($ficha->save()) {
             return Response::json([
                 'error' => false,
