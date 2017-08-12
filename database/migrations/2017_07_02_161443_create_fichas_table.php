@@ -18,8 +18,9 @@ class CreateFichasTable extends Migration
         Schema::create('fichas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('empleado_id')->unsigned();
-            $table->enum('estado',['en progreso', 'cerrado', 'no laborado'])->default('en progreso');
-            $table->date('fecha')->default(Carbon::now()->format('Y-m-d'));
+            $table->integer('cliente_id')->unsigned();
+            $table->enum('estado', ['en progreso', 'cerrado', 'no laborado'])->default('en progreso');
+            $table->timestamp('fecha')->useCurrent();
             $table->timestamp('hora_inicio')->useCurrent();
             $table->timestamp('hora_fin')->nullable();
             $table->timestamp('hora_inicio_comida')->nullable();
@@ -30,6 +31,7 @@ class CreateFichasTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('empleado_id')->references('id')->on('empleados');
+            $table->foreign('cliente_id')->references('id')->on('clientes');
         });
     }
 
