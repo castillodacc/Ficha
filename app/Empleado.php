@@ -67,7 +67,7 @@ class Empleado extends Model
     public function horaRangoIniciarJornada()
     {
         $hora_actual    = Carbon::now();
-        $inicio_jornada = Carbon::createFromFormat('H:i',$this->jornada->hora_inicio_jornada);
+        $inicio_jornada = Carbon::createFromFormat('H:i', $this->jornada->hora_inicio_jornada);
         $fin_jornada    = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
 
         return($hora_actual->between($inicio_jornada->subMinutes(30), $fin_jornada->subMinute()));
@@ -75,8 +75,8 @@ class Empleado extends Model
 
     public function horaRangoFinalizarJornada()
     {
-        $ficha = Ficha::where('empleado_id',$this->id)
-               ->where('estado','en progreso')->get()->first();
+        $ficha = Ficha::where('empleado_id', $this->id)
+               ->where('estado', 'en progreso')->get()->first();
 
         $hora_actual             = Carbon::now();
         $inicio_jornada_asignada = Carbon::createFromFormat('H:i', $this->jornada->hora_inicio_jornada);
@@ -159,7 +159,7 @@ class Empleado extends Model
 
     public function getEstadoFichaDiaActual()
     {
-        $ficha = Ficha::where('fecha', Carbon::now()->format('Y-m-d'))
+        $ficha = Ficha::whereDate('fecha', Carbon::now()->format('Y-m-d'))
                ->where('empleado_id', $this->id)
                ->first();
         return(($ficha) ? $ficha->estado : "no laborado");
@@ -167,7 +167,7 @@ class Empleado extends Model
 
     public function primeraJornada()
     {
-        $ficha = Ficha::where('fecha', Carbon::now()->format('Y-m-d'))
+        $ficha = Ficha::whereDate('fecha', Carbon::now()->format('Y-m-d'))
                ->where('empleado_id', $this->id)
                ->first();
         return((!($ficha ? TRUE : FALSE)));
