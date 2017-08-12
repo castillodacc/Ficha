@@ -19,6 +19,7 @@ class Ficha extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'fecha',
         'hora_inicio',
         'hora_fin',
         'hora_inicio_comida',
