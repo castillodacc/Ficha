@@ -31,4 +31,9 @@ class Cliente extends Model
         return $this->hasMany('App\Empleado');
     }
 
+    public function fichas()
+    {
+        return $this->hasMany('App\Ficha');
+    }
+
 }
