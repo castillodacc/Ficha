@@ -122,4 +122,45 @@ class Ficha extends Model
             return(Carbon::createFromFormat('Y-m-d H:i:s', $hora)->format('H:i'));
         }
     }
+
+    public function getFechaAttribute($fecha)
+    {
+        if($fecha) {
+            return(Carbon::createFromFormat('Y-m-d H:i:s', $fecha)->format('Y-m-d'));
+        }
+    }
+
+    public function getTotalHorasTrabajadas()
+    {
+        if($this->hora_inicio AND $this->hora_fin) {
+            $hora_inicio = Carbon::createFromFormat('H:i', $this->hora_inicio);
+            $hora_fin    = Carbon::createFromFormat('H:i', $this->hora_fin);
+            return($hora_fin->diff($hora_inicio)->format('%H:%i'));
+        }
+        return(0);
+    }
+
+    public function getTotalHorasExtras()
+    {
+        if($this->hora_inicio_extras AND $this->hora_fin_extras) {
+            $hora_inicio = Carbon::createFromFormat('H:i', $this->hora_inicio_extras);
+            $hora_fin    = Carbon::createFromFormat('H:i', $this->hora_fin_extras);
+            return($hora_fin->diff($hora_inicio)->format('%H:%i'));
+        }
+        return(0);
+    }
+
+    public function getNombreEmpleados()
+    {
+        $nombres = "";
+        if($this->cliente->empleado->count() === 1) {
+            $nombres = $this->cliente->empleado->nombre;
+        } else {
+            foreach($this->cliente->empleado as $empleado) {
+                $nombres .= $empleado->nombre.", ";
+            }
+        }
+
+        return($nombres ?: "N/D");
+    }
 }
