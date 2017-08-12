@@ -33,6 +33,12 @@ class Ficha extends Model
         return $this->belongsTo('App\Empleado');
     }
 
+    public function cliente()
+    {
+        return $this->belongsTo('App\Cliente');
+    }
+
+
     public function setHoraInicioAttribute($hora)
     {
         if($hora) {
