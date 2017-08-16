@@ -39,35 +39,35 @@
             <ul class="nav navbar-nav navbar-nav-center">
               &nbsp;
               @if(Auth::check() and Auth::user()->is_admin)
-                <li class="dropdown">
+                <li class="dropdown col-xs-12 col-md-auto">
                   <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Empleados<span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="/empleado">Listado</a></li>
                     <li><a href="/empleado/create">Crear</a></li>
                   </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown col-xs-12 col-md-auto">
                   <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administradores<span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="/admin">Listado</a></li>
                     <li><a href="/admin/create">Crear</a></li>
                   </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown col-xs-12 col-md-auto">
                   <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Jornadas<span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="/jornada">Listado</a></li>
                     <li><a href="/jornada/create">Crear</a></li>
                   </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown col-xs-12 col-md-auto">
                   <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clientes<span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="/cliente">Listado</a></li>
                     <li><a href="/cliente/create">Crear</a></li>
                   </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown col-xs-12 col-md-auto">
                   <a href="#" class="dropdown-toggle navbar-brand" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reportes<span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li class="dropdown-header">Clientes</li>
@@ -82,7 +82,7 @@
               @endif
             </ul>
             <!-- Right Side Of Navbar -->
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right left-force">
               <!-- Authentication Links -->
               @if (Auth::guest())
                 @if(Route::currentRouteName() != 'login' and !Request::is('/'))
@@ -90,7 +90,7 @@
                 @endif
               @else
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }} <span class="caret"></span>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">&nbsp;&nbsp;&nbsp;&nbsp;{{ Auth::user()->username }} <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu" role="menu">
                       <li>

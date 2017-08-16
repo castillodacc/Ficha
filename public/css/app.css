@@ -8350,3 +8350,14 @@ button.close {
   }
 }
 
+@media (min-width: 991px) and (max-width: 2000px) {
+  .col-md-auto { width: auto !important; }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .left-force{
+    position: absolute;
+    top: 0px;
+    right: 70px;
+  }
+}
