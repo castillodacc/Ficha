@@ -17,9 +17,72 @@ class FichasTableSeeder extends Seeder
             'empleado_id' => 1,
             'cliente_id' => 1,
             'estado'     => 'cerrado',
+            'fecha' => '2017-08-15 10:33:33',
+            'hora_inicio' => '2017-08-15 10:33:33',
+            'hora_fin' => '2017-08-15 13:03:00',
+            'created_at'          => '2017-08-15 10:33:33',
+        ]);
+        DB::table('fichas')->insert([
+            'empleado_id' => 2,
+            'cliente_id' => 1,
+            'estado'     => 'cerrado',
+            'fecha' => '2017-08-15 10:33:33',
+            'hora_inicio' => '2017-08-15 10:33:33',
+            'hora_fin' => '2017-08-15 16:43:00',
+            'created_at'          => '2017-08-15 10:33:33',
+        ]);
+        DB::table('fichas')->insert([
+            'empleado_id' => 2,
+            'cliente_id' => 2,
+            'estado'     => 'cerrado',
+            'fecha' => '2017-08-15 10:33:33',
+            'hora_inicio' => '2017-08-15 10:33:33',
+            'hora_fin' => '2017-08-15 13:25:00',
+            'created_at'          => '2017-08-15 10:33:33',
+        ]);
+        DB::table('fichas')->insert([
+            'empleado_id' => 1,
+            'cliente_id' => 2,
+            'estado'     => 'cerrado',
+            'fecha' => '2017-08-15 10:33:33',
+            'hora_inicio' => '2017-08-15 10:33:33',
+            'hora_fin' => '2017-08-15 15:25:00',
+            'created_at'          => '2017-08-15 10:33:33',
+        ]);
+        DB::table('fichas')->insert([
+            'empleado_id' => 1,
+            'cliente_id' => 1,
+            'estado'     => 'cerrado',
+            'fecha' => '2017-08-16 10:33:33',
+            'hora_inicio' => '2017-08-16 10:33:33',
+            'hora_fin' => '2017-08-16 12:08:00',
+            'created_at'          => '2017-08-16 10:33:33',
+        ]);
+        DB::table('fichas')->insert([
+            'empleado_id' => 2,
+            'cliente_id' => 1,
+            'estado'     => 'cerrado',
+            'fecha' => '2017-08-16 10:33:33',
+            'hora_inicio' => '2017-08-16 10:33:33',
+            'hora_fin' => '2017-08-16 16:29:00',
+            'created_at'          => '2017-08-16 10:33:33',
+        ]);
+        DB::table('fichas')->insert([
+            'empleado_id' => 2,
+            'cliente_id' => 2,
+            'estado'     => 'cerrado',
+            'fecha' => '2017-08-16 10:33:33',
+            'hora_inicio' => '2017-08-16 10:33:33',
+            'hora_fin' => '2017-08-16 17:25:00',
+            'created_at'          => '2017-08-16 10:33:33',
+        ]);
+        DB::table('fichas')->insert([
+            'empleado_id' => 1,
+            'cliente_id' => 1,
+            'estado'     => 'cerrado',
             'fecha' => '2017-08-17 10:33:33',
             'hora_inicio' => '2017-08-17 10:33:33',
-            'hora_fin' => '2017-08-17 11:03:00',
+            'hora_fin' => '2017-08-17 14:54:00',
             'created_at'          => '2017-08-17 10:33:33',
         ]);
         DB::table('fichas')->insert([
