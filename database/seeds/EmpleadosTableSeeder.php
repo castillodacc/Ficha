@@ -15,6 +15,8 @@ class EmpleadosTableSeeder extends Seeder
     {
         DB::table('empleados')->insert([
             'user_id' => 2,
+            'cliente_id' => 1,
+            'jornada_id' => 1,
             'nombre' => 'Pedro',
             'apellido' => 'Navaja',
             'dni' => '123456',
