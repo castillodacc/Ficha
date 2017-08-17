@@ -27,5 +27,19 @@ class EmpleadosTableSeeder extends Seeder
             'created_at' => Carbon::now(),
         ]);
 
+        DB::table('empleados')->insert([
+            'user_id' => 3,
+            'cliente_id' => 1,
+            'jornada_id' => 1,
+            'nombre' => 'Jose',
+            'apellido' => 'Perez',
+            'dni' => '1234567',
+            'correo' => 'correo@correo.correo',
+            'direccion' => 'mi direccion',
+            'telefono' => '54654',
+            'telefono_movil' => '365854',
+            'created_at' => Carbon::now(),
+        ]);
+
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <div class="row">
-      <div class="col-md-8 col-md-offset-2">
+      <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3>Listado de clientes</h3>
@@ -17,6 +17,10 @@
                     <tr>
                       <th>#</th>
                       <th>Nombre</th>
+                      <th>Telefono</th>
+                      <th>Correo</th>
+                      <th>Direccion</th>
+                      <th>Observaciones</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
@@ -25,6 +29,10 @@
                       <tr>
                         <th scope="row">{{$loop->iteration}}</th>
                         <td>{{$cliente->nombre}}</td>
+                        <td>{{$cliente->telefono}}</td>
+                        <td>{{$cliente->correo}}</td>
+                        <td>{{$cliente->direccion}}</td>
+                        <td>{{$cliente->observaciones}}</td>
                         <td>
                           <a href="/cliente/{{$cliente->id}}/edit" data-toggle="tooltip" data-placement="left" title="Editar">
                             <span class="glyphicon glyphicon-pencil"></span>

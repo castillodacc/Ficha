@@ -43,7 +43,6 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-
         $cliente = Cliente::create($request->all());
         if($cliente) {
             return Response::json([
@@ -91,6 +90,11 @@ class ClienteController extends Controller
     public function update(Request $request, Cliente $cliente)
     {
         $cliente->nombre = $request->nombre;
+        $cliente->telefono = $request->telefono;
+        $cliente->correo = $request->correo;
+        $cliente->direccion = $request->direccion;
+        $cliente->observaciones = $request->observaciones;
+
         if($cliente->save()) {
             return Response::json([
                 'error' => false,

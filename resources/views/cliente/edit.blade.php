@@ -7,11 +7,27 @@
         <div class="panel panel-default">
           <div class="panel-heading">EDITAR CLIENTE</div>
           <div class="panel-body">
-            {!! Form::open(['url' => '/cliente/'.$cliente->id, 'method' => 'put', 'class' => 'form-inline', 'id' => 'update-cliente-form']) !!}
+            {!! Form::open(['url' => '/cliente/'.$cliente->id, 'method' => 'put', 'id' => 'update-cliente-form']) !!}
             <!-- Content form input -->
             <div class="form-group">
               {!! Form::label('nombre', 'Nombre y Apellido:') !!}
               {!! Form::text('nombre', $cliente->nombre, ['class' => 'form-control', 'required' => 'required']) !!}
+            </div>
+            <div class="form-group">
+              {!! Form::label('telefono', 'Telefono') !!}
+              {!! Form::text('telefono', $cliente->telefono, ['class' => 'form-control', 'required' => 'required']) !!}
+            </div>
+            <div class="form-group">
+              {!! Form::label('correo', 'Correo') !!}
+              {!! Form::text('correo', $cliente->correo, ['class' => 'form-control', 'required' => 'required']) !!}
+            </div>
+            <div class="form-group">
+              {!! Form::label('direccion', 'Direccion') !!}
+              {!! Form::text('direccion', $cliente->direccion, ['class' => 'form-control', 'required' => 'required']) !!}
+            </div>
+            <div class="form-group">
+              {!! Form::label('Observaciones', 'Observaciones') !!}
+              {!! Form::textarea('observaciones', $cliente->observaciones, ['class' => 'form-control','rows' => '4']) !!}
             </div>
             <div class="form-group">
               {!! Form::submit('Actualizar Cliente', ["class" => "btn btn-success"]) !!}

@@ -20,7 +20,7 @@ class Cliente extends Model
         'deleted_at'
     ];
 
-    protected $fillable = ['nombre', 'activo'];
+    protected $fillable = ['nombre', 'telefono', 'correo', 'direccion' , 'observaciones', 'activo'];
 
     protected $casts = [
         'activo' => 'boolean',
