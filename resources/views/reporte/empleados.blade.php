@@ -66,45 +66,17 @@
               </div>
             @endif
           </div>
-          <div class="panel-footer"></div>
+          <div class="panel-footer">
+            @if($errors->any())
+              <div class="alert alert-danger" role="alert">
+                <p>{{$errors->first()}}</p>
+              </div>
+            @endif
+          </div>
         </div>
       </div>
     </div>
   </div>
   <script type="text/javascript" src="{{ URL::asset('js/bootstrap-datepicker-1.6.4-dist/js/bootstrap-datepicker.min.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('js/bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.es.min.js') }}" charset="UTF-8"></script>
-  <script>
-    $(document).ready(function() {
-      $("#reporte-empleados-form").submit("submit", function(e) {
-        $.ajax({
-          url: $(this).attr("action"),
-          method: $(this).attr("method"),
-          data: $(this).serialize(),
-          dataType: 'json',
-          success: function(respuesta)
-          {
-            if(!respuesta.error) {
-              var html = "<div class='alert alert-success'>";
-              html += "<a href='"+respuesta.archivo+"' download='reporte.pdf' class='btn btn-info descargar'>Descargar PDF</a>";
-              html += "</div>";
-              $(".panel-footer").html(html);
-            } else {
-              var html = "<div class='alert alert-danger'>";
-              html +="<p>" + respuesta.mensaje + "</p>";
-              html += "</div>";
-              $(".panel-footer").html(html);
-            }
-          },
-          error: function()
-          {
-            var html = "<div class='alert alert-danger'>";
-            html +="<p>Error en el servidor. Por favor, recargue la p&aacute;gina, si el problema persiste contacte al administrador del sitio.</p>";
-            html += "</div>";
-            $(".panel-footer").html(html);
-          }
-        });
-        e.preventDefault();
-      });
-    });
-  </script>
 @endsection
