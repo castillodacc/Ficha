@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Redirect;
 
 use App\Cliente;
 use App\Empleado;
@@ -131,20 +131,9 @@ class ReporteController extends Controller
                 ->get();
         if($fichas->isNotEmpty()) {
             $pdf = PDF::loadView('reporte.tabla_cliente', compact('fichas'));
-            $reporte = $pdf->save('reporte.pdf');
-            return Response::json([
-                'error' => false,
-                'archivo' => '/reporte.pdf',
-                'mensaje' => 'todo ok',
-                'code' => 200
-            ], 200);
+            return $pdf->stream('reporte.pdf');
         } else {
-            return Response::json([
-                'error' => true,
-                'archivo' => null,
-                'mensaje' => 'Error. No hay información en el rango de fecha seleccionado',
-                'code' => 200
-            ], 200);
+            return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
         }
     }
 
@@ -156,20 +145,9 @@ class ReporteController extends Controller
                 ->get();
         if($fichas->isNotEmpty()) {
             $pdf = PDF::loadView('reporte.tabla_clientes', compact('fichas'));
-            $reporte = $pdf->save('reporte.pdf');
-            return Response::json([
-                'error' => false,
-                'archivo' => '/reporte.pdf',
-                'mensaje' => 'todo ok',
-                'code' => 200
-            ], 200);
+            return $pdf->stream('reporte.pdf');
         } else {
-            return Response::json([
-                'error' => true,
-                'archivo' => null,
-                'mensaje' => 'Error. No hay información en el rango de fecha seleccionado',
-                'code' => 200
-            ], 200);
+            return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
         }
     }
 
@@ -181,22 +159,26 @@ class ReporteController extends Controller
                 ->where('empleado_id', $request->empleado)
                 ->get();
         if($fichas->isNotEmpty()) {
-            $pdf = PDF::loadView('reporte.tabla_empleado', compact('fichas'));
-            $reporte = $pdf->save('reporte.pdf');
-            return Response::json([
-                'error' => false,
-                'archivo' => '/reporte.pdf',
-                'mensaje' => 'todo ok',
-                'code' => 200
-            ], 200);
+            $hoy1 = Carbon::today();
+            $hoy2 = Carbon::today();
+            $horas_trabajadas = null;
+            $horas_extras     = null;
+            // foreach($fichas as $ficha) {
+            //     $tiempo_trabajado = $ficha->getTotalHorasTrabajadas();
+            //     if($tiempo_trabajado) {
+
+            //         $horas_e = $ficha->getTotalHorasExtras();
+
+            //         if($horas_e) {
+
+            //         }
+            //     }
+            // }
+            $pdf = PDF::loadView('reporte.tabla_empleado', compact('fichas', 'horas_trabajadas', 'horas_extras'));
+            return $pdf->stream('reporte.pdf');
         } else {
-            return Response::json([
-                'error' => true,
-                'archivo' => null,
-                'mensaje' => 'Error. No hay información en el rango de fecha seleccionado',
-                'code' => 200
-            ], 200);
-        }
+            return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
+       }
     }
 
     public function reporteEmpleados(Request $request)
@@ -207,20 +189,9 @@ class ReporteController extends Controller
                 ->get();
         if($fichas->isNotEmpty()) {
             $pdf = PDF::loadView('reporte.tabla_empleados', compact('fichas'));
-            $reporte = $pdf->save('reporte.pdf');
-            return Response::json([
-                'error' => false,
-                'archivo' => '/reporte.pdf',
-                'mensaje' => 'todo ok',
-                'code' => 200
-            ], 200);
+            return $pdf->stream('reporte.pdf');
         } else {
-            return Response::json([
-                'error' => true,
-                'archivo' => null,
-                'mensaje' => 'Error. No hay información en el rango de fecha seleccionado',
-                'code' => 200
-            ], 200);
+            return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
         }
     }
 
