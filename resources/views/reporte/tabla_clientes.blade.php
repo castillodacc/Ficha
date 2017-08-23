@@ -8410,6 +8410,33 @@
           </tr>
         </tbody>
       </table>
+
+      <!-- por cada cliente los datos generales en el rango de fecha -->
+      <table class="table" border="1">
+        <thead>
+          <tr>
+            <th>RANGO DE FECHA SELECCIONADO</th>
+            <th>CLIENTE</th>
+            <th>HORAS TRABAJADAS</th>
+            <th>HORAS EXTRAS</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>De 2017-08-16 a 2017-08-22</td>
+              <td>Sra. Juana</td>
+              <td>4:00</td>
+              <td>6:25</td>
+            </tr>
+            <tr>
+              <td>De 2017-08-16 a 2017-08-22</td>
+              <td>Dr. Andres</td>
+              <td>3:00</td>
+              <td>1:25</td>
+            </tr>
+        </tbody>
+      </table>
+    <!-- por cada cliente -->
     @else
       <div class="alert alert-danger" role="alert">
         <p>No se encuentran datos en la fecha seleccionada</p>
