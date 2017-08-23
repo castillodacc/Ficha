@@ -8401,14 +8401,12 @@
           <tr>
             <td></td>
             <td colspan="4"><strong>TOTAL HORAS TRABAJADAS</strong></td>
-            {{-- <td>{{$horas_trabajadas}}</td> --}}
-            <td>0</td>
+            <td>{{$horas_trabajadas}}</td>
           </tr>
           <tr>
             <td></td>
             <td colspan="4"><strong>TOTAL HORAS EXTRAS</strong></td>
-            {{-- <td>{{$horas_extras}}</td> --}}
-            <td>0</td>
+            <td>{{$horas_extras}}</td>
           </tr>
         </tbody>
       </table>
