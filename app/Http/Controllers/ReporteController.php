@@ -130,6 +130,26 @@ class ReporteController extends Controller
                 ->where('cliente_id', $request->cliente)
                 ->get();
         if($fichas->isNotEmpty()) {
+            $hora             = Carbon::today();
+            $tiempo_trabajado = Carbon::today();
+            $tiempo_extras     = Carbon::today();
+            foreach($fichas as $ficha) {
+                $horas_t = $ficha->getTotalHorasTrabajadas();
+                if($horas_t) {
+                    $tiempo_t = explode(":", $horas_t);
+                    $tiempo_trabajado->addHours($tiempo_t[0]);
+                    $tiempo_trabajado->addMinutes($tiempo_t[1]);
+
+                    $horas_e = $ficha->getTotalHorasExtras();
+                    if($horas_e) {
+                        $tiempo_e = explode(":", $horas_e);
+                        $tiempo_extras->addHours($tiempo_e[0]);
+                        $tiempo_extras->addMinutes($tiempo_e[1]);
+                    }
+                }
+            }
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%i');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%i');
             $pdf = PDF::loadView('reporte.tabla_cliente', compact('fichas'));
             return $pdf->stream('reporte.pdf');
         } else {
@@ -144,6 +164,26 @@ class ReporteController extends Controller
                 ->whereDate('fecha', '<=', $request->fecha_fin)
                 ->get();
         if($fichas->isNotEmpty()) {
+            $hora             = Carbon::today();
+            $tiempo_trabajado = Carbon::today();
+            $tiempo_extras     = Carbon::today();
+            foreach($fichas as $ficha) {
+                $horas_t = $ficha->getTotalHorasTrabajadas();
+                if($horas_t) {
+                    $tiempo_t = explode(":", $horas_t);
+                    $tiempo_trabajado->addHours($tiempo_t[0]);
+                    $tiempo_trabajado->addMinutes($tiempo_t[1]);
+
+                    $horas_e = $ficha->getTotalHorasExtras();
+                    if($horas_e) {
+                        $tiempo_e = explode(":", $horas_e);
+                        $tiempo_extras->addHours($tiempo_e[0]);
+                        $tiempo_extras->addMinutes($tiempo_e[1]);
+                    }
+                }
+            }
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%i');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%i');
             $pdf = PDF::loadView('reporte.tabla_clientes', compact('fichas'));
             return $pdf->stream('reporte.pdf');
         } else {
@@ -159,21 +199,26 @@ class ReporteController extends Controller
                 ->where('empleado_id', $request->empleado)
                 ->get();
         if($fichas->isNotEmpty()) {
-            $hoy1 = Carbon::today();
-            $hoy2 = Carbon::today();
-            $horas_trabajadas = null;
-            $horas_extras     = null;
-            // foreach($fichas as $ficha) {
-            //     $tiempo_trabajado = $ficha->getTotalHorasTrabajadas();
-            //     if($tiempo_trabajado) {
+            $hora             = Carbon::today();
+            $tiempo_trabajado = Carbon::today();
+            $tiempo_extras     = Carbon::today();
+            foreach($fichas as $ficha) {
+                $horas_t = $ficha->getTotalHorasTrabajadas();
+                if($horas_t) {
+                    $tiempo_t = explode(":", $horas_t);
+                    $tiempo_trabajado->addHours($tiempo_t[0]);
+                    $tiempo_trabajado->addMinutes($tiempo_t[1]);
 
-            //         $horas_e = $ficha->getTotalHorasExtras();
-
-            //         if($horas_e) {
-
-            //         }
-            //     }
-            // }
+                    $horas_e = $ficha->getTotalHorasExtras();
+                    if($horas_e) {
+                        $tiempo_e = explode(":", $horas_e);
+                        $tiempo_extras->addHours($tiempo_e[0]);
+                        $tiempo_extras->addMinutes($tiempo_e[1]);
+                    }
+                }
+            }
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%i');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%i');
             $pdf = PDF::loadView('reporte.tabla_empleado', compact('fichas', 'horas_trabajadas', 'horas_extras'));
             return $pdf->stream('reporte.pdf');
         } else {
@@ -188,6 +233,26 @@ class ReporteController extends Controller
                 ->whereDate('fecha', '<=', $request->fecha_fin)
                 ->get();
         if($fichas->isNotEmpty()) {
+            $hora             = Carbon::today();
+            $tiempo_trabajado = Carbon::today();
+            $tiempo_extras     = Carbon::today();
+            foreach($fichas as $ficha) {
+                $horas_t = $ficha->getTotalHorasTrabajadas();
+                if($horas_t) {
+                    $tiempo_t = explode(":", $horas_t);
+                    $tiempo_trabajado->addHours($tiempo_t[0]);
+                    $tiempo_trabajado->addMinutes($tiempo_t[1]);
+
+                    $horas_e = $ficha->getTotalHorasExtras();
+                    if($horas_e) {
+                        $tiempo_e = explode(":", $horas_e);
+                        $tiempo_extras->addHours($tiempo_e[0]);
+                        $tiempo_extras->addMinutes($tiempo_e[1]);
+                    }
+                }
+            }
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%i');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%i');
             $pdf = PDF::loadView('reporte.tabla_empleados', compact('fichas'));
             return $pdf->stream('reporte.pdf');
         } else {
