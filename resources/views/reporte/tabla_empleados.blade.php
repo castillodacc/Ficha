@@ -8410,33 +8410,27 @@
           </tr>
         </tbody>
       </table>
-
-      <!-- por cada empleado los datos generales en el rango de fecha -->
+      <div class="page-break"></div>
       <table class="table" border="1">
         <thead>
           <tr>
             <th>RANGO DE FECHA SELECCIONADO</th>
             <th>EMPLEADO</th>
-            <th>HORAS TRABAJADAS</th>
-            <th>HORAS EXTRAS</th>
+            <th>TOTAL HORAS TRABAJADAS</th>
+            <th>TOTAL HORAS EXTRAS</th>
           </tr>
         </thead>
         <tbody>
+          @foreach($empleados as $empleado)
             <tr>
-              <td>De 2017-08-16 a 2017-08-22</td>
-              <td>Jose</td>
-              <td>4:00</td>
-              <td>6:25</td>
+              <td>De {{$fecha_inicio}} a {{$fecha_fin}}</td>
+              <td>{{$empleado->getNombreEmpleado($empleado->empleado_id)}}</td>
+              <td>{{$empleado->horasTrabajadasEmpleado($empleado->empleado_id, $fecha_inicio, $fecha_fin)}}</td>
+              <td>{{$empleado->horasExtrasTrabajadasEmpleado($empleado->empleado_id, $fecha_inicio, $fecha_fin)}}</td>
             </tr>
-            <tr>
-              <td>De 2017-08-16 a 2017-08-22</td>
-              <td>Pedro</td>
-              <td>3:00</td>
-              <td>1:25</td>
-            </tr>
+          @endforeach
         </tbody>
       </table>
-    <!-- por cada empleado -->
 
     @else
       <div class="alert alert-danger" role="alert">
