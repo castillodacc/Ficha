@@ -182,9 +182,26 @@ class ReporteController extends Controller
                     }
                 }
             }
+            $clientes = Ficha::select('cliente_id')
+                       ->where('estado', '!=', 'en progreso')
+                       ->whereDate('fecha', '>=', $request->fecha_inicio)
+                       ->whereDate('fecha', '<=', $request->fecha_fin)
+                       ->groupBy('cliente_id')
+                       ->get();
+
+            $fecha_inicio     = $request->fecha_inicio;
+            $fecha_fin        = $request->fecha_fin;
             $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%i');
             $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%i');
-            $pdf = PDF::loadView('reporte.tabla_clientes', compact('fichas', 'horas_trabajadas', 'horas_extras'));
+            $pdf = PDF::loadView('reporte.tabla_clientes',
+                                 compact('fichas',
+                                         'horas_trabajadas',
+                                         'horas_extras',
+                                         'fecha_inicio',
+                                         'fecha_fin',
+                                         'clientes'
+                                 )
+            );
             return $pdf->stream('reporte.pdf');
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
