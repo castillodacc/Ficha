@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use App\Empleado;
+use App\Cliente;
 
 class Ficha extends Model
 {
@@ -163,4 +165,117 @@ class Ficha extends Model
 
         return($nombres ?: "N/D");
     }
+
+    function horasTrabajadasEmpleado($empleado, $fecha_inicio, $fecha_fin)
+    {
+        $fichas = Ficha::where('estado', '!=', 'en progreso')
+                ->where('empleado_id', $empleado)
+                ->whereDate('fecha', '>=', $fecha_inicio)
+                ->whereDate('fecha', '<=', $fecha_fin)
+                ->get();
+        if($fichas->isNotEmpty()) {
+            $hora             = Carbon::today();
+            $tiempo_trabajado = Carbon::today();
+            foreach($fichas as $ficha) {
+                $horas_t = $ficha->getTotalHorasTrabajadas();
+                if($horas_t) {
+                    $tiempo_t = explode(":", $horas_t);
+                    $tiempo_trabajado->addHours($tiempo_t[0]);
+                    $tiempo_trabajado->addMinutes($tiempo_t[1]);
+                }
+            }
+            return($tiempo_trabajado->diff($hora)->format('%H:%i'));
+        } else {
+            return(0);
+        }
+    }
+
+    function horasExtrasTrabajadasEmpleado($empleado, $fecha_inicio, $fecha_fin)
+    {
+        $fichas = Ficha::where('estado', '!=', 'en progreso')
+                ->where('empleado_id', $empleado)
+                ->whereDate('fecha', '>=', $fecha_inicio)
+                ->whereDate('fecha', '<=', $fecha_fin)
+                ->get();
+        if($fichas->isNotEmpty()) {
+            $hora          = Carbon::today();
+            $tiempo_extras = Carbon::today();
+            foreach($fichas as $ficha) {
+                $horas_e = $ficha->getTotalHorasExtras();
+                if($horas_e) {
+                    $tiempo_e = explode(":", $horas_e);
+                    $tiempo_extras->addHours($tiempo_e[0]);
+                    $tiempo_extras->addMinutes($tiempo_e[1]);
+                }
+            }
+            return($tiempo_extras->diff($hora)->format('%H:%i'));
+        } else {
+            return(0);
+        }
+    }
+
+    function getNombreEmpleado($empleado)
+    {
+        $empleado = Empleado::select('nombre')
+                  ->where('id', $empleado)
+                  ->first();
+        return(($empleado) ? $empleado->nombre : "N/D");
+    }
+
+        function horasTrabajadasCliente($cliente, $fecha_inicio, $fecha_fin)
+    {
+        $fichas = Ficha::where('estado', '!=', 'en progreso')
+                ->where('cliente_id', $cliente)
+                ->whereDate('fecha', '>=', $fecha_inicio)
+                ->whereDate('fecha', '<=', $fecha_fin)
+                ->get();
+        if($fichas->isNotEmpty()) {
+            $hora             = Carbon::today();
+            $tiempo_trabajado = Carbon::today();
+            foreach($fichas as $ficha) {
+                $horas_t = $ficha->getTotalHorasTrabajadas();
+                if($horas_t) {
+                    $tiempo_t = explode(":", $horas_t);
+                    $tiempo_trabajado->addHours($tiempo_t[0]);
+                    $tiempo_trabajado->addMinutes($tiempo_t[1]);
+                }
+            }
+            return($tiempo_trabajado->diff($hora)->format('%H:%i'));
+        } else {
+            return(0);
+        }
+    }
+
+    function horasExtrasTrabajadasCliente($cliente, $fecha_inicio, $fecha_fin)
+    {
+        $fichas = Ficha::where('estado', '!=', 'en progreso')
+                ->where('cliente_id', $cliente)
+                ->whereDate('fecha', '>=', $fecha_inicio)
+                ->whereDate('fecha', '<=', $fecha_fin)
+                ->get();
+        if($fichas->isNotEmpty()) {
+            $hora          = Carbon::today();
+            $tiempo_extras = Carbon::today();
+            foreach($fichas as $ficha) {
+                $horas_e = $ficha->getTotalHorasExtras();
+                if($horas_e) {
+                    $tiempo_e = explode(":", $horas_e);
+                    $tiempo_extras->addHours($tiempo_e[0]);
+                    $tiempo_extras->addMinutes($tiempo_e[1]);
+                }
+            }
+            return($tiempo_extras->diff($hora)->format('%H:%i'));
+        } else {
+            return(0);
+        }
+    }
+
+    function getNombreCliente($cliente)
+    {
+        $cliente = Cliente::select('nombre')
+                  ->where('id', $cliente)
+                  ->first();
+        return(($cliente) ? $cliente->nombre : "N/D");
+    }
+
 }
