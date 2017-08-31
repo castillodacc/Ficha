@@ -148,8 +148,8 @@ class ReporteController extends Controller
                     }
                 }
             }
-            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%i');
-            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%i');
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%I');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%I');
             $pdf = PDF::loadView('reporte.tabla_cliente', compact('fichas', 'horas_trabajadas', 'horas_extras'));
             return $pdf->stream('reporte.pdf');
         } else {
@@ -191,8 +191,8 @@ class ReporteController extends Controller
 
             $fecha_inicio     = $request->fecha_inicio;
             $fecha_fin        = $request->fecha_fin;
-            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%i');
-            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%i');
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%I');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%I');
             $pdf = PDF::loadView('reporte.tabla_clientes',
                                  compact('fichas',
                                          'horas_trabajadas',
@@ -234,8 +234,8 @@ class ReporteController extends Controller
                     }
                 }
             }
-            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%i');
-            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%i');
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%I');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%I');
             $pdf = PDF::loadView('reporte.tabla_empleado', compact('fichas', 'horas_trabajadas', 'horas_extras'));
             return $pdf->stream('reporte.pdf');
         } else {
@@ -277,8 +277,8 @@ class ReporteController extends Controller
 
             $fecha_inicio     = $request->fecha_inicio;
             $fecha_fin        = $request->fecha_fin;
-            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%i');
-            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%i');
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%I');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%I');
             $pdf = PDF::loadView('reporte.tabla_empleados',
                                  compact('fichas',
                                          'horas_trabajadas',

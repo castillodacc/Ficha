@@ -137,9 +137,9 @@ class Ficha extends Model
         if($this->hora_inicio AND $this->hora_fin) {
             $hora_inicio = Carbon::createFromFormat('H:i', $this->hora_inicio);
             $hora_fin    = Carbon::createFromFormat('H:i', $this->hora_fin);
-            return($hora_fin->diff($hora_inicio)->format('%H:%i'));
+            return($hora_fin->diff($hora_inicio)->format('%H:%I'));
         }
-        return(0);
+        return("00:00");
     }
 
     public function getTotalHorasExtras()
@@ -147,9 +147,9 @@ class Ficha extends Model
         if($this->hora_inicio_extras AND $this->hora_fin_extras) {
             $hora_inicio = Carbon::createFromFormat('H:i', $this->hora_inicio_extras);
             $hora_fin    = Carbon::createFromFormat('H:i', $this->hora_fin_extras);
-            return($hora_fin->diff($hora_inicio)->format('%H:%i'));
+            return($hora_fin->diff($hora_inicio)->format('%H:%I'));
         }
-        return(0);
+        return("00:00");
     }
 
     public function getNombreEmpleados()
@@ -184,9 +184,9 @@ class Ficha extends Model
                     $tiempo_trabajado->addMinutes($tiempo_t[1]);
                 }
             }
-            return($tiempo_trabajado->diff($hora)->format('%H:%i'));
+            return($tiempo_trabajado->diff($hora)->format('%H:%I'));
         } else {
-            return(0);
+            return("00:00");
         }
     }
 
@@ -208,9 +208,9 @@ class Ficha extends Model
                     $tiempo_extras->addMinutes($tiempo_e[1]);
                 }
             }
-            return($tiempo_extras->diff($hora)->format('%H:%i'));
+            return($tiempo_extras->diff($hora)->format('%H:%I'));
         } else {
-            return(0);
+            return("00:00");
         }
     }
 
@@ -240,9 +240,9 @@ class Ficha extends Model
                     $tiempo_trabajado->addMinutes($tiempo_t[1]);
                 }
             }
-            return($tiempo_trabajado->diff($hora)->format('%H:%i'));
+            return($tiempo_trabajado->diff($hora)->format('%H:%I'));
         } else {
-            return(0);
+            return("00:00");
         }
     }
 
@@ -264,9 +264,9 @@ class Ficha extends Model
                     $tiempo_extras->addMinutes($tiempo_e[1]);
                 }
             }
-            return($tiempo_extras->diff($hora)->format('%H:%i'));
+            return($tiempo_extras->diff($hora)->format('%H:%I'));
         } else {
-            return(0);
+            return("00:00");
         }
     }
 
