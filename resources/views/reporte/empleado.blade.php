@@ -8,7 +8,7 @@
           <div class="panel-heading">Generar reporte de un empleado</div>
           <div class="panel-body">
             @if($empleados->isNotEmpty())
-              {!! Form::open(['url' => '/reporte/empleado', 'id' => 'reporte-empleado-form']) !!}
+              {!! Form::open(['url' => '/reporte/empleado', 'id' => 'reporte-empleado-form', 'target' => '_blank']) !!}
               <div class="form-group">
                 <div class="panel panel-default">
                   <div class="panel-body">

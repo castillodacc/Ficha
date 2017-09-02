@@ -151,7 +151,7 @@ class ReporteController extends Controller
             $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%I');
             $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%I');
             $pdf = PDF::loadView('reporte.tabla_cliente', compact('fichas', 'horas_trabajadas', 'horas_extras'));
-            return $pdf->stream('reporte.pdf');
+            return $pdf->stream('reporte.pdf', array("Attachment" => false));
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
         }
@@ -202,7 +202,7 @@ class ReporteController extends Controller
                                          'clientes'
                                  )
             );
-            return $pdf->stream('reporte.pdf');
+            return $pdf->stream('reporte.pdf', array("Attachment" => false));
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
         }
@@ -237,7 +237,7 @@ class ReporteController extends Controller
             $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%I');
             $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%I');
             $pdf = PDF::loadView('reporte.tabla_empleado', compact('fichas', 'horas_trabajadas', 'horas_extras'));
-            return $pdf->stream('reporte.pdf');
+            return $pdf->stream('reporte.pdf', array("Attachment" => false));
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
        }
@@ -288,7 +288,7 @@ class ReporteController extends Controller
                                          'empleados'
                                  )
             );
-            return $pdf->stream('reporte.pdf');
+            return $pdf->stream('reporte.pdf', array("Attachment" => false));
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
         }

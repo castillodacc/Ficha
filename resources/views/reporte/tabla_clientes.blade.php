@@ -8400,13 +8400,15 @@
           @endforeach
           <tr>
             <td></td>
-            <td colspan="4"><strong>TOTAL HORAS TRABAJADAS</strong></td>
+            <td colspan="3"><strong>TOTALES</strong></td>
             <td>{{$horas_trabajadas}}</td>
+            <td>{{$horas_extras}}</td>
           </tr>
           <tr>
             <td></td>
-            <td colspan="4"><strong>TOTAL HORAS EXTRAS</strong></td>
-            <td>{{$horas_extras}}</td>
+            <td colspan="3"><strong>JORNADAS CUMPLIDAS</strong></td>
+            <td><strong>4.4</strong> jornadas</td>
+            <td></td>
           </tr>
         </tbody>
       </table>

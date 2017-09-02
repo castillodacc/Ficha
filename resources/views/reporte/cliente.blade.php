@@ -8,7 +8,7 @@
           <div class="panel-heading">Generar reporte de un cliente</div>
           <div class="panel-body">
             @if($clientes->isNotEmpty())
-              {!! Form::open(['url' => '/reporte/cliente', 'id' => 'reporte-cliente-form']) !!}
+              {!! Form::open(['url' => '/reporte/cliente', 'id' => 'reporte-cliente-form', 'target' => '_blank']) !!}
               <div class="form-group">
                 <div class="panel panel-default">
                   <div class="panel-body">
@@ -62,7 +62,7 @@
                       <br>
                       {!! Form::submit('Generar',
                                        [
-                                         "class" => "btn btn-success btn-block",
+                                         "class" => "btn btn-success btn-block"
                                        ]
                           )
                       !!}
