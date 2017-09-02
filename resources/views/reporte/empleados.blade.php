@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-md-10 col-md-offset-1">
         <div class="panel panel-default">
-          <div class="panel-heading">Generar reporte para todos los clientes</div>
+          <div class="panel-heading">Generar reporte para todos los empleados</div>
           <div class="panel-body">
             @if($empleados->isNotEmpty())
               {!! Form::open(['url' => '/reporte/empleados', 'id' => 'reporte-empleados-form', 'target' => '_blank']) !!}
