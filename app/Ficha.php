@@ -184,9 +184,9 @@ class Ficha extends Model
                     $tiempo_trabajado->addMinutes($tiempo_t[1]);
                 }
             }
-            return($tiempo_trabajado->diff($hora)->format('%H:%I'));
+            return($tiempo_trabajado->diff($hora)->format('%Dd:%Hh:%Im'));
         } else {
-            return("00:00");
+            return("00h:00m");
         }
     }
 
@@ -208,9 +208,9 @@ class Ficha extends Model
                     $tiempo_extras->addMinutes($tiempo_e[1]);
                 }
             }
-            return($tiempo_extras->diff($hora)->format('%H:%I'));
+            return($tiempo_extras->diff($hora)->format('%Dd:%Hh:%Im'));
         } else {
-            return("00:00");
+            return("00h:00m");
         }
     }
 
@@ -222,7 +222,7 @@ class Ficha extends Model
         return(($empleado) ? $empleado->nombre : "N/D");
     }
 
-        function horasTrabajadasCliente($cliente, $fecha_inicio, $fecha_fin)
+    function horasTrabajadasCliente($cliente, $fecha_inicio, $fecha_fin)
     {
         $fichas = Ficha::where('estado', '!=', 'en progreso')
                 ->where('cliente_id', $cliente)
@@ -240,9 +240,9 @@ class Ficha extends Model
                     $tiempo_trabajado->addMinutes($tiempo_t[1]);
                 }
             }
-            return($tiempo_trabajado->diff($hora)->format('%H:%I'));
+            return($tiempo_trabajado->diff($hora)->format('%Dd:%Hh:%Im'));
         } else {
-            return("00:00");
+            return("00h:00m");
         }
     }
 
@@ -264,9 +264,9 @@ class Ficha extends Model
                     $tiempo_extras->addMinutes($tiempo_e[1]);
                 }
             }
-            return($tiempo_extras->diff($hora)->format('%H:%I'));
+            return($tiempo_extras->diff($hora)->format('%Dd:%Hh:%Im'));
         } else {
-            return("00:00");
+            return("00h:00m");
         }
     }
 
