@@ -8407,7 +8407,7 @@
           <tr>
             <td></td>
             <td colspan="3"><strong>JORNADAS CUMPLIDAS</strong></td>
-            <td><strong>4.4</strong> jornadas</td>
+            <td><strong>{{$porcentaje_jornada}}</strong> Jornadas</td>
             <td></td>
           </tr>
         </tbody>
