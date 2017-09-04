@@ -129,11 +129,17 @@ class ReporteController extends Controller
                 ->whereDate('fecha', '<=', $request->fecha_fin)
                 ->where('cliente_id', $request->cliente)
                 ->get();
+        $horas_jornada = "";
         if($fichas->isNotEmpty()) {
             $hora             = Carbon::today();
             $tiempo_trabajado = Carbon::today();
             $tiempo_extras     = Carbon::today();
+            $i = 1;
             foreach($fichas as $ficha) {
+                if($i === 1) {
+                    $horas_jornada = $ficha->tiempo_por_trabajar;
+                    $i++;
+                }
                 $horas_t = $ficha->getTotalHorasTrabajadas();
                 if($horas_t) {
                     $tiempo_t = explode(":", $horas_t);
@@ -148,9 +154,26 @@ class ReporteController extends Controller
                     }
                 }
             }
-            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%I');
-            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%I');
-            $pdf = PDF::loadView('reporte.tabla_cliente', compact('fichas', 'horas_trabajadas', 'horas_extras'));
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%Dd:%Hh:%Im');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%Dd:%Hh:%Im');
+
+            $tiempo_por_trabajar = explode(":", $horas_jornada);
+            $horas_t             = explode(":", $horas_trabajadas);
+
+            $d_t = substr($horas_t[0], 0, strpos($horas_t[0], 'd')) * 24;
+            $h_t = substr($horas_t[1], 0, strpos($horas_t[1], 'h'));
+            $m_t = substr($horas_t[2], 0, strpos($horas_t[2], 'm')) / 60;
+            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))),
+                                                 1
+            );
+
+            $pdf = PDF::loadView('reporte.tabla_cliente',
+                                 compact('fichas',
+                                         'horas_trabajadas',
+                                         'horas_extras',
+                                         'porcentaje_jornada'
+                                 )
+            );
             return $pdf->stream('reporte.pdf', array("Attachment" => false));
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
@@ -163,11 +186,17 @@ class ReporteController extends Controller
                 ->whereDate('fecha', '>=', $request->fecha_inicio)
                 ->whereDate('fecha', '<=', $request->fecha_fin)
                 ->get();
+        $horas_jornada = "";
         if($fichas->isNotEmpty()) {
             $hora             = Carbon::today();
             $tiempo_trabajado = Carbon::today();
-            $tiempo_extras     = Carbon::today();
+            $tiempo_extras    = Carbon::today();
+            $i = 1;
             foreach($fichas as $ficha) {
+                if($i === 1) {
+                    $horas_jornada = $ficha->tiempo_por_trabajar;
+                    $i++;
+                }
                 $horas_t = $ficha->getTotalHorasTrabajadas();
                 if($horas_t) {
                     $tiempo_t = explode(":", $horas_t);
@@ -191,15 +220,27 @@ class ReporteController extends Controller
 
             $fecha_inicio     = $request->fecha_inicio;
             $fecha_fin        = $request->fecha_fin;
-            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%I');
-            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%I');
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%Dd:%Hh:%Im');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%Dd:%Hh:%Im');
+
+            $tiempo_por_trabajar = explode(":", $horas_jornada);
+            $horas_t             = explode(":", $horas_trabajadas);
+
+            $d_t = substr($horas_t[0], 0, strpos($horas_t[0], 'd')) * 24;
+            $h_t = substr($horas_t[1], 0, strpos($horas_t[1], 'h'));
+            $m_t = substr($horas_t[2], 0, strpos($horas_t[2], 'm')) / 60;
+            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))),
+                                                 1
+            );
+
             $pdf = PDF::loadView('reporte.tabla_clientes',
                                  compact('fichas',
                                          'horas_trabajadas',
                                          'horas_extras',
                                          'fecha_inicio',
                                          'fecha_fin',
-                                         'clientes'
+                                         'clientes',
+                                         'porcentaje_jornada'
                                  )
             );
             return $pdf->stream('reporte.pdf', array("Attachment" => false));
@@ -215,11 +256,17 @@ class ReporteController extends Controller
                 ->whereDate('fecha', '<=', $request->fecha_fin)
                 ->where('empleado_id', $request->empleado)
                 ->get();
+        $horas_jornada = "";
         if($fichas->isNotEmpty()) {
             $hora             = Carbon::today();
             $tiempo_trabajado = Carbon::today();
-            $tiempo_extras     = Carbon::today();
+            $tiempo_extras    = Carbon::today();
+            $i = 1;
             foreach($fichas as $ficha) {
+                if($i === 1) {
+                    $horas_jornada = $ficha->tiempo_por_trabajar;
+                    $i++;
+                }
                 $horas_t = $ficha->getTotalHorasTrabajadas();
                 if($horas_t) {
                     $tiempo_t = explode(":", $horas_t);
@@ -234,9 +281,26 @@ class ReporteController extends Controller
                     }
                 }
             }
-            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%I');
-            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%I');
-            $pdf = PDF::loadView('reporte.tabla_empleado', compact('fichas', 'horas_trabajadas', 'horas_extras'));
+            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%Dd:%Hh:%Im');
+            $horas_extras     = $tiempo_extras->diff($hora)->format('%Dd:%Hh:%Im');
+
+            $tiempo_por_trabajar = explode(":", $horas_jornada);
+            $horas_t             = explode(":", $horas_trabajadas);
+
+            $d_t = substr($horas_t[0], 0, strpos($horas_t[0], 'd')) * 24;
+            $h_t = substr($horas_t[1], 0, strpos($horas_t[1], 'h'));
+            $m_t = substr($horas_t[2], 0, strpos($horas_t[2], 'm')) / 60;
+            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))),
+                                                 1
+            );
+
+            $pdf = PDF::loadView('reporte.tabla_empleado',
+                                 compact('fichas',
+                                         'horas_trabajadas',
+                                         'horas_extras',
+                                         'porcentaje_jornada'
+                                 )
+            );
             return $pdf->stream('reporte.pdf', array("Attachment" => false));
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
@@ -249,11 +313,17 @@ class ReporteController extends Controller
                 ->whereDate('fecha', '>=', $request->fecha_inicio)
                 ->whereDate('fecha', '<=', $request->fecha_fin)
                 ->get();
+        $horas_jornada = "";
         if($fichas->isNotEmpty()) {
             $hora             = Carbon::today();
             $tiempo_trabajado = Carbon::today();
-            $tiempo_extras     = Carbon::today();
+            $tiempo_extras    = Carbon::today();
+            $i = 1;
             foreach($fichas as $ficha) {
+                if($i === 1) {
+                    $horas_jornada = $ficha->tiempo_por_trabajar;
+                    $i++;
+                }
                 $horas_t = $ficha->getTotalHorasTrabajadas();
                 if($horas_t) {
                     $tiempo_t = explode(":", $horas_t);
@@ -275,17 +345,29 @@ class ReporteController extends Controller
                        ->groupBy('empleado_id')
                        ->get();
 
-            $fecha_inicio     = $request->fecha_inicio;
-            $fecha_fin        = $request->fecha_fin;
-            $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%H:%I');
-            $horas_extras     = $tiempo_extras->diff($hora)->format('%H:%I');
+            $fecha_inicio        = $request->fecha_inicio;
+            $fecha_fin           = $request->fecha_fin;
+            $horas_trabajadas    = $tiempo_trabajado->diff($hora)->format('%Dd:%Hh:%Im');
+            $horas_extras        = $tiempo_extras->diff($hora)->format('%Dd:%Hh:%Im');
+
+            $tiempo_por_trabajar = explode(":", $horas_jornada);
+            $horas_t             = explode(":", $horas_trabajadas);
+
+            $d_t = substr($horas_t[0], 0, strpos($horas_t[0], 'd')) * 24;
+            $h_t = substr($horas_t[1], 0, strpos($horas_t[1], 'h'));
+            $m_t = substr($horas_t[2], 0, strpos($horas_t[2], 'm')) / 60;
+
+            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))),
+                                                 1
+            );
             $pdf = PDF::loadView('reporte.tabla_empleados',
                                  compact('fichas',
                                          'horas_trabajadas',
                                          'horas_extras',
                                          'fecha_inicio',
                                          'fecha_fin',
-                                         'empleados'
+                                         'empleados',
+                                         'porcentaje_jornada'
                                  )
             );
             return $pdf->stream('reporte.pdf', array("Attachment" => false));
