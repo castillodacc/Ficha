@@ -21,6 +21,7 @@ class CreateFichasTable extends Migration
             $table->integer('cliente_id')->unsigned();
             $table->enum('estado', ['en progreso', 'cerrado', 'no laborado'])->default('en progreso');
             $table->timestamp('fecha')->useCurrent();
+            $table->string('tiempo_por_trabajar');
             $table->timestamp('hora_inicio')->useCurrent();
             $table->timestamp('hora_fin')->nullable();
             $table->timestamp('hora_inicio_comida')->nullable();
