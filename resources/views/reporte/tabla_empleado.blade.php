@@ -21,6 +21,7 @@
 
       body {
         margin: 0;
+        background-color: white !important;
       }
 
       article,
@@ -8374,7 +8375,8 @@
       }
     </style>
   </head>
-  <body>
+  <?php $actual_link = "http://$_SERVER[HTTP_HOST]"."/imgs/fondoPDF.png"; ?>
+  <body style="background-image: url({{$actual_link}});background-repeat: no-repeat; background-position: center;">
     @if($fichas->isNotEmpty())
       <table class="table" border="1">
         <thead>

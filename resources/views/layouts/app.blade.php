@@ -29,8 +29,7 @@
             <!-- Branding Image -->
               @if(Route::currentRouteName() != 'login' and !Request::is('/'))
                 <a class="navbar-brand" href="{{ url('/home') }}">
-                  {{--               {{ config('app.name', 'Ficha') }} --}}
-                  Ficha
+                  <img src="{{ asset('imgs/logo.png') }}" height="30px">
                 </a>
               @endif
           </div>
