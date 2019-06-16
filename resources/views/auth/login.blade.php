@@ -43,6 +43,7 @@
                             </div>
                         </div>
                         
+                        @if(env('APP_ENV') == 'local')
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
@@ -52,8 +53,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        @if(env('APP_ENV') == 'local')
                         <script>
                             $('#username').val('admin@ficha.com');
                             $('#password').val('admin');
