@@ -20,6 +20,12 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/admin/{admin}/enable', 'AdminController@enable');
@@ -46,6 +52,7 @@ Route::get('/empleado/{empleado}/jornada/finalizar', 'EmpleadoController@showFor
 Route::post('/empleado/{empleado}/jornada/finalizar', 'EmpleadoController@finalizarJornada');
 
 Route::resource('empleado', 'EmpleadoController');
+Route::post('/empleado/{provincia}/poblacion', 'EmpleadoController@poblacion');
 
 Route::post('/jornada/{jornada}/enable', 'JornadaController@enable');
 Route::post('/jornada/{jornada}/disable', 'JornadaController@disable');
@@ -58,6 +65,8 @@ Route::resource('jornada', 'JornadaController');
 Route::resource('ficha', 'FichaController');
 
 Route::resource('cliente', 'ClienteController');
+
+Route::resource('empresa', 'EmpresaController');
 
 Route::get('/reporte/cliente',    'ReporteController@showFormReporteCliente');
 Route::get('/reporte/clientes',   'ReporteController@showFormReporteClientes');

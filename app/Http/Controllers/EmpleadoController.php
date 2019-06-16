@@ -6,6 +6,10 @@ use App\Empleado;
 use App\User;
 use App\Ficha;
 use App\Cliente;
+use App\Provincia;
+use App\Poblacion;
+use App\Empresa;
+use App\Jornada;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -39,8 +43,15 @@ class EmpleadoController extends Controller
     public function create()
     {
         $clientes = Cliente::where('activo', TRUE)->pluck('nombre', 'id');
+        $provincias = Provincia::orderBy('nombre')->pluck('nombre', 'id');
+        $empresas = Empresa::orderBy('nombre')->pluck('nombre', 'id');
+        $jornadas = Jornada::orderBy('nombre')->pluck('nombre', 'id');
+        $poblaciones = [];
         return view('empleado.create')
-            ->with('clientes', $clientes);
+            ->with('clientes', $clientes)
+            ->with('provincias', $provincias)
+            ->with('empresas', $empresas)
+            ->with('jornadas', $jornadas);
     }
 
     /**
@@ -55,7 +66,7 @@ class EmpleadoController extends Controller
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
         if($user->save()) {
-            $empleado_datos = $request->except('username', 'password');
+            $empleado_datos = $request->except('username', 'activo', 'provincia_id', 'password');
             $empleado_datos = array_add($empleado_datos, 'user_id', $user->id);
             $empleado       = Empleado::create($empleado_datos);
             if($empleado) {
@@ -93,8 +104,21 @@ class EmpleadoController extends Controller
     public function edit(Empleado $empleado)
     {
         $clientes = Cliente::where('activo', TRUE)->pluck('nombre', 'id');
+        $provincias = Provincia::orderBy('nombre')->pluck('nombre', 'id');
+        $empresas = Empresa::orderBy('nombre')->pluck('nombre', 'id');
+        $jornadas = Jornada::orderBy('nombre')->pluck('nombre', 'id');
+        $poblaciones = [];
+        if ($empleado->poblacion) {
+            $poblaciones = Poblacion::where('provincia_id', $empleado->poblacion->provincia_id)
+            ->orderBy('nombre')
+            ->pluck('nombre', 'id');
+        }
         return view('empleado.edit')
             ->with('clientes', $clientes)
+            ->with('provincias', $provincias)
+            ->with('poblaciones', $poblaciones)
+            ->with('empresas', $empresas)
+            ->with('jornadas', $jornadas)
             ->with('empleado', $empleado);
     }
 
@@ -108,8 +132,12 @@ class EmpleadoController extends Controller
     public function update(Request $request, Empleado $empleado)
     {
         $empleado->user->username = $request->username;
+        $empleado->user->activo = ($request->activo) ? true : false;
         if($empleado->user->save()) {
-            if($empleado->update($request->except('username'))) {
+            if($empleado->update($request->except('username', 'activo', 'provincia_id', 'password', 'password_confirm'))) {
+                if(!empty($request->password)){
+                    $empleado->update(['password' => bcrypt($request->password)]);
+                }
                 return Response::json([
                     'error' => false,
                     'mensaje' => 'Empleado actualizado correctamente',
@@ -145,6 +173,17 @@ class EmpleadoController extends Controller
                 'code' => 200
             ], 200);
         }
+    }
+
+    /**
+     * Retorna las poblaciones de la provincia que se pasa por parametro.
+     *
+     * @param  \App\Empleado  $empleado
+     * @return \Illuminate\Http\Response
+     */
+    public function poblacion(Provincia $provincia)
+    {
+        return response()->json($provincia->poblaciones()->orderBy('nombre', 'ASC')->get(['id', 'nombre']));
     }
 
     /**

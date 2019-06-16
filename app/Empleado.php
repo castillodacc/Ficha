@@ -47,6 +47,14 @@ class Empleado extends Model
         return $this->hasMany('App\Ficha');
     }
 
+    /**
+     * Get the poblacion for empleado.
+     */
+    public function poblacion()
+    {
+        return $this->belongsTo(Poblacion::class);
+    }
+
     public function clienteAsignado()
     {
         return ($this->cliente_id) ? TRUE : FALSE;
@@ -171,5 +179,55 @@ class Empleado extends Model
                ->where('empleado_id', $this->id)
                ->first();
         return((!($ficha ? TRUE : FALSE)));
+    }
+
+    public static function fechasParaReporte($fecha_i, $fecha_f, $empleado_id = null)
+    {
+        $empleados = ($empleado_id) ? Self::where('id', $empleado_id)->get() : Self::all();
+        $rows = [];
+        $fecha_i = \Carbon::parse($fecha_i);
+        $fecha_f = \Carbon::parse($fecha_f . ' 23:59:59');
+        do {
+            $f_i = (!isset($f_i)) ? $fecha_i->addDay(1) : $f_i->addDay(1);
+            foreach ($empleados as $e) {
+                $vacaciones = explode(',', $e->vacaciones);
+                foreach ($vacaciones as $v) {
+                    if ($f_i == \Carbon::parse($v)) {
+                        $rows[] = [
+                            'nombre' => $e->nombre . ' ' . $e->apellido,
+                            'fecha' => $v,
+                            'dni' => $e->dni,
+                            'tipo' => 'Vacaciones'
+                        ];
+                    }
+                }
+
+                $festivos = explode(',', $e->festivos);
+                foreach ($festivos as $f) {
+                    if ($f_i == \Carbon::parse($f)) {
+                        $rows[] = [
+                            'nombre' => $e->nombre . ' ' . $e->apellido,
+                            'fecha' => $f,
+                            'dni' => $e->dni,
+                            'tipo' => 'Festivos'
+                        ];
+                    }
+                }
+
+                $bajas_ausencias = explode(',', $e->bajas_ausencias);
+                foreach ($bajas_ausencias as $ba) {
+                    if ($f_i == \Carbon::parse($ba)) {
+                        $rows[] = [
+                            'nombre' => $e->nombre . ' ' . $e->apellido,
+                            'fecha' => $ba,
+                            'dni' => $e->dni,
+                            'tipo' => 'Bajas o Ausencias'
+                        ];
+                    }
+                }
+
+            }
+        } while ($f_i <= $fecha_f);
+        return $rows;
     }
 }

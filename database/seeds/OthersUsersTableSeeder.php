@@ -15,7 +15,7 @@ class OthersUsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'username' => 'pedro',
+            'username' => 'pedro@ficha.com',
             'password' => bcrypt('pedro'),
             'activo' => false,
             'created_at' => Carbon::now(),

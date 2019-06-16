@@ -17,5 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(JornadasTableSeeder::class);
         $this->call(EmpleadosTableSeeder::class);
         $this->call(FichasTableSeeder::class);
+        $this->call(ProvinciasTableSeeder::class);
+        $this->call(PoblacionesTableSeeder::class);
+        for ($i=0; $i < 10; $i++) \App\Empresa::create(['nombre' => 'Empresa ' . $i]);
     }
 }

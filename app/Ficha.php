@@ -219,7 +219,7 @@ class Ficha extends Model
         $empleado = Empleado::select('nombre')
                   ->where('id', $empleado)
                   ->first();
-        return(($empleado) ? $empleado->nombre : "N/D");
+        return(($empleado) ? $empleado->nombre . ' ' . $empleado->apellido : "N/D");
     }
 
     function horasTrabajadasCliente($cliente, $fecha_inicio, $fecha_fin)

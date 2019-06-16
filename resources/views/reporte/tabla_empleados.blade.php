@@ -8375,71 +8375,95 @@
       }
     </style>
   </head>
-  <?php $actual_link = "http://$_SERVER[HTTP_HOST]"."/imgs/fondoPDF.png"; ?>
-  <body style="background-image: url({{$actual_link}});background-repeat: no-repeat; background-position: center;">
+  <body style="background-image: url('{{ asset('imgs/logo.png') }}');background-repeat: no-repeat; background-position: center;">
     @if($fichas->isNotEmpty())
-      <table class="table" border="1">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>FECHA</th>
-            <th>EMPLEADO</th>
-            <th>CLIENTE</th>
-            <th>HORAS TRABAJADAS</th>
-            <th>HORAS EXTRAS</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($fichas as $ficha)
-            <tr>
-              <th scope="row">{{$loop->iteration}}</th>
-              <td>{{$ficha->fecha}}</td>
-              <td>{{$ficha->empleado->nombre}}</td>
-              <td>{{$ficha->cliente->nombre}}</td>
-              <td>{{$ficha->getTotalHorasTrabajadas()}}</td>
-              <td>{{$ficha->getTotalHorasExtras()}}</td>
-            </tr>
-          @endforeach
-          <tr>
-            <td></td>
-            <td colspan="3"><strong>TOTALES</strong></td>
-            <td>{{$horas_trabajadas}}</td>
-            <td>{{$horas_extras}}</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td colspan="3"><strong>JORNADAS CUMPLIDAS</strong></td>
-            <td><strong>{{$porcentaje_jornada}}</strong> Jornadas</td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="page-break"></div>
-      <table class="table" border="1">
-        <thead>
-          <tr>
-            <th>RANGO DE FECHA SELECCIONADO</th>
-            <th>EMPLEADO</th>
-            <th>TOTAL HORAS TRABAJADAS</th>
-            <th>TOTAL HORAS EXTRAS</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($empleados as $empleado)
-            <tr>
-              <td>De {{$fecha_inicio}} a {{$fecha_fin}}</td>
-              <td>{{$empleado->getNombreEmpleado($empleado->empleado_id)}}</td>
-              <td>{{$empleado->horasTrabajadasEmpleado($empleado->empleado_id, $fecha_inicio, $fecha_fin)}}</td>
-              <td>{{$empleado->horasExtrasTrabajadasEmpleado($empleado->empleado_id, $fecha_inicio, $fecha_fin)}}</td>
-            </tr>
-          @endforeach
-        </tbody>
-      </table>
+    <table class="table" border="1">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>FECHA</th>
+          <th>EMPLEADO</th>
+          <th>CLIENTE</th>
+          <th>HORAS TRABAJADAS</th>
+          <th>HORAS EXTRAS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php $n = 1; ?>
+        @foreach($fichas as $ficha)
+        <?php $fecha_i = (!isset($fecha_i)) ? request()->fecha_inicio : $fecha_f; ?>
+        <?php $fecha_f = $ficha->fecha; ?>
+        @foreach(\App\Empleado::fechasParaReporte($fecha_i, $fecha_f) as $f)
+        <tr>
+          <th scope="row">{{$n++}}</th>
+          <td>{{$f['fecha']}}</td>
+          <td>{{$f['nombre']}}</td>
+          <td><b>{{$f['tipo']}}</b></td>
+          <td>N/A</td>
+          <td>N/A</td>
+        </tr>
+        @endforeach
+        <tr>
+          <th scope="row">{{$n++}}</th>
+          <td>{{$ficha->fecha}}</td>
+          <td>{{$ficha->empleado->nombre}}</td>
+          <td>{{$ficha->cliente->nombre}}</td>
+          <td>{{$ficha->getTotalHorasTrabajadas()}}</td>
+          <td>{{$ficha->getTotalHorasExtras()}}</td>
+        </tr>
+        @endforeach
+        @foreach(\App\Empleado::fechasParaReporte($fecha_f, request()->fecha_fin) as $f)
+        <tr>
+          <th scope="row">{{$n++}}</th>
+          <td>{{$f['fecha']}}</td>
+          <td>{{$f['nombre']}}</td>
+          <td><b>{{$f['tipo']}}</b></td>
+          <td>N/A</td>
+          <td>N/A</td>
+        </tr>
+        @endforeach
+        <tr>
+          <td></td>
+          <td colspan="3"><strong>TOTALES</strong></td>
+          <td>{{$horas_trabajadas}}</td>
+          <td>{{$horas_extras}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="3"><strong>JORNADAS CUMPLIDAS</strong></td>
+          <td><strong>{{$porcentaje_jornada}}</strong> Jornadas</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="page-break"></div>
+    <table class="table" border="1">
+      <thead>
+        <tr>
+          <th>RANGO DE FECHA SELECCIONADO</th>
+          <th>EMPLEADO</th>
+          <th>DNI</th>
+          <th>TOTAL HORAS TRABAJADAS</th>
+          <th>TOTAL HORAS EXTRAS</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach($empleados as $empleado)
+        <tr>
+          <td>De {{$fecha_inicio}} a {{$fecha_fin}}</td>
+          <td>{{$empleado->getNombreEmpleado($empleado->empleado_id)}}</td>
+          <td>{{$empleado->dni}}</td>
+          <td>{{$empleado->horasTrabajadasEmpleado($empleado->empleado_id, $fecha_inicio, $fecha_fin)}}</td>
+          <td>{{$empleado->horasExtrasTrabajadasEmpleado($empleado->empleado_id, $fecha_inicio, $fecha_fin)}}</td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
 
     @else
-      <div class="alert alert-danger" role="alert">
-        <p>No se encuentran datos en la fecha seleccionada</p>
-      </div>
+    <div class="alert alert-danger" role="alert">
+      <p>No se encuentran datos en la fecha seleccionada</p>
+    </div>
     @endif
   </body>
-</html>
+  </html>

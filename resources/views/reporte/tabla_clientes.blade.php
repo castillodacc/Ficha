@@ -8375,8 +8375,7 @@
       }
     </style>
   </head>
-  <?php $actual_link = "http://$_SERVER[HTTP_HOST]"."/imgs/fondoPDF.png"; ?>
-  <body style="background-image: url({{$actual_link}});background-repeat: no-repeat; background-position: center;">
+  <body style="background-image: url('{{ asset('imgs/logo.png') }}');background-repeat: no-repeat; background-position: center;">
     @if($fichas->isNotEmpty())
       <table class="table" border="1">
         <thead>
@@ -8395,7 +8394,7 @@
               <th scope="row">{{$loop->iteration}}</th>
               <td>{{$ficha->fecha}}</td>
               <td>{{$ficha->cliente->nombre}}</td>
-              <td>{{$ficha->empleado->nombre}}</td>
+              <td>{{$ficha->empleado->nombre . ' ' . $ficha->empleado->apellido}}</td>
               <td>{{$ficha->getTotalHorasTrabajadas()}}</td>
               <td>{{$ficha->getTotalHorasExtras()}}</td>
             </tr>

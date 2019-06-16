@@ -14,7 +14,7 @@
             <div class="row">
               <div class="col-md-6">
                 {!! Form::label('username', 'Nombre de usuario:', ['style' => 'display:block;']) !!}
-                {!! Form::text('username',
+                {!! Form::email('username',
                                $admin->user->username,
                                [
                                  'class' => 'form-control',
