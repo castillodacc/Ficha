@@ -78,7 +78,7 @@ class Empleado extends Model
         $inicio_jornada = Carbon::createFromFormat('H:i', $this->jornada->hora_inicio_jornada);
         $fin_jornada    = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
 
-        return($hora_actual->between($inicio_jornada->subMinutes(30), $fin_jornada->subMinute()));
+        return ($this->libre) ?: $hora_actual->between($inicio_jornada->subMinutes(30), $fin_jornada->subMinute());
     }
 
     public function horaRangoFinalizarJornada()
@@ -93,7 +93,7 @@ class Empleado extends Model
         $inicio_jornada = ($inicio_ficha->gt($inicio_jornada_asignada)) ? $inicio_ficha : $inicio_jornada_asignada;
         $fin_jornada    = Carbon::createFromFormat('H:i', $this->jornada->hora_fin_jornada);
 
-        return($hora_actual->between($inicio_jornada->addMinutes(30), $fin_jornada->addMinutes(30)));
+        return ($this->libre) ?: $hora_actual->between($inicio_jornada->addMinutes(30), $fin_jornada->addMinutes(30));
     }
 
     public function jornadaAdmiteHorasExtras()

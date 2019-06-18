@@ -13,17 +13,17 @@
           @can('cliente_asignado', $empleado)
           @can('primera_jornada', $empleado)
           @can('jornada_cerrada', $empleado)
-          {{-- @can('hora_rango_iniciar_jornada', $empleado) --}}
+          @can('hora_rango_iniciar_jornada', $empleado)
           {!! Form::open(['url' => '/empleado/'.$empleado->id.'/jornada/iniciar', 'class' => 'form-inline', 'id' => 'jornada-form']) !!}
           <div class="form-group">
             {!! Form::submit('Iniciar Jornada', ["class" => "btn btn-success"]) !!}
           </div>
           {!! Form::close() !!}
-          {{-- @else --}}
-          {{-- <div class="alert alert-danger" role="alert"> --}}
-            {{-- <p>Faltan m&aacute;s de 30 minutos para el inicio de su jornada</p> --}}
-          {{-- </div> --}}
-          {{-- @endcan --}}
+          @else
+          <div class="alert alert-danger" role="alert">
+            <p>Faltan m&aacute;s de 30 minutos para el inicio de su jornada</p>
+          </div>
+          @endcan
           @else
           <div class="alert alert-danger" role="alert">
             <p>Ya tiene una jornada abierta</p>
