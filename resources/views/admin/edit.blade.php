@@ -10,10 +10,9 @@
           </div>
           <div class="panel-body">
             {!! Form::open(['url' => '/admin/'.$admin->id, 'method' => 'put', 'id' => 'update-admin-form']) !!}
-
             <div class="row">
               <div class="col-md-6">
-                {!! Form::label('username', 'Nombre de usuario:', ['style' => 'display:block;']) !!}
+                {!! Form::label('username', 'Correo de usuario:', ['style' => 'display:block;']) !!}
                 {!! Form::email('username',
                                $admin->user->username,
                                [

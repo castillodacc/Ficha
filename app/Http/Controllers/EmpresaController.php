@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Empresa;
+use App\Provincia;
+use App\Poblacion;
 
 class EmpresaController extends Controller
 {
@@ -35,7 +37,9 @@ class EmpresaController extends Controller
     public function create()
     {
         $empresa = new Empresa();
-        return view('empresa.form', compact('empresa'));
+        $provincias = Provincia::orderBy('nombre')->pluck('nombre', 'id');
+        $poblaciones = [];
+        return view('empresa.form', compact('empresa', 'provincias', 'poblaciones'));
     }
 
     /**
@@ -76,7 +80,15 @@ class EmpresaController extends Controller
     public function edit($id)
     {
         $empresa = Empresa::findOrFail($id);
-        return view('empresa.form', compact('empresa'));
+        $empresa->provincia_id = $empresa->poblacion->provincia_id;
+        $poblaciones = [];
+        if ($empresa->poblacion_id) {
+            $poblaciones = Poblacion::where('provincia_id', $empresa->poblacion->provincia_id)
+            ->orderBy('nombre')
+            ->pluck('nombre', 'id');
+        }
+        $provincias = Provincia::orderBy('nombre')->pluck('nombre', 'id');
+        return view('empresa.form', compact('empresa', 'provincias', 'poblaciones'));
     }
 
     /**

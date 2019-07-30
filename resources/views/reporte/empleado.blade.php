@@ -24,7 +24,8 @@
                                            'data-date-format'    => 'yyyy-mm-dd',
                                            'data-date-language'  => 'es',
                                            'data-date-autoclose' => 'true',
-                                           'placeholder'         => 'Escoger fecha'
+                                           'placeholder'         => 'Escoger fecha',
+                                           'autocomplete'        => 'off'
                                          ])
                           !!}
                         </div>
@@ -41,7 +42,8 @@
                                            'data-date-format'    => 'yyyy-mm-dd',
                                            'data-date-language'  => 'es',
                                            'data-date-autoclose' => 'true',
-                                           'placeholder'         => 'Escoger fecha'
+                                           'placeholder'         => 'Escoger fecha',
+                                           'autocomplete'        => 'off'
                                          ])
                           !!}
                         </div>

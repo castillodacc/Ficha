@@ -163,18 +163,12 @@ class ReporteController extends Controller
             $d_t = substr($horas_t[0], 0, strpos($horas_t[0], 'd')) * 24;
             $h_t = substr($horas_t[1], 0, strpos($horas_t[1], 'h'));
             $m_t = substr($horas_t[2], 0, strpos($horas_t[2], 'm')) / 60;
-            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))),
-                                                 1
-            );
+            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))), 1);
 
-            $pdf = PDF::loadView('reporte.tabla_cliente',
-                                 compact('fichas',
-                                         'horas_trabajadas',
-                                         'horas_extras',
-                                         'porcentaje_jornada'
-                                 )
-            );
-            return $pdf->stream('reporte.pdf', array("Attachment" => false));
+            $cliente = \App\Cliente::withTrashed()->find($request->cliente);
+
+            $pdf = PDF::loadView('reporte.tabla_cliente', compact('fichas', 'horas_trabajadas', 'horas_extras', 'porcentaje_jornada', 'request', 'cliente'));
+            return $pdf->stream(strtoupper('Reporte del Cliente: ' . $cliente->nombre) . '.pdf', array("Attachment" => false));
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
         }
@@ -229,21 +223,10 @@ class ReporteController extends Controller
             $d_t = substr($horas_t[0], 0, strpos($horas_t[0], 'd')) * 24;
             $h_t = substr($horas_t[1], 0, strpos($horas_t[1], 'h'));
             $m_t = substr($horas_t[2], 0, strpos($horas_t[2], 'm')) / 60;
-            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))),
-                                                 1
-            );
+            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))), 1);
 
-            $pdf = PDF::loadView('reporte.tabla_clientes',
-                                 compact('fichas',
-                                         'horas_trabajadas',
-                                         'horas_extras',
-                                         'fecha_inicio',
-                                         'fecha_fin',
-                                         'clientes',
-                                         'porcentaje_jornada'
-                                 )
-            );
-            return $pdf->stream('reporte.pdf', array("Attachment" => false));
+            $pdf = PDF::loadView('reporte.tabla_clientes', compact('fichas', 'horas_trabajadas', 'horas_extras', 'fecha_inicio', 'fecha_fin', 'clientes', 'porcentaje_jornada', 'request'));
+            return $pdf->stream('REPORTE DE TODOS LOS CLIENTES.pdf', array("Attachment" => false));
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
         }
@@ -290,18 +273,11 @@ class ReporteController extends Controller
             $d_t = substr($horas_t[0], 0, strpos($horas_t[0], 'd')) * 24;
             $h_t = substr($horas_t[1], 0, strpos($horas_t[1], 'h'));
             $m_t = substr($horas_t[2], 0, strpos($horas_t[2], 'm')) / 60;
-            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))),
-                                                 1
-            );
+            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))), 1);
+            $empleado = \App\Empleado::withTrashed()->find($request->empleado);
 
-            $pdf = PDF::loadView('reporte.tabla_empleado',
-                                 compact('fichas',
-                                         'horas_trabajadas',
-                                         'horas_extras',
-                                         'porcentaje_jornada'
-                                 )
-            );
-            return $pdf->stream('reporte.pdf', array("Attachment" => false));
+            $pdf = PDF::loadView('reporte.tabla_empleado', compact('fichas', 'horas_trabajadas', 'horas_extras', 'porcentaje_jornada', 'empleado', 'request'));
+            return $pdf->stream(strtoupper('Reporte del Empleado:' . $empleado->nombre . ' ' . $empleado->apellido) . '.pdf', array("Attachment" => false));
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
        }
@@ -357,20 +333,9 @@ class ReporteController extends Controller
             $h_t = substr($horas_t[1], 0, strpos($horas_t[1], 'h'));
             $m_t = substr($horas_t[2], 0, strpos($horas_t[2], 'm')) / 60;
 
-            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))),
-                                                 1
-            );
-            $pdf = PDF::loadView('reporte.tabla_empleados',
-                                 compact('fichas',
-                                         'horas_trabajadas',
-                                         'horas_extras',
-                                         'fecha_inicio',
-                                         'fecha_fin',
-                                         'empleados',
-                                         'porcentaje_jornada'
-                                 )
-            );
-            return $pdf->stream('reporte.pdf', array("Attachment" => false));
+            $porcentaje_jornada  = number_format((($d_t+$h_t+$m_t) / ($tiempo_por_trabajar[0] + ($tiempo_por_trabajar[1] / 60))), 1);
+            $pdf = PDF::loadView('reporte.tabla_empleados', compact('fichas', 'horas_trabajadas', 'horas_extras', 'fecha_inicio', 'fecha_fin', 'empleados', 'porcentaje_jornada', 'request'));
+            return $pdf->stream('REPORTE TOTAL DE EMPLEADOS.pdf', array("Attachment" => false));
         } else {
             return Redirect::back()->withErrors(['Error. No hay información en el rango de fecha seleccionado']);
         }

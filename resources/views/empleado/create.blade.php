@@ -12,32 +12,6 @@
             {!! Form::open(['url' => '/empleado', 'id' => 'empleado-form']) !!}
             <div class="row">
               <div class="col-md-6">
-                {!! Form::label('username', 'Nombre de usuario:', ['style' => 'display:block;']) !!}
-                {!! Form::email('username',
-                                null,
-                                [
-                                  'class' => 'form-control',
-                                  'required' => 'required'
-                                ])
-                !!}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  {!! Form::label('password', 'Contraseña:', ['style' => 'display:block;']) !!}
-                  {!! Form::text('password',
-                                     null,
-                                     [
-                                       'class' => 'form-control',
-                                       'required' => 'required'
-                                     ])
-                  !!}
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
                 {!! Form::label('correo', 'Correo:', ['style' => 'display:block;']) !!}
                 {!! Form::email('correo',
                                null,
@@ -46,6 +20,14 @@
                                  'required' => 'required'
                                ])
                 !!}
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="password" style="display:block;">Contraseña:</label>
+                  <input class="form-control" required="required" name="password" type="password" id="password">
+                </div>
               </div>
             </div>
             <div class="row">
@@ -74,7 +56,7 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                {!! Form::label('dni', 'DNI:', ['style' => 'display:block;']) !!}
+                {!! Form::label('dni', 'DNI/NIE:', ['style' => 'display:block;']) !!}
                 {!! Form::text('dni',
                                  null,
                                  [
@@ -109,16 +91,15 @@
             </div>
             <div class="row">
               <div class="col-md-6">
+                <div class="form-group" style="margin:0">
                 {!! Form::label('vacaciones', 'Vacaciones:', ['style' => 'display:block;']) !!}
-                {!! Form::text('vacaciones',
-                               null,
-                               [
-                               'class' => 'form-control datemulti',
-                               'placeholder'         => 'Seleccionar fecha',
-                               'autocomplete'        => 'off'
-                               ]
-                    )
-                !!}
+                  <div class="input-group">
+                    <label for="vacaciones" class="input-group-addon control-label">
+                      <input type="checkbox" id="activar_vacaciones" name="activar_vacaciones" data-tooltip="tooltip" title="Sin Determinar">
+                    </label>
+                    <input id="vacaciones" type="text" name="vacaciones" class="form-control datemulti" placeholder="Seleccionar fecha" value="Sin Determinar" autocomplete="off" readonly="" disabled="">
+                  </div>
+                </div>
               </div>
               <div class="col-md-6">
                 {!! Form::label('festivos', 'Festivos:', ['style' => 'display:block;']) !!}
@@ -157,8 +138,17 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-md-6 col-md-offset-3">
+                <label for="tipo_contrato_id" style="display:block;">Tipo contrato:</label>
+                <select id="tipo_contrato_id" required="required" class="form-control" name="tipo_contrato_id">
+                  <option value="1">Sin Determinar</option>
+                  <option value="2">Contrato Indefinido</option>
+                  <option value="3">Contrato Fin de Obra</option>
+                  <option value="4">Contrato Servicio</option>
+                </select>
+              </div>
               <div class="col-md-6">
-                {!! Form::label('contrato_start', 'Inicio de Contrato:', ['style' => 'display:block;']) !!}
+                {!! Form::label('contrato_start', 'Fecha alta:', ['style' => 'display:block;']) !!}
                 {!! Form::text('contrato_start',
                                null,
                                [
@@ -168,14 +158,13 @@
                                'data-date-language'  => 'es',
                                'data-date-autoclose' => 'true',
                                'placeholder'         => 'Seleccionar fecha',
-                               'required'            => 'required',
                                'autocomplete'        => 'off'
                                ]
                     )
                 !!}
               </div>
               <div class="col-md-6">
-                {!! Form::label('contrato_end', 'Fin de Contrato:', ['style' => 'display:block;']) !!}
+                {!! Form::label('contrato_end', 'Fecha fin:', ['style' => 'display:block;']) !!}
                 {!! Form::text('contrato_end',
                                null,
                                [
@@ -185,43 +174,6 @@
                                'data-date-language'  => 'es',
                                'data-date-autoclose' => 'true',
                                'placeholder'         => 'Seleccionar fecha',
-                               'required'            => 'required',
-                               'autocomplete'        => 'off'
-                               ]
-                    )
-                !!}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                {!! Form::label('vacaciones_start', 'Inicio de Vacaciones:', ['style' => 'display:block;']) !!}
-                {!! Form::text('vacaciones_start',
-                               null,
-                               [
-                               'class' => 'form-control',
-                               'data-provide'        => 'datepicker',
-                               'data-date-format'    => 'yyyy-mm-dd',
-                               'data-date-language'  => 'es',
-                               'data-date-autoclose' => 'true',
-                               'placeholder'         => 'Seleccionar fecha',
-                               'required'            => 'required',
-                               'autocomplete'        => 'off'
-                               ]
-                    )
-                !!}
-              </div>
-              <div class="col-md-6">
-                {!! Form::label('vacaciones_end', 'Fin de Vacaciones:', ['style' => 'display:block;']) !!}
-                {!! Form::text('vacaciones_end',
-                               null,
-                               [
-                               'class' => 'form-control',
-                               'data-provide'        => 'datepicker',
-                               'data-date-format'    => 'yyyy-mm-dd',
-                               'data-date-language'  => 'es',
-                               'data-date-autoclose' => 'true',
-                               'placeholder'         => 'Seleccionar fecha',
-                               'required'            => 'required',
                                'autocomplete'        => 'off'
                                ]
                     )
@@ -251,58 +203,11 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-6">
-                {!! Form::label('razon_social', 'Razón Social:', ['style' => 'display:block;']) !!}
-                {!! Form::text('razon_social',
-                               null,
-                               [
-                               'class' => 'form-control',
-                               'required' => 'required',
-                               ]
-                    )
-                !!}
-              </div>
-              <div class="col-md-6">
-                {!! Form::label('cif', 'C.I.F:', ['style' => 'display:block;']) !!}
-                {!! Form::text('cif',
-                               null,
-                               [
-                               'class' => 'form-control',
-                               'required' => 'required',
-                               ]
-                    )
-                !!}
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <label for="provincia_id" style="display:block;">Provincia:</label>
-                <select id="provincia_id" required="required" class="form-control" name="provincia_id">
-                  <option value="" selected="">Seleccione una Provincia</option>
-                  @foreach($provincias as $key => $p)
-                  <option value="{{ $key }}">{{ $p }}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="col-md-6">
-                <label for="poblacion_id" style="display:block;">Población:</label>
-                <select id="poblacion_id" required="required" class="form-control" name="poblacion_id">
-                  <option value="" selected="">Seleccione una Población</option>
-                </select>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-md-12">
                 {!! Form::label('direccion', 'Direcci&oacute;n:', ['style' => 'display:block;']) !!}
-                {!! Form::text('direccion',
-                               null,
-                               [
-                                 'class' => 'form-control',
-                                 'required' => 'required'
-                               ])
-                !!}
-              </div>
-            </div>
+                {!! Form::text('direccion', null, ['class' => 'form-control', 'required' => 'required']) !!}
+               </div>
+             </div>
             @if($clientes->isNotEmpty())
               <div class="row">
                 <div class="col-md-6">
@@ -320,7 +225,7 @@
                 </div>
                 <div class="col-md-6" style="margin-top: 30px;">
                   {!! Form::label('libre', 'Fichaje Libre:', ['style' => 'margin-right: 15px ']) !!}
-                  {!! Form::checkbox('libre', 1, $empleado->libre) !!}
+                  {!! Form::checkbox('libre', 1, null) !!}
                 </div>
               </div>
             @else
@@ -344,29 +249,27 @@
   <script type="text/javascript" src="{{ URL::asset('js/bootstrap-datepicker-1.6.4-dist/locales/bootstrap-datepicker.es.min.js') }}" charset="UTF-8"></script>
   <script>
     $(document).ready(function (){
+      $('[data-tooltip="tooltip"]').tooltip();
       $('.datemulti').datepicker({
         multidate: true,
         format: 'yyyy-mm-dd',
         language: 'es',
       });
-      $('#provincia_id').change(function () {
-        $.ajax({
-          type: "POST",
-          url: '/empleado/' + $(this).val() + '/poblacion',
-          data: {
-            '_token': $('meta[name="csrf-token"]')[0].content
-          },
-          dataType: 'json', 
-          success: function(response) {
-            $('select#poblacion_id').html('<option value="" selected="">Seleccione una Población</option>');
-            for(let i in response) {
-              element = document.createElement('option');
-              element.value = response[i].id;
-              element.text = response[i].nombre;
-              $('select#poblacion_id').append(element);
-            }
-          }
-        });
+      $('#activar_vacaciones').click(function (el) {
+        if (el.target.checked) {
+          $('#vacaciones')
+          .removeAttr('readonly')
+          .removeAttr('disabled')
+          .attr('title', 'Activo')
+          .val('');
+        } else {
+          $('#vacaciones')
+          .attr('readonly', 'readonly')
+          .attr('disabled', 'disabled')
+          .attr('title', 'Sin Determinar')
+          .val('Sin Determinar');
+        }
+        $('[data-tooltip="tooltip"]').tooltip();
       });
       $("#empleado-form").submit("submit", function(e) {
         $.ajax({
@@ -374,12 +277,10 @@
           method: $(this).attr("method"),
           data: $(this).serialize(),
           dataType: 'json',
-          beforeSend: function()
-          {
+          beforeSend: function() {
             $(".panel-footer").empty();
           },
-          success: function(respuesta)
-          {
+          success: function(respuesta) {
             if(!respuesta.error) {
               var html = "<div class='alert alert-success'>";
               html += "<p>" + respuesta.mensaje + "</p>";
@@ -393,8 +294,7 @@
               $(".panel-footer").html(html);
             }
           },
-          error: function()
-          {
+          error: function() {
             var html = "<div class='alert alert-danger'>";
             html +="<p>Error en el servidor. Por favor, recargue la p&aacute;gina, si el problema persiste contacte al administrador del sitio.</p>";
             html += "</div>";

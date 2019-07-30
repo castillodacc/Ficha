@@ -17,9 +17,12 @@ class CreateEmpresasTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('telefono')->nullable();
-            $table->string('contacto')->nullable();
+            $table->string('detalles')->nullable();
             $table->string('correo')->nullable();
             $table->text('direccion')->nullable();
+            $table->string('razon_social')->nullable();
+            $table->string('cif')->nullable();
+            $table->integer('poblacion_id')->unsigned()->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

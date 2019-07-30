@@ -20,7 +20,7 @@ class CreateEmpleadosTable extends Migration
             $table->integer('cliente_id')->unsigned()->nullable();
             $table->string('nombre');
             $table->string('apellido');
-            $table->string('direccion');
+            $table->string('direccion')->nullable();
             $table->string('telefono')->nullable();
             $table->string('telefono_movil');
             $table->string('correo');

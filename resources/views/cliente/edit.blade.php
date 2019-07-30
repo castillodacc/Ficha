@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
               {!! Form::label('correo', 'Correo') !!}
-              {!! Form::text('correo', $cliente->correo, ['class' => 'form-control', 'required' => 'required']) !!}
+              {!! Form::email('correo', $cliente->correo, ['class' => 'form-control', 'required' => 'required']) !!}
             </div>
             <div class="form-group">
               {!! Form::label('direccion', 'Direccion') !!}
@@ -47,18 +47,15 @@
           method: $(this).attr("method"),
           data: $(this).serialize(),
           dataType: 'json',
-          beforeSend: function()
-          {
+          beforeSend: function() {
             $(".panel-footer").empty();
           },
-          success: function(respuesta)
-          {
+          success: function(respuesta) {
             if(!respuesta.error) {
               var html = "<div class='alert alert-success'>";
               html += "<p>" + respuesta.mensaje + "</p>";
               html += "</div>";
               $(".panel-footer").html(html);
-              $("#nombre").val("");
             } else {
               var html = "<div class='alert alert-danger'>";
               html +="<p>" + respuesta.mensaje + "</p>";
@@ -66,8 +63,7 @@
               $(".panel-footer").html(html);
             }
           },
-          error: function()
-          {
+          error: function() {
             var html = "<div class='alert alert-danger'>";
             html +="<p>Error en el servidor. Por favor, recargue la p&aacute;gina, si el problema persiste contacte al administrador del sitio.</p>";
             html += "</div>";

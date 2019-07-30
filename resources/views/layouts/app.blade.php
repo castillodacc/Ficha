@@ -98,7 +98,7 @@
             @endif
             @else
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">&nbsp;&nbsp;&nbsp;&nbsp;{{ Auth::user()->username }} <span class="caret"></span>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">&nbsp;&nbsp;&nbsp;&nbsp;{{ (Auth::user()->is_admin) ? Auth::user()->admin->nombre : Auth::user()->empleado->nombre . ' ' . Auth::user()->empleado->apellido }} <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" role="menu">
                 <li>

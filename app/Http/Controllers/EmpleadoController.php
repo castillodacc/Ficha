@@ -43,13 +43,11 @@ class EmpleadoController extends Controller
     public function create()
     {
         $clientes = Cliente::where('activo', TRUE)->pluck('nombre', 'id');
-        $provincias = Provincia::orderBy('nombre')->pluck('nombre', 'id');
         $empresas = Empresa::orderBy('nombre')->pluck('nombre', 'id');
         $jornadas = Jornada::orderBy('nombre')->pluck('nombre', 'id');
         $poblaciones = [];
         return view('empleado.create')
             ->with('clientes', $clientes)
-            ->with('provincias', $provincias)
             ->with('empresas', $empresas)
             ->with('jornadas', $jornadas);
     }
@@ -63,10 +61,10 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         $user           = new User();
-        $user->username = $request->username;
+        $user->username = $request->correo;
         $user->password = Hash::make($request->password);
         if($user->save()) {
-            $empleado_datos = $request->except('username', 'activo', 'provincia_id', 'password');
+            $empleado_datos = $request->except('activo', 'provincia_id', 'password', 'activar_vacaciones');
             $empleado_datos = array_add($empleado_datos, 'user_id', $user->id);
             $empleado       = Empleado::create($empleado_datos);
             if($empleado) {
@@ -76,6 +74,8 @@ class EmpleadoController extends Controller
                     'code' => 200
                 ], 200);
             }
+            $empleado->delete();
+            $user->delete();
         }
         return Response::json([
             'error' => true,
@@ -104,19 +104,10 @@ class EmpleadoController extends Controller
     public function edit(Empleado $empleado)
     {
         $clientes = Cliente::where('activo', TRUE)->pluck('nombre', 'id');
-        $provincias = Provincia::orderBy('nombre')->pluck('nombre', 'id');
         $empresas = Empresa::orderBy('nombre')->pluck('nombre', 'id');
         $jornadas = Jornada::orderBy('nombre')->pluck('nombre', 'id');
-        $poblaciones = [];
-        if ($empleado->poblacion) {
-            $poblaciones = Poblacion::where('provincia_id', $empleado->poblacion->provincia_id)
-            ->orderBy('nombre')
-            ->pluck('nombre', 'id');
-        }
         return view('empleado.edit')
             ->with('clientes', $clientes)
-            ->with('provincias', $provincias)
-            ->with('poblaciones', $poblaciones)
             ->with('empresas', $empresas)
             ->with('jornadas', $jornadas)
             ->with('empleado', $empleado);
@@ -131,11 +122,13 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, Empleado $empleado)
     {
-        $empleado->user->username = $request->username;
+        $empleado->user->username = $request->correo;
         $empleado->user->activo = ($request->activo) ? true : false;
         if($empleado->user->save()) {
-            if($empleado->update($request->except('username', 'activo', 'provincia_id', 'password', 'password_confirm'))) {
-                if(!empty($request->password)){
+            $data = $request->except('activo', 'provincia_id', 'password', 'password_confirm', 'activar_vacaciones');
+            $data['vacaciones'] = (isset($data['vacaciones'])) ? $data['vacaciones'] : '';
+            if($empleado->update($data)) {
+                if(!empty($request->password)) {
                     $empleado->update(['password' => bcrypt($request->password)]);
                 }
                 return Response::json([

@@ -47,14 +47,6 @@ class Empleado extends Model
         return $this->hasMany('App\Ficha');
     }
 
-    /**
-     * Get the poblacion for empleado.
-     */
-    public function poblacion()
-    {
-        return $this->belongsTo(Poblacion::class);
-    }
-
     public function clienteAsignado()
     {
         return ($this->cliente_id) ? TRUE : FALSE;
@@ -181,51 +173,48 @@ class Empleado extends Model
         return((!($ficha ? TRUE : FALSE)));
     }
 
-    public static function fechasParaReporte($fecha_i, $fecha_f, $empleado_id = null)
+    public static function fechasParaReporte($fecha_i, $fecha_f, $used = [], $empleado_id = null, $cliente = null)
     {
-        $empleados = ($empleado_id) ? Self::where('id', $empleado_id)->get() : Self::all();
+        if ($empleado_id) {
+            $empleados = Self::where('id', $empleado_id)->get();
+        } elseif ($cliente) {
+            $empleados = Self::where('cliente_id', $cliente->id)->get();
+        } else {
+            $empleados = Self::all();
+        }
         $rows = [];
         $fecha_i = \Carbon::parse($fecha_i);
-        $fecha_f = \Carbon::parse($fecha_f . ' 23:59:59');
+        $fecha_f = \Carbon::parse($fecha_f);
         do {
-            $f_i = (!isset($f_i)) ? $fecha_i->addDay(1) : $f_i->addDay(1);
+            $f_i = (isset($f_i)) ? $f_i->addDay(1) : $fecha_i;
             foreach ($empleados as $e) {
-                $vacaciones = explode(',', $e->vacaciones);
-                foreach ($vacaciones as $v) {
-                    if ($f_i == \Carbon::parse($v)) {
-                        $rows[] = [
-                            'nombre' => $e->nombre . ' ' . $e->apellido,
-                            'fecha' => $v,
-                            'dni' => $e->dni,
-                            'tipo' => 'Vacaciones'
-                        ];
-                    }
+                if (in_array($f_i->format('Y-m-d'), explode(',', $e->vacaciones))) {
+                    $row = [
+                        'nombre' => $e->nombre . ' ' . $e->apellido,
+                        'fecha' => $f_i->format('d/m/Y'),
+                        'dni' => $e->dni,
+                        'tipo' => 'VACACIONES'
+                    ];
+                    if (!in_array($row, $used)) $rows[] = $row;
                 }
-
-                $festivos = explode(',', $e->festivos);
-                foreach ($festivos as $f) {
-                    if ($f_i == \Carbon::parse($f)) {
-                        $rows[] = [
-                            'nombre' => $e->nombre . ' ' . $e->apellido,
-                            'fecha' => $f,
-                            'dni' => $e->dni,
-                            'tipo' => 'Festivos'
-                        ];
-                    }
+                if (in_array($f_i->format('Y-m-d'), explode(',', $e->festivos))) {
+                    $row = [
+                        'nombre' => $e->nombre . ' ' . $e->apellido,
+                        'fecha' => $f_i->format('d/m/Y'),
+                        'dni' => $e->dni,
+                        'tipo' => 'FESTIVO'
+                    ];
+                    if (!in_array($row, $used)) $rows[] = $row;
                 }
-
-                $bajas_ausencias = explode(',', $e->bajas_ausencias);
-                foreach ($bajas_ausencias as $ba) {
-                    if ($f_i == \Carbon::parse($ba)) {
-                        $rows[] = [
-                            'nombre' => $e->nombre . ' ' . $e->apellido,
-                            'fecha' => $ba,
-                            'dni' => $e->dni,
-                            'tipo' => 'Bajas o Ausencias'
-                        ];
-                    }
+                if (in_array($f_i->format('Y-m-d'), explode(',', $e->bajas_ausencias))) {
+                    $row = [
+                        'nombre' => $e->nombre . ' ' . $e->apellido,
+                        'fecha' => $f_i->format('d/m/Y'),
+                        'dni' => $e->dni,
+                        'tipo' => 'BAJA O AUSENCIA'
+                    ];
+                    if (!in_array($row, $used)) $rows[] = $row;
                 }
-
             }
         } while ($f_i <= $fecha_f);
         return $rows;

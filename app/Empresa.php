@@ -17,9 +17,12 @@ class Empresa extends Model
     protected $fillable = [
     	'nombre',
     	'telefono',
-    	'contacto',
+    	'detalles',
     	'correo',
-    	'direccion'
+    	'direccion',
+        'razon_social',
+        'cif',
+        'poblacion_id',
     ];
 
     /**
@@ -30,4 +33,12 @@ class Empresa extends Model
     protected $hidden = [ # $dates
         'created_at' , 'updated_at', 'deleted_at'
     ];
+
+    /**
+     * Get the poblacion for empleado.
+     */
+    public function poblacion()
+    {
+        return $this->belongsTo(Poblacion::class);
+    }
 }

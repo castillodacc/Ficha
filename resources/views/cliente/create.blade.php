@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
               {!! Form::label('correo', 'Correo') !!}
-              {!! Form::text('correo', null, ['class' => 'form-control', 'required' => 'required']) !!}
+              {!! Form::email('correo', null, ['class' => 'form-control', 'required' => 'required']) !!}
             </div>
             <div class="form-group">
               {!! Form::label('direccion', 'Direccion') !!}

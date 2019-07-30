@@ -216,7 +216,7 @@ class Ficha extends Model
 
     function getNombreEmpleado($empleado)
     {
-        $empleado = Empleado::select('nombre')
+        $empleado = Empleado::select('nombre', 'apellido')
                   ->where('id', $empleado)
                   ->first();
         return(($empleado) ? $empleado->nombre . ' ' . $empleado->apellido : "N/D");
