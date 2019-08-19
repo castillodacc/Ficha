@@ -16,7 +16,7 @@
     </div>
     <div class="row">
       <div class="col-md-3">Jornada: {{ $empleado->jornada->nombre }}.</div>
-      <div class="col-md-3">DNI/NIE: {{ number_format($empleado->dni, 0, '', '.') }}.</div>
+      <div class="col-md-3">DNI/NIE: {{ $empleado->dni }}.</div>
       <div class="col-md-6">Correo: {{ $empleado->correo }}.</div>
     </div>
     @if($fichas->isNotEmpty())

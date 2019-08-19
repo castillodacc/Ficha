@@ -99,7 +99,7 @@
           @foreach($empleados as $empleado)
           <tr>
             <td>{{ $empleado->getNombreEmpleado($empleado->empleado_id) }}</td>
-            <td class="text-right">{{ number_format($empleado->empleado->dni, 0, '', '.') }}</td>
+            <td class="text-right">{{ $empleado->empleado->dni }}</td>
             <td>{{ $empleado->empleado->jornada->nombre }}</td>
             <td>{{ $empleado->empleado->cliente->nombre }}</td>
             <td class="text-right">{{ $empleado->horasTrabajadasEmpleado($empleado->empleado_id, $fecha_inicio, $fecha_fin) }}</td>

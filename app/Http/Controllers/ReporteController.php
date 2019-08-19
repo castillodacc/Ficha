@@ -110,14 +110,14 @@ class ReporteController extends Controller
 
     public function showFormReporteEmpleado()
     {
-        $empleados = Empleado::all()->pluck('nombre', 'id');
+        $empleados = Empleado::select(\DB::raw('CONCAT(nombre," ",apellido) AS nombre'), 'id')->pluck('nombre', 'id');
         return view('reporte.empleado')
             ->with('empleados', $empleados);
     }
 
     public function showFormReporteEmpleados()
     {
-        $empleados = Empleado::all()->pluck('nombre', 'id');
+        $empleados = Empleado::select(\DB::raw('CONCAT(nombre," ",apellido) AS nombre'), 'id')->pluck('nombre', 'id');
         return view('reporte.empleados')
             ->with('empleados', $empleados);
     }

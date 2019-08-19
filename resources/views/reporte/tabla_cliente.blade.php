@@ -46,7 +46,7 @@
             <th>{{ $n++ }}</th>
             <td>{{ $f['fecha'] }}</td>
             <td>{{ $f['nombre'] }}</td>
-            <td class="text-right">{{ number_format($f['dni'], 0, '', '.') }}</td>
+            <td class="text-right">{{ $f['dni'] }}</td>
             <td colspan="2" class="text-center"><b>{{ $f['tipo'] }}</b></td>
           </tr>
           @endforeach
@@ -54,7 +54,7 @@
             <th>{{ $n++ }}</th>
             <td>{{ \Carbon::parse($ficha->fecha)->format('d/m/Y') }}</td>
             <td>{{ $ficha->empleado->nombre.' '.$ficha->empleado->apellido }}</td>
-            <td class="text-right">{{ number_format($ficha->empleado->dni, 0, '', '.') }}</td>
+            <td class="text-right">{{ $ficha->empleado->dni }}</td>
             <td class="text-right">{{ $ficha->getTotalHorasTrabajadas() }}</td>
             <td class="text-right">{{ $ficha->getTotalHorasExtras() }}</td>
           </tr>
@@ -65,7 +65,7 @@
             <th>{{ $n++ }}</th>
             <td>{{ $f['fecha'] }}</td>
             <td>{{ $f['nombre'] }}</td>
-            <td class="text-right">{{ number_format($f['dni'], 0, '', '.') }}</td>
+            <td class="text-right">{{ $f['dni'] }}</td>
             <td colspan="2" class="text-center"><b>{{ $f['tipo'] }}</b></td>
           </tr>
           @endforeach
