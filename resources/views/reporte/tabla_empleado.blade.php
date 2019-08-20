@@ -19,6 +19,14 @@
       <div class="col-md-3">DNI/NIE: {{ $empleado->dni }}.</div>
       <div class="col-md-6">Correo: {{ $empleado->correo }}.</div>
     </div>
+    <div class="row">
+      <div class="col-md-3">Empresa: {{ $empleado->empresa->nombre }}.</div>
+      <div class="col-md-3">CIF: {{ $empleado->empresa->cif }}.</div>
+      <div class="col-md-3">Teléfono: {{ $empleado->empresa->telefono }}.</div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">Email: {{ $empleado->empresa->correo }}.</div>
+    </div>
     @if($fichas->isNotEmpty())
     <div class="row">
       <div class="col-md-12">

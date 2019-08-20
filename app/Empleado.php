@@ -37,6 +37,11 @@ class Empleado extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class);
+    }
+
     public function cliente()
     {
         return $this->belongsTo('App\Cliente');
