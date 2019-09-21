@@ -55,19 +55,25 @@ class ForgotPasswordController extends Controller
         }
 
         $now = \Carbon::now();
-        $token = bcrypt(\Carbon::now() . '-' . uniqid() . '-' . $request->username);
+        $token = str_replace('/', '', bcrypt(\Carbon::now() . '-' . uniqid() . '-' . $request->username));
+        $reset = DB::table('password_resets')
         DB::table('password_resets')
         ->insert([
             'username' => $request->username,
-            'token' => str_replace('/', '', $token),
+            'token' => $token,
             'created_at' => $now
         ]);
 
-        $reset = DB::table('password_resets')->where('token', $token)->first();
-
-        \Mail::to($request->username)->send(new \App\Mail\ResetPassword($reset));
-
-        return back()->with(['status' => 'Hemos enviado un link a su correo para que pueda cambiar su contraseña. Por favor ingrese por ese link y cumpla con los pasos.']);
+        if ($reset) {
+            $reset = DB::table('password_resets')->where('token', $token)->first();
+            \Mail::to($request->username)->send(new \App\Mail\ResetPassword($reset));
+            return back()->with(['status' => 'Hemos enviado un link a su correo para que pueda cambiar su contraseña. Por favor ingrese por ese link y cumpla con los pasos.']);
+        } else {
+            return back()->with([
+                'status' => 'Ha ocurrido un error, por favor intente de nuevo.',
+                'color' => 'danger'
+            ]);
+        }
 
     }
 
