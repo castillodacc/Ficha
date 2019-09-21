@@ -135,9 +135,14 @@ class Ficha extends Model
     public function getTotalHorasTrabajadas()
     {
         if($this->hora_inicio AND $this->hora_fin) {
-            $hora_inicio = Carbon::createFromFormat('H:i', $this->hora_inicio);
-            $hora_fin    = Carbon::createFromFormat('H:i', $this->hora_fin);
-            return($hora_fin->diff($hora_inicio)->format('%H:%I'));
+            $ficha = \DB::table('fichas')
+            ->where('id', $this->id)
+            ->get(['hora_inicio', 'hora_fin']);
+            foreach ($ficha as $f) {
+                $hora_inicio = Carbon::parse($f->hora_inicio);
+                $hora_fin = Carbon::parse($f->hora_fin);
+                return($hora_inicio->diff($hora_fin)->format('%H:%I'));
+            }
         }
         return("00:00");
     }
@@ -145,9 +150,14 @@ class Ficha extends Model
     public function getTotalHorasExtras()
     {
         if($this->hora_inicio_extras AND $this->hora_fin_extras) {
-            $hora_inicio = Carbon::createFromFormat('H:i', $this->hora_inicio_extras);
-            $hora_fin    = Carbon::createFromFormat('H:i', $this->hora_fin_extras);
-            return($hora_fin->diff($hora_inicio)->format('%H:%I'));
+            $ficha = \DB::table('fichas')
+            ->where('id', $this->id)
+            ->get(['hora_inicio_extras', 'hora_fin_extras']);
+            foreach ($ficha as $f) {
+                $hora_inicio_extras = Carbon::parse($f->hora_inicio_extras);
+                $hora_fin_extras = Carbon::parse($f->hora_fin_extras);
+                return($hora_inicio_extras->diff($hora_fin_extras)->format('%H:%I'));
+            }
         }
         return("00:00");
     }

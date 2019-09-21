@@ -234,11 +234,12 @@ class ReporteController extends Controller
 
     public function reporteEmpleado(Request $request)
     {
-        $fichas = Ficha::where('estado', '!=', 'en progreso')
-                ->whereDate('fecha', '>=', $request->fecha_inicio)
-                ->whereDate('fecha', '<=', $request->fecha_fin)
-                ->where('empleado_id', $request->empleado)
-                ->get();
+        $fichas = Ficha::where(function ($query) use ($request) {
+            $query->where('estado', '!=', 'en progreso');
+            $query->where('empleado_id', $request->empleado);
+            $query->whereDate('fecha', '>=', $request->fecha_inicio);
+            $query->whereDate('fecha', '<=', $request->fecha_fin);
+        })->get();
         $horas_jornada = "";
         if($fichas->isNotEmpty()) {
             $hora             = Carbon::today();
@@ -264,6 +265,7 @@ class ReporteController extends Controller
                     }
                 }
             }
+
             $horas_trabajadas = $tiempo_trabajado->diff($hora)->format('%Dd:%Hh:%Im');
             $horas_extras     = $tiempo_extras->diff($hora)->format('%Dd:%Hh:%Im');
 
