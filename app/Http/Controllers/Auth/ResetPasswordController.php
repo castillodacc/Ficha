@@ -51,15 +51,27 @@ class ResetPasswordController extends Controller
         $test = DB::table('password_resets')
         ->where('username', $request->email)
         ->where('token', $request->token)
-        ->where('created_at', 'BEETWEN', [\Carbon::now()->subHour(1), \Carbon::now()])
-        ->count();
+        ->first();
         if ($test) {
-            $user = \App\User::where('username', $request->email)->first();
-            $user->update(['password' => bcrypt($request->password)]);
-            if ($user) {
-                return redirect('/')->with(['status' => 'Cambio de contraseña exitoso...']);
+            $date = \Carbon::parse($test->created_at);
+            if ($date > \Carbon::now()->subHour(1) && $date < \Carbon::now()) {
+                $user = \App\User::where('username', $request->email)->first();
+                $user->password = bcrypt($request->password);
+                if ($user->save()) {
+                    return redirect('/')->with([
+                        'status' => 'Cambio de contraseña exitoso...'
+                    ]);
+                }
+            } else {
+                return back()->with([
+                    'status' => 'Ya esta caducado este link, por favor intente uno nuevo.',
+                    'color' => 'danger'
+                ]);
             }
         }
-        return back()->with(['status' => 'Hubo un error al cambiar datos, Por favor vuelva a intentarlo.']);
+        return back()->with([
+            'status' => 'Hubo un error al cambiar datos, Por favor vuelva a intentarlo.',
+            'color' => 'danger'
+        ]);
     }
 }

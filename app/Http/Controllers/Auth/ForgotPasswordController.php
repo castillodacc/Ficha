@@ -57,7 +57,6 @@ class ForgotPasswordController extends Controller
         $now = \Carbon::now();
         $token = str_replace('/', '', bcrypt(\Carbon::now() . '-' . uniqid() . '-' . $request->username));
         $reset = DB::table('password_resets')
-        DB::table('password_resets')
         ->insert([
             'username' => $request->username,
             'token' => $token,
